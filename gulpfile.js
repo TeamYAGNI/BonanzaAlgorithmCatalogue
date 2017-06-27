@@ -1,8 +1,9 @@
-var gulp = require('gulp'),
+const gulp = require('gulp'),
   nodemon = require('gulp-nodemon'),
   plumber = require('gulp-plumber'),
-  livereload = require('gulp-livereload');
-
+  livereload = require('gulp-livereload'),
+  mocha = require('gulp-mocha'),
+  gulpsync = require('gulp-sync')(gulp);
 
 gulp.task('develop', function () {
   livereload.listen();
@@ -12,7 +13,7 @@ gulp.task('develop', function () {
     stdout: false
   }).on('readable', function () {
     this.stdout.on('data', function (chunk) {
-      if(/^Express server listening on port/.test(chunk)){
+      if (/^Express server listening on port/.test(chunk)) {
         livereload.changed(__dirname);
       }
     });
@@ -24,3 +25,12 @@ gulp.task('develop', function () {
 gulp.task('default', [
   'develop'
 ]);
+
+gulp.task('test:unit', () => {
+  return gulp.src('./tests/unit/**/*.js', { read: false })
+    .pipe(mocha({
+      reporter: 'nyan',
+    }));
+});
+
+gulp.task('test', gulpsync.sync(['test:unit']));
