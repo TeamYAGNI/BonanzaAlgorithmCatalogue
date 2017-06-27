@@ -22,9 +22,12 @@
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "chai": "^3.5.0",
     "debug": "^2.2.0",
+    "eslint-config-google": "^0.8.0",
     "gulp": "^3.9.0",
+    "gulp-eslint": "^4.0.0",
     "gulp-livereload": "^3.8.0",
     "gulp-mocha": "^4.3.1",
     "gulp-nodemon": "^2.0.2",

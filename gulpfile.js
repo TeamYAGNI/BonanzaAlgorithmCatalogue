@@ -3,7 +3,8 @@ const gulp = require('gulp'),
   plumber = require('gulp-plumber'),
   livereload = require('gulp-livereload'),
   mocha = require('gulp-mocha'),
-  gulpsync = require('gulp-sync')(gulp);
+  gulpsync = require('gulp-sync')(gulp),
+  eslint = require('gulp-eslint');
 
 gulp.task('develop', function () {
   livereload.listen();
@@ -26,6 +27,19 @@ gulp.task('default', [
   'develop'
 ]);
 
+gulp.task('lint-fix', () => {
+  return gulp.src(['**/*.js', '!node_modules/**'])
+    .pipe(eslint({ fix: true }))
+    .pipe(eslint.format());
+});
+
+gulp.task('test:lint', () => {
+  return gulp.src(['**/*.js', '!node_modules/**'])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
+});
+
 gulp.task('test:unit', () => {
   return gulp.src('./tests/unit/**/*.js', { read: false })
     .pipe(mocha({
@@ -33,4 +47,7 @@ gulp.task('test:unit', () => {
     }));
 });
 
-gulp.task('test', gulpsync.sync(['test:unit']));
+gulp.task('test', gulpsync.sync([
+  'test:lint',
+  'test:unit'
+]));
