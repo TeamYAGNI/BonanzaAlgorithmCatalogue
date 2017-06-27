@@ -6,14 +6,14 @@ const gulp = require('gulp'),
   gulpsync = require('gulp-sync')(gulp),
   eslint = require('gulp-eslint');
 
-gulp.task('develop', function () {
+gulp.task('develop', function() {
   livereload.listen();
   nodemon({
     script: 'app.js',
     ext: 'js coffee jade',
-    stdout: false
-  }).on('readable', function () {
-    this.stdout.on('data', function (chunk) {
+    stdout: false,
+  }).on('readable', function() {
+    this.stdout.on('data', function(chunk) {
       if (/^Express server listening on port/.test(chunk)) {
         livereload.changed(__dirname);
       }
@@ -24,13 +24,14 @@ gulp.task('develop', function () {
 });
 
 gulp.task('default', [
-  'develop'
+  'develop',
 ]);
 
 gulp.task('lint-fix', () => {
   return gulp.src(['**/*.js', '!node_modules/**'])
     .pipe(eslint({ fix: true }))
-    .pipe(eslint.format());
+    .pipe(eslint.format())
+    .pipe(gulp.dest('.'));
 });
 
 gulp.task('test:lint', () => {
@@ -49,5 +50,5 @@ gulp.task('test:unit', () => {
 
 gulp.task('test', gulpsync.sync([
   'test:lint',
-  'test:unit'
+  'test:unit',
 ]));

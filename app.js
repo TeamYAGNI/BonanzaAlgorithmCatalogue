@@ -1,4 +1,4 @@
-var express = require('express'),
+let express = require('express'),
     config = require('./config/config'),
     glob = require('glob');
 
@@ -16,11 +16,11 @@ var express = require('express'),
 //   require(model);
 // });
 
-var app = express();
+const app = express();
 
 module.exports = require('./config/express')(app, config);
 
-app.listen(config.port, function () {
+app.listen(config.port, function() {
   console.log('Express server listening on port ' + config.port);
 });
 

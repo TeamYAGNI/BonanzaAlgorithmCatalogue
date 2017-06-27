@@ -1,34 +1,34 @@
-var path = require('path'),
+let path = require('path'),
     rootPath = path.normalize(__dirname + '/..'),
     env = process.env.NODE_ENV || 'development';
 
-var config = {
+const config = {
   development: {
     root: rootPath,
     app: {
-      name: 'bonanzaalgorithmscatalogue'
+      name: 'bonanzaalgorithmscatalogue',
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/bonanzaalgorithmscatalogue-development'
+    db: 'mongodb://localhost/bonanzaalgorithmscatalogue-development',
   },
 
   test: {
     root: rootPath,
     app: {
-      name: 'bonanzaalgorithmscatalogue'
+      name: 'bonanzaalgorithmscatalogue',
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/bonanzaalgorithmscatalogue-test'
+    db: 'mongodb://localhost/bonanzaalgorithmscatalogue-test',
   },
 
   production: {
     root: rootPath,
     app: {
-      name: 'bonanzaalgorithmscatalogue'
+      name: 'bonanzaalgorithmscatalogue',
     },
     port: process.env.PORT || 3000,
-    db: 'mongodb://localhost/bonanzaalgorithmscatalogue-production'
-  }
+    db: 'mongodb://localhost/bonanzaalgorithmscatalogue-production',
+  },
 };
 
 module.exports = config[env];
