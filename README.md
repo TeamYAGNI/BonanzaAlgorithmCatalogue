@@ -1,1 +1,1 @@
-# BonanzaAlgorithmCatalogue
+# BonanzaAlgorithmsCatalogue
