@@ -1,6 +1,6 @@
-let express = require('express'),
-    config = require('./config/config'),
-    glob = require('glob');
+const express = require('express');
+const config = require('./config/config');
+const glob = require('glob');
 
 // Connection to mongoose
 //   mongoose = require('mongoose');
@@ -15,12 +15,11 @@ let express = require('express'),
 // models.forEach(function (model) {
 //   require(model);
 // });
-
 const app = express();
 
 module.exports = require('./config/express')(app, config);
 
-app.listen(config.port, function() {
+app.listen(config.port, () => {
   console.log('Express server listening on port ' + config.port);
 });
 

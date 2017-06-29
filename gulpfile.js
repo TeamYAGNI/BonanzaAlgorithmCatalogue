@@ -1,10 +1,13 @@
-const gulp = require('gulp'),
-  nodemon = require('gulp-nodemon'),
-  plumber = require('gulp-plumber'),
-  livereload = require('gulp-livereload'),
-  mocha = require('gulp-mocha'),
-  gulpsync = require('gulp-sync')(gulp),
-  eslint = require('gulp-eslint');
+/* globals __dirname */
+/* globals process */
+
+const gulp = require('gulp');
+const nodemon = require('gulp-nodemon');
+const plumber = require('gulp-plumber');
+const livereload = require('gulp-livereload');
+const mocha = require('gulp-mocha');
+const gulpsync = require('gulp-sync')(gulp);
+const eslint = require('gulp-eslint');
 
 gulp.task('develop', function() {
   livereload.listen();

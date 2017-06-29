@@ -1,6 +1,9 @@
-let path = require('path'),
-    rootPath = path.normalize(__dirname + '/..'),
-    env = process.env.NODE_ENV || 'development';
+/* globals __dirname */
+
+const path = require('path');
+const rootPath = path.normalize(__dirname + '/..');
+const configJson = require('./config.json');
+const env = configJson.NODE_ENV || 'development';
 
 const config = {
   development: {
@@ -8,7 +11,7 @@ const config = {
     app: {
       name: 'bonanzaalgorithmscatalogue',
     },
-    port: process.env.PORT || 3000,
+    port: configJson.PORT || 3000,
     db: 'mongodb://localhost/bonanzaalgorithmscatalogue-development',
   },
 
@@ -17,7 +20,7 @@ const config = {
     app: {
       name: 'bonanzaalgorithmscatalogue',
     },
-    port: process.env.PORT || 3000,
+    port: configJson.PORT || 3000,
     db: 'mongodb://localhost/bonanzaalgorithmscatalogue-test',
   },
 
@@ -26,7 +29,7 @@ const config = {
     app: {
       name: 'bonanzaalgorithmscatalogue',
     },
-    port: process.env.PORT || 3000,
+    port: configJson.PORT || 3000,
     db: 'mongodb://localhost/bonanzaalgorithmscatalogue-production',
   },
 };

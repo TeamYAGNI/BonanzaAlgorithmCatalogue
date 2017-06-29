@@ -1,11 +1,10 @@
-let express = require('express'),
-  router = express.Router();
+const { Router } = require('express');
+const router = new Router();
 
-module.exports = function(app) {
+module.exports = (app) => {
   app.use('/', router);
 };
-
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next) => {
   res.render('index', {
     title: 'Generator-Express MVC',
   });
