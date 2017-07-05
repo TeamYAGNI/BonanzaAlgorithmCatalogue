@@ -2,14 +2,12 @@ const express = require('express');
 const glob = require('glob');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
 const configJson = require('./config.json');
 
-
-module.exports = (app, config) => {
+const configApp = (app, config) => {
   const env = configJson.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env === 'development';
@@ -23,9 +21,9 @@ module.exports = (app, config) => {
   app.use(bodyParser.urlencoded({
     extended: true,
   }));
-  app.use(cookieParser());
   app.use(compress());
-  app.use(express.static(config.root + '/public'));
+  app.use('/public', express.static(config.root + '/public'));
+  app.use('/libs', express.static(config.root + '/node_modules'));
   app.use(methodOverride());
 
   const controllers = glob.sync(config.root + '/app/controllers/*.js');
@@ -61,3 +59,5 @@ module.exports = (app, config) => {
 
   return app;
 };
+
+module.exports = configApp;

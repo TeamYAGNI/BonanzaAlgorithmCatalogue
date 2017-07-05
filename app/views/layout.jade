@@ -6,7 +6,8 @@ html(lang='en')
     title= title
     link(rel='icon' href='/public/img/favicon.ico')
     block css
-      link(rel='stylesheet', href='/css/style.css')
+      link(rel='stylesheet', href='/public/css/style.css')
+      link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
     block js
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
