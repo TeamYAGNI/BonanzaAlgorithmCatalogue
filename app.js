@@ -2,13 +2,15 @@ let express = require('express'),
     config = require('./config/config'),
     glob = require('glob');
 
-// Connection to mongoose
-//   mongoose = require('mongoose');
-// mongoose.connect(config.db);
-// var db = mongoose.connection;
-// db.on('error', function () {
-//   throw new Error('unable to connect to database at ' + config.db);
-// });
+const mongoClient = require('mongodb').MongoClient,
+    url = 'mongodb://localhost:27017/local';
+
+mongoClient.connect(url, (err, db) => {
+  db.collection('users').find({}).toArray((err, items) => {
+    console.log(items);
+    db.close();
+  });
+});
 
 // Requiring all models
 // var models = glob.sync(config.root + '/app/models/*.js');
