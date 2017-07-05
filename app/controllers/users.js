@@ -39,24 +39,29 @@ const attach = (app) => {
     const router = new Router();
 
     router.get('/', (req, res) => {
-        let { q, page, size } = req.query;
-        page = +page || 1;
-        size = +size || 10;
+        if (req.isAuthenticated()) {
+            console.log(req.session);
+            let { q, page, size } = req.query;
+            page = +page || 1;
+            size = +size || 10;
 
-        let result = users;
-        if (q) {
-            q = q.toLowerCase();
+            let result = users;
+            if (q) {
+                q = q.toLowerCase();
 
-            result = result.filter((i) => {
-                return i.name.toLowerCase().includes(q);
-            });
-        }
-        if (result.length > (page - 1) * size) {
-            result = result.slice((page - 1) * size, page * size);
+                result = result.filter((i) => {
+                    return i.name.toLowerCase().includes(q);
+                });
+            }
+            if (result.length > (page - 1) * size) {
+                result = result.slice((page - 1) * size, page * size);
+            } else {
+                result = result.slice(result.length - result.length % size);
+            }
+            res.send(result);
         } else {
-            result = result.slice(result.length - result.length % size);
+            res.redirect('/api/login');
         }
-        res.send(result);
     })
         .get('/:id', (req, res, next) => {
             const id = +req.params.id;

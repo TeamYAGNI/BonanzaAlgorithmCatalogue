@@ -1,6 +1,9 @@
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const passport = require('passport');
+const redis = require('redis');
+const RedisStore = require('connect-redis')(session);
+const client = redis.createClient();
 const { Strategy } = require('passport-local');
 
 const configAuth = (app, { users }) => {
@@ -19,8 +22,18 @@ const configAuth = (app, { users }) => {
         }
     ));
 
-    app.use(cookieParser());
-    app.use(session({ secret: 'Test' }));
+    app.use(cookieParser('test'));
+    app.use(session({
+        secret: 'test',
+        store: new RedisStore({
+            host: 'localhost',
+            port: 6379,
+            client: client,
+            ttl: 900,
+        }),
+        saveUninitialized: false,
+        resave: false,
+    }));
     app.use(passport.initialize());
     app.use(passport.session());
 
