@@ -15,10 +15,28 @@ let express = require('express'),
 //   require(model);
 // });
 
+const mongoClient = require('mongodb').MongoClient,
+    //url = 'mongodb://localhost:27017/local'; 
+    url = 'mongodb://ec2-35-158-165-86.eu-central-1.compute.amazonaws.com:27017/local';
+
+
+
 const app = express();
 
 app.get('/', function(req, res) {
-  res.send("mekiq maina");
+  
+  mongoClient.connect(url, (err, db) => {
+    db.collection('users').find({}).toArray((err, items) => {
+      if (err !== null) {
+        res.send(err.message);
+      }
+      else {
+        res.send(items);
+      }
+      db.close();
+    });
+  });
+
 });
 
 module.exports = require('./config/express')(app, config);
