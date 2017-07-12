@@ -8,11 +8,11 @@ const attach = (app) => {
         req.session.destroy((err) => {
             res.clearCookie('connect.sid');
             req.session = null;
-            res.redirect('/api/');
+            res.redirect('/');
         });
     });
 
-    app.use('/api/logout', router);
+    app.use('/logout', router);
 };
 
 module.exports = attach;

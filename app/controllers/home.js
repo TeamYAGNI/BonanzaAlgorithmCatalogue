@@ -9,7 +9,7 @@ const attach = (app) => {
     });
   });
 
-  app.use('/api', router);
+  app.use('/', router);
 };
 
 module.exports = attach;

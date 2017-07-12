@@ -10,13 +10,13 @@ const attach = (app) => {
         })
         .post('/',
         passport.authenticate('local', {
-            successRedirect: '/api',
-            failureRedirect: '/api/login',
+            successRedirect: '/',
+            failureRedirect: '/login',
             failureFlash: true,
         })
         );
 
-    app.use('/api/login', router);
+    app.use('/login', router);
 };
 
 module.exports = attach;

@@ -39,6 +39,7 @@ const attach = (app) => {
     const router = new Router();
 
     router.get('/', (req, res) => {
+        console.log(req);
         if (req.isAuthenticated()) {
             console.log(req.session);
             let { q, page, size } = req.query;
@@ -60,7 +61,7 @@ const attach = (app) => {
             }
             res.send(result);
         } else {
-            res.redirect('/api/login');
+            res.redirect('/login');
         }
     })
         .get('/:id', (req, res, next) => {
@@ -82,7 +83,7 @@ const attach = (app) => {
             res.status(201).send(body);
         });
 
-    app.use('/api/users', router);
+    app.use('/users', router);
 };
 
 module.exports = attach;
