@@ -1,6 +1,5 @@
 let express = require('express'),
-    config = require('./config/config'),
-    glob = require('glob');
+    config = require('./config/config');
 
 // Connection to mongoose
 //   mongoose = require('mongoose');
@@ -17,6 +16,10 @@ let express = require('express'),
 // });
 
 const app = express();
+
+app.get('/', function(req, res) {
+  res.send("mekiq maina");
+});
 
 module.exports = require('./config/express')(app, config);
 
