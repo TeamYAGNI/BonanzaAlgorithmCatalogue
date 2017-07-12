@@ -16,7 +16,7 @@ let express = require('express'),
 // });
 
 const mongoClient = require('mongodb').MongoClient,
-    ////url = 'mongodb://localhost:27017/local'; 
+    //url = 'mongodb://localhost:27017/local'; 
     url = 'mongodb://ec2-35-158-165-86.eu-central-1.compute.amazonaws.com:27017/local';
 
 
