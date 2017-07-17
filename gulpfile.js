@@ -66,8 +66,8 @@ gulp.task('test:unit', () => {
       reporter: 'nyan',
     }))
     .on('error', (err) => {
-      console.error(err);
-    })
+      process.exit.bind(process, 1);
+    }
     .pipe(istanbul.writeReports());
 });
 
