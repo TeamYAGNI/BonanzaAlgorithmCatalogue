@@ -31,7 +31,7 @@ gulp.task('develop', () => {
 
 gulp.task('serve', () => {
   pm2.connect(false, () => {
-    pm2.start({
+    pm2.restart({
       name: 'app',
       script: 'app.js',
     }, (err, apps) => {
