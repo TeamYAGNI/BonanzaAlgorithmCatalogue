@@ -18,7 +18,7 @@ const data = require('./app/data');
 require('./config/auth')(app, data);
 require('./config/express')(app, config);
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   mongoClient.connect(url, (err, db) => {
     db.collection('users').find({}).toArray((err, items) => {
       if (err !== null) {
