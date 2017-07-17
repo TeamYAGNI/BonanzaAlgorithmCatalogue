@@ -65,7 +65,9 @@ gulp.task('test:unit', () => {
     .pipe(mocha({
       reporter: 'nyan',
     }))
-    .on('error', process.exit.bind(process, 2))
+    .on('error', (err) => {
+      console.error(err);
+    })
     .pipe(istanbul.writeReports());
 });
 
