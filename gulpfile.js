@@ -41,8 +41,7 @@ gulp.task('serve', (error) => {
     }, (err, apps) => {
       pm2.disconnect();
       if (err) {
-        console.error(err);
-        process.exit(2);
+        throw err;
       }
     });
   });
@@ -71,7 +70,7 @@ gulp.task('test:unit', () => {
     .pipe(mocha({
       reporter: 'nyan',
     }))
-    //.on('error', process.exit.bind(process, 1))
+    .on('error', process.exit.bind(process, 2))
     .pipe(istanbul.writeReports());
 });
 
