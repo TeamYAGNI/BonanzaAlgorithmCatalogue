@@ -8,6 +8,7 @@ const livereload = require('gulp-livereload');
 const mocha = require('gulp-mocha');
 const gulpsync = require('gulp-sync')(gulp);
 const eslint = require('gulp-eslint');
+const istanbul = require('gulp-istanbul');
 
 gulp.task('develop', function() {
   livereload.listen();
@@ -40,18 +41,36 @@ gulp.task('lint-fix', () => {
 gulp.task('test:lint', () => {
   return gulp.src(['**/*.js', '!node_modules/**'])
     .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+    .pipe(eslint.format());
+    //.pipe(eslint.failAfterError());
 });
 
 gulp.task('test:unit', () => {
   return gulp.src('./tests/unit/**/*.js', { read: false })
     .pipe(mocha({
       reporter: 'nyan',
-    }));
+    }))
+    .pipe(istanbul.writeReports());
+});
+
+gulp.task('pre-test', () => {
+  return gulp.src([
+    './app/**/*.js',
+    './config/*.js',
+    '!./node_modules/',
+    '!./test/',
+    '!./public/',
+    '!./coverage/',
+    './app.js',
+    ])
+    .pipe(istanbul({
+      includeUntested: true,
+    }))
+    .pipe(istanbul.hookRequire());
 });
 
 gulp.task('test', gulpsync.sync([
+  'pre-test',
   'test:lint',
   'test:unit',
 ]));
