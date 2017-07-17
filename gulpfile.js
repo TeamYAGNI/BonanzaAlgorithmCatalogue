@@ -67,7 +67,7 @@ gulp.task('test:unit', () => {
     }))
     .on('error', (err) => {
       process.exit.bind(process, 1);
-    }
+    })
     .pipe(istanbul.writeReports());
 });
 
