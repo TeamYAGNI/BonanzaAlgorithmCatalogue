@@ -3,7 +3,7 @@ const config = require('./config/config');
 // const glob = require('glob');
 
 const mongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017/local';
+const url = 'mongodb://ec2-35-158-165-86.eu-central-1.compute.amazonaws.com:27017/local';
 
 mongoClient.connect(url, (error, db) => {
   db.collection('users').find({}).toArray((err, items) => {
