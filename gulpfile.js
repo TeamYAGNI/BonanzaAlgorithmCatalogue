@@ -29,7 +29,12 @@ gulp.task('develop', () => {
   });
 });
 
-gulp.task('serve', () => {
+gulp.task('serve', (error) => {
+  if (error) {
+    console.error(error);
+    process.exit(2);
+  }
+
   pm2.connect(false, () => {
     pm2.restart({
       name: 'app',
@@ -37,7 +42,8 @@ gulp.task('serve', () => {
     }, (err, apps) => {
       pm2.disconnect();
       if (err) {
-        throw err;
+        console.error(err);
+        process.exit(2);
       }
     });
   });
@@ -67,7 +73,10 @@ gulp.task('test:unit', () => {
       reporter: 'nyan',
     }))
     .pipe(istanbul.writeReports())
-    .on('error', handleError);
+    .on('error', (error) => {
+      console.error(error);
+      process.exit(2);
+    });
 });
 
 gulp.task('pre-test', () => {
@@ -91,8 +100,3 @@ gulp.task('test', gulpsync.sync([
   //'test:lint',
   'test:unit',
 ]));
-
-function handleError(err) {
-  console.log(err.toString());
-  this.emit('end');
-}
