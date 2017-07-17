@@ -28,12 +28,7 @@ gulp.task('develop', () => {
   });
 });
 
-gulp.task('serve', (error) => {
-  if (error) {
-    console.error(error);
-    process.exit(2);
-  }
-
+gulp.task('serve', () => {
   pm2.connect(false, () => {
     pm2.restart({
       name: 'app',
