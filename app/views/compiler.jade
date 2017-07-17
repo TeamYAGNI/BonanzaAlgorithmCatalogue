@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    form(action='/compiler', method='post')
+        div
+            label Input:
+            input(type='text', name='input')
+        div
+            input(type='submit', value='Post')
