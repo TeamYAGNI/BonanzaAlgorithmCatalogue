@@ -30,13 +30,15 @@ gulp.task('develop', () => {
 });
 
 gulp.task('serve', () => {
-  pm2.connect(true, () => {
+  pm2.connect(false, () => {
     pm2.start({
       name: 'app',
-      script: 'app.js'
-    }, () => {
-      console.log('pm2 started');
-      pm2.streamLogs('all', 0);
+      script: 'app.js',
+    }, (err, apps) => {
+      pm2.disconnect();
+      if (err) {
+        throw err;
+      }
     });
   });
 });
@@ -56,7 +58,7 @@ gulp.task('test:lint', () => {
   return gulp.src(['**/*.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format());
-    //.pipe(eslint.failAfterError());
+    // .pipe(eslint.failAfterError());
 });
 
 gulp.task('test:unit', () => {
@@ -64,7 +66,8 @@ gulp.task('test:unit', () => {
     .pipe(mocha({
       reporter: 'nyan',
     }))
-    .pipe(istanbul.writeReports());
+    .pipe(istanbul.writeReports())
+    .on('error', handleError);
 });
 
 gulp.task('pre-test', () => {
@@ -85,6 +88,11 @@ gulp.task('pre-test', () => {
 
 gulp.task('test', gulpsync.sync([
   'pre-test',
-  'test:lint',
+  //'test:lint',
   'test:unit',
 ]));
+
+function handleError(err) {
+  console.log(err.toString());
+  this.emit('end');
+}
