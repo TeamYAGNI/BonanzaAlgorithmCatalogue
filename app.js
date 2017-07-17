@@ -5,6 +5,13 @@ const config = require('./config/config');
 const mongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://ec2-35-158-165-86.eu-central-1.compute.amazonaws.com:27017/local';
 
+mongoClient.connect(url, (error, db) => {
+  db.collection('users').find({}).toArray((err, items) => {
+    console.log(items);
+    db.close();
+  });
+});
+
 // Requiring all models
 // var models = glob.sync(config.root + '/app/models/*.js');
 // models.forEach(function (model) {
@@ -17,19 +24,6 @@ const data = require('./app/data');
 
 require('./config/auth')(app, data);
 require('./config/express')(app, config);
-
-app.get('/', (req, res) => {
-  mongoClient.connect(url, (err, db) => {
-    db.collection('users').find({}).toArray((err, items) => {
-      if (err !== null) {
-        res.send(err.message);
-      } else {
-        res.send(items);
-      }
-      db.close();
-    });
-  });
-});
 
 app.listen(config.port, () => {
   console.log('Express server listening on port ' + config.port);

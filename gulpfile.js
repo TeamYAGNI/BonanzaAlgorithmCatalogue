@@ -11,7 +11,6 @@ const eslint = require('gulp-eslint');
 const istanbul = require('gulp-istanbul');
 const pm2 = require('pm2');
 
-
 gulp.task('develop', () => {
   livereload.listen();
   nodemon({
@@ -72,11 +71,11 @@ gulp.task('test:unit', () => {
     .pipe(mocha({
       reporter: 'nyan',
     }))
-    .pipe(istanbul.writeReports())
     .on('error', (error) => {
       console.error(error);
       process.exit(2);
-    });
+    })
+    .pipe(istanbul.writeReports());
 });
 
 gulp.task('pre-test', () => {
