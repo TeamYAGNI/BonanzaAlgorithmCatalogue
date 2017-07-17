@@ -4,7 +4,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "shutdown": "forever stopall",
+    "shutdown": "forever stopall"
     "launch": "forever start",
     "start": "node app.js",
     "test": "NODE_ENV=test mocha --recursive test",
