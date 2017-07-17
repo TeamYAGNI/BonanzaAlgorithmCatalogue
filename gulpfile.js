@@ -9,21 +9,35 @@ const mocha = require('gulp-mocha');
 const gulpsync = require('gulp-sync')(gulp);
 const eslint = require('gulp-eslint');
 const istanbul = require('gulp-istanbul');
+const pm2 = require('pm2');
 
-gulp.task('develop', function() {
+
+gulp.task('develop', () => {
   livereload.listen();
   nodemon({
     script: 'app.js',
     ext: 'js coffee jade',
     stdout: false,
-  }).on('readable', function() {
-    this.stdout.on('data', function(chunk) {
+  }).on('readable', () => {
+    this.stdout.on('data', () => {
       if (/^Express server listening on port/.test(chunk)) {
         livereload.changed(__dirname);
       }
     });
     this.stdout.pipe(process.stdout);
     this.stderr.pipe(process.stderr);
+  });
+});
+
+gulp.task('serve', () => {
+  pm2.connect(true, () => {
+    pm2.start({
+      name: 'app',
+      script: 'app.js'
+    }, () => {
+      console.log('pm2 started');
+      pm2.streamLogs('all', 0);
+    });
   });
 });
 
