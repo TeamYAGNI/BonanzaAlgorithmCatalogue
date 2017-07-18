@@ -1,5 +1,6 @@
 /* globals __dirname */
 /* globals process */
+ /* eslint-disable no-invalid-this */
 
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
@@ -32,6 +33,7 @@ gulp.task('default', [
 
 gulp.task('lint-fix', () => {
   return gulp.src(['**/*.js', '!node_modules/**'])
+    .pipe(plumber())
     .pipe(eslint({ fix: true }))
     .pipe(eslint.format())
     .pipe(gulp.dest('.'));
@@ -39,6 +41,7 @@ gulp.task('lint-fix', () => {
 
 gulp.task('test:lint', () => {
   return gulp.src(['**/*.js', '!node_modules/**'])
+    .pipe(plumber())
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError());
@@ -46,6 +49,7 @@ gulp.task('test:lint', () => {
 
 gulp.task('test:unit', () => {
   return gulp.src('./tests/unit/**/*.js', { read: false })
+    .pipe(plumber())
     .pipe(mocha({
       reporter: 'nyan',
     }));

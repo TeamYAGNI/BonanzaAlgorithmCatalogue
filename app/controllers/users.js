@@ -1,89 +1,51 @@
-const { Router } = require('express');
+class UserController {
+    constructor({ users }) {
+        this._users = users;
+    }
 
-const users = [{
-    'name': 'Test',
-    'id': 1,
-}, {
-    'name': 'Test2',
-    'id': 2,
-}, {
-    'name': 'Test3',
-    'id': 3,
-}, {
-    'name': 'Test4',
-    'id': 4,
-}, {
-    'name': 'Test5',
-    'id': 5,
-}, {
-    'name': 'Test6',
-    'id': 6,
-}, {
-    'name': 'Test7',
-    'id': 7,
-}, {
-    'name': 'Test8',
-    'id': 8,
-}, {
-    'name': 'Test9',
-    'id': 9,
-}, {
-    'name': 'Test10',
-    'id': 10,
-}, {
-    'name': 'Test11',
-    'id': 11,
-}];
-
-const attach = (app) => {
-    const router = new Router();
-
-    router.get('/', (req, res) => {
-        console.log(req);
+    getUsers(req, res) {
         if (req.isAuthenticated()) {
-            console.log(req.session);
-            let { q, page, size } = req.query;
+            let { pattern, page, size } = req.query;
+            pattern = pattern || '';
             page = +page || 1;
             size = +size || 10;
 
-            let result = users;
-            if (q) {
-                q = q.toLowerCase();
+            const filter = {
+                username: new RegExp('.*' + pattern + '.*', 'i'),
+            };
 
-                result = result.filter((i) => {
-                    return i.name.toLowerCase().includes(q);
+            const proection = {
+                _id: 1,
+                username: 1,
+                password: 0,
+            };
+            
+            this._users
+                .filterBy(filter, proection, (page - 1) * size, size)
+                .then((result) => {
+                    res.send(result);
                 });
-            }
-            if (result.length > (page - 1) * size) {
-                result = result.slice((page - 1) * size, page * size);
-            } else {
-                result = result.slice(result.length - result.length % size);
-            }
-            res.send(result);
         } else {
             res.redirect('/login');
         }
-    })
-        .get('/:id', (req, res, next) => {
-            const id = +req.params.id;
-            const user = users.find((u) => u.id === id);
+    }
 
-            if (!user) {
-                const err = new Error('Not Found');
-                err.status = 404;
-                next(err);
-            }
+    getById(req, res, next) {
+        const id = req.params.id;
+        const user = this._users.findById(id);
 
-            return res.status(200).send(user);
-        })
-        .post('/', (req, res) => {
-            const body = req.body;
-            body.id = ++users.length;
-            users.push(body);
-            res.status(201).send(body);
-        });
+        if (!user) {
+            const err = new Error('Not Found');
+            err.status = 404;
+            next(err);
+        }
 
-    app.use('/users', router);
+        return res.status(200).send(user);
+    }
+}
+
+const getUserController = (data) => {
+    return new UserController(data);
 };
 
-module.exports = attach;
+module.exports = { getUserController };

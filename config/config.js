@@ -4,7 +4,6 @@ const path = require('path');
 const rootPath = path.normalize(__dirname + '/..');
 const configJson = require('./config.json');
 const env = configJson.NODE_ENV || 'development';
-
 const config = {
   development: {
     root: rootPath,

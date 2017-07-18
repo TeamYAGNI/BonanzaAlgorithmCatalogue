@@ -1,15 +1,13 @@
-const { Router } = require('express');
+class HomeController {
+    getHome(req, res) {
+        return res.render('index', {
+            title: 'Generator-Express MVC',
+        });
+    }
+}
 
-const attach = (app) => {
-  const router = new Router();
-
-  router.get('/', (req, res, next) => {
-    res.render('index', {
-      title: 'Generator-Express MVC',
-    });
-  });
-
-  app.use('/', router);
+const getHomeController = () => {
+    return new HomeController();
 };
 
-module.exports = attach;
+module.exports = { getHomeController };
