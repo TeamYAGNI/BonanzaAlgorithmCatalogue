@@ -69,6 +69,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 public class Startup
 {
@@ -80,17 +81,22 @@ public class Startup
     public async Task<object> Invoke(object input)
     {
         FakeInput(input);
-        return Program.Main();
+        var sw = new Stopwatch();
+        sw.Start();
+        string result = Program.Main();
+        sw.Stop();
+        return sw.Elapsed + " " + result;
     }
 ${req.body.input}
 }`);
+let result1;
             test(input, (error, result) => {
                 if (error) {
                     throw error;
                 }
-                console.log(result);
+                result1 = result;
             });
-            res.status(200).send();
+            res.send(result1);
         });
     app.use('/compiler', router);
 };
