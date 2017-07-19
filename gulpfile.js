@@ -36,7 +36,7 @@ gulp.task('serve', () => {
     }, (err, apps) => {
       pm2.disconnect();
       if (err) {
-        throw err;
+        process.exit(2);
       }
     });
   });
@@ -66,7 +66,7 @@ gulp.task('test:unit', () => {
       reporter: 'nyan',
     }))
     .on('error', (err) => {
-      process.exit.bind(process, 9);
+      process.exit(2);
     })
     .pipe(istanbul.writeReports());
 });
@@ -89,6 +89,6 @@ gulp.task('pre-test', () => {
 
 gulp.task('test', gulpsync.sync([
   'pre-test',
-  //'test:lint',
+  'test:lint',
   'test:unit',
 ]));
