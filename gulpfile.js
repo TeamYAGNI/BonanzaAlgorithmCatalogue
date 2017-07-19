@@ -32,7 +32,8 @@ gulp.task('serve', () => {
   pm2.connect(false, () => {
     pm2.restart({
       name: 'app',
-      script: 'app.js',
+      script: './node_modules/gulp/bin/gulp.js',
+      args: 'develop',
     }, (err, apps) => {
       pm2.disconnect();
       if (err) {
