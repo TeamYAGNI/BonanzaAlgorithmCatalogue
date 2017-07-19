@@ -3,13 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "test": "NODE_ENV=test mocha --recursive test",
-    "test:coverage": "nyc npm test",
-    "test:unit": "mocha --recursive test/middleware test/models test/routes",
-    "test:integration": "mocha --recursive test/integration"
-  },
+  "scripts": {},
   "dependencies": {
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.7",
@@ -21,7 +15,6 @@
     "glob": "^6.0.4",
     "jade": "^1.11.0",
     "method-override": "^2.3.0",
-    "mocha-jenkins-reporter": "^0.3.8",
     "mongodb": "^2.2.29",
     "morgan": "^1.6.1",
     "passport": "^0.3.2",
@@ -46,6 +39,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "mock-require": "^2.0.2",
+    "nyc": "^11.0.3",
     "sinon": "^2.3.5",
     "sinon-chai": "^2.11.0",
     "supertest": "^2.0.0"

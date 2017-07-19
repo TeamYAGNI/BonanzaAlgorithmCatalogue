@@ -63,7 +63,8 @@ gulp.task('test:lint', () => {
 gulp.task('test:unit', () => {
   return gulp.src('./tests/unit/**/*.js', { read: false })
     .pipe(mocha({
-      reporter: 'mocha-jenkins-reporter',
+      colors: false,
+      reporter: 'nyan',
     }))
     .on('error', (err) => {
       process.exit(2);
