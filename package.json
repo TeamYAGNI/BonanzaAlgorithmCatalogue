@@ -21,6 +21,7 @@
     "glob": "^6.0.4",
     "jade": "^1.11.0",
     "method-override": "^2.3.0",
+    "mocha-jenkins-reporter": "^0.3.8",
     "mongodb": "^2.2.29",
     "morgan": "^1.6.1",
     "passport": "^0.3.2",
@@ -45,7 +46,6 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "mock-require": "^2.0.2",
-    "nyc": "^10.0.0",
     "sinon": "^2.3.5",
     "sinon-chai": "^2.11.0",
     "supertest": "^2.0.0"
