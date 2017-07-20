@@ -7,6 +7,7 @@ const input = `0 0
 9 1 7 6 3 1 
 8 2 7 3 8 6
 3 6 1 3 1 2`;
+const timeout = 1000;
 
 const inputInTheBrowser = `
 public class Program
@@ -38,8 +39,12 @@ public class Program
                 }
             }
         }
+
+        while(true){
+            
+        }
         
-        Console.WriteLine("TEST");
+        Console.WriteLine(5);
     }
 }
 `;
@@ -51,22 +56,22 @@ const attach = (app) => {
             return res.render('compiler');
         })
         .post('/', (req, res) => {
-            console.log(req.body.input);
-            const test = edge.func(`using System;
+            const boilerplate = edge.func(`using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
-
+    
 public class Startup
 {
     static void FakeInput(object input)
     {
         Console.SetIn(new StringReader(input.ToString()));
     }
-
+    
     public async Task<object> Invoke(object input)
     {
         FakeInput(input);
@@ -74,10 +79,20 @@ public class Startup
         {
             Console.SetOut(writer);
             var sw = new Stopwatch();
+            var task = new Task(() => Program.Main());
             sw.Start();
-            Program.Main();
-            writer.Flush();
+            task.Start();
+            if (task == await Task.WhenAny(task, Task.Delay(${timeout})))
+            {
+                await task;
+            }
+            else
+            {
+                sw.Stop();
+                throw new TimeoutException(sw.Elapsed.ToString());
+            }
             sw.Stop();
+            writer.Flush();
             var result = writer.GetStringBuilder().ToString();
             return String.Format("{0} {1}", sw.Elapsed, result);
         }      
@@ -85,14 +100,14 @@ public class Startup
     ${req.body.input}
 }
 `);
-let result1;
-            test(input, (error, result) => {
+            boilerplate(input, (error, result) => {
+                console.log(error + 'This is error');
                 if (error) {
-                    throw error;
+                    res.send(error);
+                    return;
                 }
-                result1 = result;
+                res.send(result);
             });
-            res.send(result1);
         });
     app.use('/compiler', router);
 };
