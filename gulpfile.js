@@ -90,10 +90,11 @@ gulp.task('test', gulpsync.sync([
 
 gulp.task('serve', () => {
   pm2.connect(false, () => {
-    pm2.restart({
+    pm2.start({
       name: 'app',
       script: './node_modules/gulp/bin/gulp.js',
       args: 'develop',
+      force: true,
     }, (err, apps) => {
       pm2.disconnect();
       if (err) {
