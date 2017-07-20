@@ -9,6 +9,8 @@ const livereload = require('gulp-livereload');
 const mocha = require('gulp-mocha');
 const gulpsync = require('gulp-sync')(gulp);
 const eslint = require('gulp-eslint');
+const istanbul = require('gulp-istanbul');
+const pm2 = require('pm2');
 
 gulp.task('develop', function() {
   livereload.listen();
@@ -39,6 +41,26 @@ gulp.task('lint-fix', () => {
     .pipe(gulp.dest('.'));
 });
 
+gulp.task('pre-test', () => {
+  return gulp.src([
+    './app.js',
+    './app/**/*.js',
+    './config/*.js',
+    './data/*.js',
+    './data/**/*.js',
+    './db/*.js',
+    './models/*.js',
+    '!./node_modules/',
+    '!./public/',
+    '!./tests/',
+    '!./coverage/',
+    ])
+    .pipe(istanbul({
+      includeUntested: true,
+    }))
+    .pipe(istanbul.hookRequire());
+});
+
 gulp.task('test:lint', () => {
   return gulp.src(['**/*.js', '!node_modules/**'])
     .pipe(plumber())
@@ -51,11 +73,32 @@ gulp.task('test:unit', () => {
   return gulp.src('./tests/unit/**/*.js', { read: false })
     .pipe(plumber())
     .pipe(mocha({
+      colors: false,
       reporter: 'nyan',
-    }));
+    }))
+    .on('error', (err) => {
+      process.exit(2);
+    })
+    .pipe(istanbul.writeReports());
 });
 
 gulp.task('test', gulpsync.sync([
+  'pre-test',
   'test:lint',
   'test:unit',
 ]));
+
+gulp.task('serve', () => {
+  pm2.connect(false, () => {
+    pm2.restart({
+      name: 'app',
+      script: './node_modules/gulp/bin/gulp.js',
+      args: 'develop',
+    }, (err, apps) => {
+      pm2.disconnect();
+      if (err) {
+        process.exit(2);
+      }
+    });
+  });
+});
