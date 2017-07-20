@@ -70,7 +70,10 @@ gulp.task('test:lint', () => {
 });
 
 gulp.task('test:unit', () => {
-  return gulp.src('./tests/unit/**/*.js', { read: false })
+  return gulp.src([
+    './tests/unit/**/*.js',
+    './tests/integration/**/*.js',
+    ], { read: false })
     .pipe(plumber())
     .pipe(mocha({
       colors: false,
