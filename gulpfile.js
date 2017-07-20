@@ -34,7 +34,7 @@ gulp.task('default', [
 ]);
 
 gulp.task('lint-fix', () => {
-  return gulp.src(['**/*.js', '!node_modules/**'])
+  return gulp.src(['**/*.js', '!node_modules/**', '!coverage/**'])
     .pipe(plumber())
     .pipe(eslint({ fix: true }))
     .pipe(eslint.format())
@@ -62,7 +62,7 @@ gulp.task('pre-test', () => {
 });
 
 gulp.task('test:lint', () => {
-  return gulp.src(['**/*.js', '!node_modules/**'])
+  return gulp.src(['**/*.js', '!./node_modules/', '!coverage/**'])
     .pipe(plumber())
     .pipe(eslint())
     .pipe(eslint.format())
