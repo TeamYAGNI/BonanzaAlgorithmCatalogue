@@ -1,9 +1,5 @@
-class UserController {
-    constructor({ users }) {
-        this._users = users;
-    }
-
-    getUsers(req, res) {
+const getUserController = ({ users }) => {
+    const getUsers = (req, res) => {
         if (req.isAuthenticated()) {
             let { pattern, page, size } = req.query;
             pattern = pattern || '';
@@ -19,8 +15,8 @@ class UserController {
                 username: 1,
                 password: 0,
             };
-            
-            this._users
+
+            users
                 .filterBy(filter, proection, (page - 1) * size, size)
                 .then((result) => {
                     res.send(result);
@@ -28,11 +24,11 @@ class UserController {
         } else {
             res.redirect('/auth/login');
         }
-    }
+    };
 
-    getById(req, res, next) {
+    const getById = (req, res, next) => {
         const id = req.params.id;
-        const user = this._users.findById(id);
+        const user = users.findById(id);
 
         if (!user) {
             const err = new Error('Not Found');
@@ -41,11 +37,12 @@ class UserController {
         }
 
         return res.status(200).send(user);
-    }
-}
+    };
 
-const getUserController = (data) => {
-    return new UserController(data);
+    return {
+        getUsers,
+        getById,
+    };
 };
 
 module.exports = { getUserController };

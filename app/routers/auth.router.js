@@ -6,17 +6,11 @@ const attachTo = (app, data) => {
     const authController = getAuthController(data);
 
     authRouter
-        .get('/login', (req, res) => authController.getLoginForm(req, res))
-        .post('/login', (req, res, next) => {
-            authController.login(req, res, next);
-        })
-
-        .get('/logout', (req, res) => authController.logout(req, res))
-
-        .get('/register', (req, res) => {
-            authController.getRegisterForm(req, res);
-        })
-        .post('/register', (req, res) => authController.register(req, res));
+        .get('/login', authController.getLoginForm)
+        .post('/login', authController.login)
+        .get('/logout', authController.logout)
+        .get('/register', authController.getRegisterForm)
+        .post('/register', authController.register);
 
     app.use('/auth', authRouter);
 };

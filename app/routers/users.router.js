@@ -6,10 +6,8 @@ const attachTo = (app, data) => {
     const userController = getUserController(data);
 
     usersRouter
-        .get('/', (req, res) => {
-            userController.getUsers(req, res);
-        })
-        .get('/:id', (req, res) => userController.getById(req, res));
+        .get('/', userController.getUsers)
+        .get('/:id', userController.getById);
 
     app.use('/users', usersRouter);
 };

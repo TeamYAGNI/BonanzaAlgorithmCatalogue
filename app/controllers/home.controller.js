@@ -1,13 +1,13 @@
-class HomeController {
-    getHome(req, res) {
+const getHomeController = () => {
+    const getHome = (req, res) => {
         return res.render('index', {
             title: 'Generator-Express MVC',
         });
-    }
-}
+    };
 
-const getHomeController = () => {
-    return new HomeController();
+    return {
+        getHome,
+    };
 };
 
 module.exports = { getHomeController };
