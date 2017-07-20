@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getHomeController } = require('../controllers/home');
+const { getHomeController } = require('../controllers/home.controller');
 
 const attachTo = (app, data) => {
     const homeRouter = new Router();

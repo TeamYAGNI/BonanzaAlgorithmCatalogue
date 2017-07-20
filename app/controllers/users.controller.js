@@ -26,7 +26,7 @@ class UserController {
                     res.send(result);
                 });
         } else {
-            res.redirect('/login');
+            res.redirect('/auth/login');
         }
     }
 
