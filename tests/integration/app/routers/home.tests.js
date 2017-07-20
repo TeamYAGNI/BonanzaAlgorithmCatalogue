@@ -1,6 +1,5 @@
-const { async } = require('./../../../../app.js');
 const config = require('./../../../../config/config');
-const { Router } = require('supertest');
+const request = require('supertest');
 const { expect } = require('chai');
 
 describe('homeController tests', () => {
@@ -21,7 +20,7 @@ describe('homeController tests', () => {
 
     describe('GET /', () => {
         it('expect to return 200', (done) => {
-            Router.expect(app)
+            request(app)
                 .get('/')
                 .expect(200)
                 .end((err, res) => {
