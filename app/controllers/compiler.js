@@ -13,7 +13,7 @@ public class Program
 {
     private static int[,] labyrinth;
 
-    public static string Main()
+    public static void Main()
     {
         int[] startingPosition = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
         int startRow = startingPosition[0];
@@ -38,19 +38,8 @@ public class Program
                 }
             }
         }
-
-        StringBuilder result = new StringBuilder();
-
-        for (int i = 0; i < labyrinth.GetLength(0); i++)
-        {
-            for (int j = 0; j < labyrinth.GetLength(1); j++)
-            {
-                result.AppendFormat("{0} ", labyrinth[i, j]);
-            }
-            result.AppendLine();
-        }
-
-        return result.ToString();
+        
+        Console.WriteLine("TEST");
     }
 }
 `;
@@ -81,14 +70,21 @@ public class Startup
     public async Task<object> Invoke(object input)
     {
         FakeInput(input);
-        var sw = new Stopwatch();
-        sw.Start();
-        string result = Program.Main();
-        sw.Stop();
-        return sw.Elapsed + " " + result;
+        using(var writer = new StringWriter())
+        {
+            Console.SetOut(writer);
+            var sw = new Stopwatch();
+            sw.Start();
+            Program.Main();
+            writer.Flush();
+            sw.Stop();
+            var result = writer.GetStringBuilder().ToString();
+            return String.Format("{0} {1}", sw.Elapsed, result);
+        }      
     }
-${req.body.input}
-}`);
+    ${req.body.input}
+}
+`);
 let result1;
             test(input, (error, result) => {
                 if (error) {
