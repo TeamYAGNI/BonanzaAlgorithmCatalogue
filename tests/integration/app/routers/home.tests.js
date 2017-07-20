@@ -1,13 +1,12 @@
 const config = require('./../../../../config/config');
 const request = require('supertest');
-const { expect } = require('chai');
 
 describe('homeController tests', () => {
     let app = null;
 
     beforeEach(() => {
         return Promise.resolve()
-            .then(() => () => require('./../../../../db')
+            .then(() => require('./../../../../db')
                 .init(config.db))
             .then((db) => require('./../../../../data')
                 .init(db))
@@ -27,8 +26,6 @@ describe('homeController tests', () => {
                     if (err) {
                         return done(err);
                     }
-
-                    console.log(res.text);
 
                     return done();
                 });

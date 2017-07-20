@@ -19,7 +19,7 @@ class UserController {
                 username: 1,
                 password: 0,
             };
-            
+
             this._users
                 .filterBy(filter, proection, (page - 1) * size, size)
                 .then((result) => {
