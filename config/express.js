@@ -7,8 +7,12 @@ const compress = require('compression');
 const methodOverride = require('method-override');
 const configJson = require('./config.json');
 
-const configApp = (app, config) => {
+const init = (data, config) => {
   const env = configJson.NODE_ENV || 'development';
+
+  const app = express();
+   require('./auth')(app, data);
+
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env === 'development';
 
@@ -26,9 +30,9 @@ const configApp = (app, config) => {
   app.use('/libs', express.static(config.root + '/node_modules'));
   app.use(methodOverride());
 
-  const controllers = glob.sync(config.root + '/app/controllers/*.js');
-  controllers.forEach((controller) => {
-    require(controller)(app);
+  const routers = glob.sync(config.root + '/app/routers/*.router.js');
+  routers.forEach((router) => {
+    require(router).attachTo(app, data);
   });
 
   app.use((req, res, next) => {
@@ -57,7 +61,7 @@ const configApp = (app, config) => {
     });
   });
 
-  return app;
+  return Promise.resolve(app);
 };
 
-module.exports = configApp;
+module.exports = { init };

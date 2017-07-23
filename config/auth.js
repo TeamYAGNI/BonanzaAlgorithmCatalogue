@@ -7,13 +7,13 @@ const client = redis.createClient();
 const { Strategy } = require('passport-local');
 
 const configAuth = (app, { users }) => {
-    passport.use(new Strategy(
+    passport.use('local', new Strategy(
         (username, password, done) => {
-            return users.findByUsername(username)
+            return users.checkPassword(username, password)
                 .then((user) => {
-                    if (user.password !== password) {
-                        done(new Error('Invalid password'));
-                    }
+                    return user;
+                })
+                .then((user) => {
                     return done(null, user);
                 })
                 .catch((error) => {
@@ -38,7 +38,7 @@ const configAuth = (app, { users }) => {
     app.use(passport.session());
 
     passport.serializeUser((user, done) => {
-        done(null, user.id);
+        done(null, user._id);
     });
 
     passport.deserializeUser((id, done) => {
@@ -47,6 +47,13 @@ const configAuth = (app, { users }) => {
                 done(null, user);
             })
             .catch(done);
+    });
+
+    app.use((req, res, next) => {
+        res.locals = {
+            user: req.user,
+        };
+        next();
     });
 };
 
