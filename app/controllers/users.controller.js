@@ -1,5 +1,6 @@
 const getUserController = ({ users }) => {
     const getUsers = (req, res) => {
+        console.log(req.isAuthenticated());
         if (req.isAuthenticated()) {
             let { pattern, page, size } = req.query;
             pattern = pattern || '';
@@ -28,15 +29,17 @@ const getUserController = ({ users }) => {
 
     const getById = (req, res, next) => {
         const id = req.params.id;
-        const user = users.findById(id);
 
-        if (!user) {
-            const err = new Error('Not Found');
-            err.status = 404;
-            next(err);
-        }
-
-        return res.status(200).send(user);
+        users
+            .findById(id)
+            .then((foundUser) => {
+                if (!foundUser) {
+                    const err = new Error('Not Found');
+                    err.status = 404;
+                    next(err);
+                }
+                return res.status(200).send(foundUser);
+            });
     };
 
     return {

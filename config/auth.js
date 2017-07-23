@@ -4,23 +4,28 @@ const passport = require('passport');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const client = redis.createClient();
-const { Strategy } = require('passport-local');
+const { Strategy: LocalStrategy } = require('passport-local');
+const { Strategy: FacebookStrategy } = require('passport-facebook');
+const { facebookAuth } = require('./auth-credentials.json');
 
 const configAuth = (app, { users }) => {
-    passport.use('local', new Strategy(
+    passport.use('local', new LocalStrategy(
         (username, password, done) => {
             return users.checkPassword(username, password)
-                .then((user) => {
-                    return user;
-                })
-                .then((user) => {
-                    return done(null, user);
-                })
-                .catch((error) => {
-                    return done(error);
-                });
+                .then((user) => done(null, user))
+                .catch((error) => done(error));
         }
     ));
+
+    passport.use('facebook', new FacebookStrategy(facebookAuth, (accessToken, refreshToken, profile, done) => {
+            return users.findOrCreate(profile)
+            .then((user) => {
+                console.log(user);
+                return user;
+            })
+            .then((user) => done(null, user))
+            .catch((err) => done(err));
+    }));
 
     app.use(cookieParser('test'));
     app.use(session({

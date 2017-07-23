@@ -10,7 +10,9 @@ const attachTo = (app, data) => {
         .post('/login', authController.login)
         .get('/logout', authController.logout)
         .get('/register', authController.getRegisterForm)
-        .post('/register', authController.register);
+        .post('/register', authController.register)
+        .get('/facebook', authController.facebookLogin)
+        .get('/facebook/callback', authController.facebookLoginCallback);
 
     app.use('/auth', authRouter);
 };

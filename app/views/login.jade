@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    div.fb-like(data-share="true" data-width="450" data-show-faces="true")
     form(action='/auth/login', method='post')
         div
             label Username:

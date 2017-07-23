@@ -11,7 +11,30 @@ class UsersData extends BaseData {
             username: new RegExp(username, 'i'),
         };
 
-        return this.collection.findOne(filter);
+        const result = this.collection.findOne(filter);
+
+        console.log(result);
+        return result;
+    }
+
+    findOrCreate(profile) {
+        console.log(profile);
+        const user = {
+            username: profile.displayName,
+            password: profile.id,
+        };
+
+        return this.findByUsername(user.username)
+            .then((dbUser) => {
+                if (dbUser !== null) {
+                    return dbUser;
+                }
+
+                return this.collection.insert(user)
+                    .then(() => {
+                        return this.findByUsername(user.username);
+                    });
+            });
     }
 
     checkPassword(username, password) {

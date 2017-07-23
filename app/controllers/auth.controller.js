@@ -1,7 +1,6 @@
 const passport = require('passport');
 
- const getAuthController = ({ users }) => {
-
+const getAuthController = ({ users }) => {
     const getLoginForm = (req, res) => {
         return res.render('login');
     };
@@ -14,6 +13,17 @@ const passport = require('passport');
         })(req, res);
     };
 
+    const facebookLogin = (req, res) => {
+        passport.authenticate('facebook', { scope: 'email' })(req, res);
+    };
+
+    const facebookLoginCallback = (req, res, next) => {
+        passport.authenticate('facebook', {
+            successRedirect: '/',
+            failureRedirect: '/auth/login',
+        })(req, res, next);
+    };
+
     const logout = (req, res) => {
         req.logout();
         req.session.destroy((err) => {
@@ -23,7 +33,7 @@ const passport = require('passport');
         });
     };
 
-     const getRegisterForm = (req, res) => {
+    const getRegisterForm = (req, res) => {
         return res.render('register');
     };
 
@@ -39,6 +49,8 @@ const passport = require('passport');
     return {
         getLoginForm,
         login,
+        facebookLogin,
+        facebookLoginCallback,
         logout,
         getRegisterForm,
         register,
