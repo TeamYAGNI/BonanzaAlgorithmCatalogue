@@ -12,8 +12,9 @@ const attachTo = (app, data, { auth: authController }) => {
         .get('/facebook', authController.facebookLogin)
         .get('/facebook/callback', authController.facebookLoginCallback)
         .get('/google', authController.googleLogin)
-        .get('/google/callback', authController.googleLoginCallback);
-
+        .get('/google/callback', authController.googleLoginCallback)
+        .get('/twitter', authController.twitterLogin)
+        .get('/twitter/callback', authController.twitterLoginCallback);
     app.use('/auth', authRouter);
 };
 

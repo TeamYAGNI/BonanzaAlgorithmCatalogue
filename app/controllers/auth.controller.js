@@ -37,38 +37,54 @@ const getController = ({ users }, passport) => {
         })(req, res, next);
     };
 
-const logout = (req, res) => {
-    req.logout();
-    req.session.destroy((err) => {
-        res.clearCookie('connect.sid');
-        req.session = null;
-        res.redirect('/');
-    });
-};
+    const twitterLogin = (req, res, next) => {
+        passport
+            .authenticate('twitter-login',
+            { scope: 'email' })(req, res, next);
+    };
 
-const getRegisterForm = (req, res) => {
-    return res.render('register');
-};
+    const twitterLoginCallback = (req, res, next) => {
+        passport.authenticate('twitter-login', {
+            successRedirect: '/',
+            failureRedirect: '/auth/login',
+            failureFlash: true,
+        })(req, res, next);
+    };
 
-const register = (...args) => {
-    return passport.authenticate('local-register', {
-        successRedirect: '/auth/login',
-        failureRedirect: '/',
-        failureFlash: true,
-    })(...args);
-};
+    const logout = (req, res) => {
+        req.logout();
+        req.session.destroy((err) => {
+            res.clearCookie('connect.sid');
+            req.session = null;
+            res.redirect('/');
+        });
+    };
 
-return {
-    getLoginForm,
-    login,
-    facebookLogin,
-    facebookLoginCallback,
-    googleLogin,
-    googleLoginCallback,
-    logout,
-    getRegisterForm,
-    register,
-};
+    const getRegisterForm = (req, res) => {
+        return res.render('register');
+    };
+
+    const register = (...args) => {
+        return passport.authenticate('local-register', {
+            successRedirect: '/auth/login',
+            failureRedirect: '/',
+            failureFlash: true,
+        })(...args);
+    };
+
+    return {
+        getLoginForm,
+        login,
+        facebookLogin,
+        facebookLoginCallback,
+        googleLogin,
+        googleLoginCallback,
+        twitterLogin,
+        twitterLoginCallback,
+        logout,
+        getRegisterForm,
+        register,
+    };
 };
 
 module.exports = { getController };

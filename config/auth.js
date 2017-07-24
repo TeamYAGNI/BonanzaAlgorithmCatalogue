@@ -7,14 +7,18 @@ const client = redis.createClient();
 const { Strategy: LocalStrategy } = require('passport-local');
 const { Strategy: FacebookStrategy } = require('passport-facebook');
 const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
+const { Strategy: TwitterStrategy } = require('passport-twitter');
 
-const { localAuth,
+const {
+    localAuth,
     facebookAuth,
-    googleAuth } = require('./auth-credentials.json');
+    googleAuth,
+    twitterAuth } = require('./auth-credentials.json');
 
 localAuth.passReqToCallback = true;
 facebookAuth.passReqToCallback = true;
 googleAuth.passReqToCallback = true;
+twitterAuth.passReqToCallback = true;
 
 const configAuth = (app, { users }, passport) => {
     passport.use('local-login', new LocalStrategy(
@@ -56,13 +60,21 @@ const configAuth = (app, { users }, passport) => {
             }));
 
     passport.use('google-login',
-     new GoogleStrategy(googleAuth,
-        (req, token, refreshToken, profile, done) => {
-            console.log('opa');
-            return users.findOrCreate(profile)
+        new GoogleStrategy(googleAuth,
+            (req, token, tokenSecret, profile, done) => {
+                console.log('opa');
+                return users.findOrCreate(profile)
                     .then((user) => done(null, user))
                     .catch((err) => done(err));
-        }));
+            }));
+
+    passport.use('twitter-login',
+        new TwitterStrategy(twitterAuth,
+            (req, token, refreshToken, profile, done) => {
+                return users.findOrCreate(profile)
+                    .then((user) => done(null, user))
+                    .catch((err) => done(err));
+            }));
 
     app.use(cookieParser('test'));
     app.use(session({
