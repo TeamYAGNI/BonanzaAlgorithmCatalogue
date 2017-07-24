@@ -1,30 +1,25 @@
-const getUserController = ({ users }) => {
+const getController = ({ users }) => {
     const getUsers = (req, res) => {
-        console.log(req.isAuthenticated());
-        if (req.isAuthenticated()) {
-            let { pattern, page, size } = req.query;
-            pattern = pattern || '';
-            page = +page || 1;
-            size = +size || 10;
+        let { pattern, page, size } = req.query;
+        pattern = pattern || '';
+        page = +page || 1;
+        size = +size || 10;
 
-            const filter = {
-                username: new RegExp('.*' + pattern + '.*', 'i'),
-            };
+        const filter = {
+            username: new RegExp('.*' + pattern + '.*', 'i'),
+        };
 
-            const proection = {
-                _id: 1,
-                username: 1,
-                password: 0,
-            };
+        const proection = {
+            _id: 1,
+            username: 1,
+            password: 0,
+        };
 
-            users
-                .filterBy(filter, proection, (page - 1) * size, size)
-                .then((result) => {
-                    res.send(result);
-                });
-        } else {
-            res.redirect('/auth/login');
-        }
+        users
+            .filterBy(filter, proection, (page - 1) * size, size)
+            .then((result) => {
+                res.send(result);
+            });
     };
 
     const getById = (req, res, next) => {
@@ -48,4 +43,4 @@ const getUserController = ({ users }) => {
     };
 };
 
-module.exports = { getUserController };
+module.exports = { getController };

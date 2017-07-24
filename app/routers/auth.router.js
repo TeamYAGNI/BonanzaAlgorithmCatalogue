@@ -1,9 +1,7 @@
 const { Router } = require('express');
-const { getAuthController } = require('../controllers/auth.controller');
 
-const attachTo = (app, data) => {
+const attachTo = (app, data, { auth: authController }) => {
     const authRouter = new Router();
-    const authController = getAuthController(data);
 
     authRouter
         .get('/login', authController.getLoginForm)
@@ -12,7 +10,9 @@ const attachTo = (app, data) => {
         .get('/register', authController.getRegisterForm)
         .post('/register', authController.register)
         .get('/facebook', authController.facebookLogin)
-        .get('/facebook/callback', authController.facebookLoginCallback);
+        .get('/facebook/callback', authController.facebookLoginCallback)
+        .get('/google', authController.googleLogin)
+        .get('/google/callback', authController.googleLoginCallback);
 
     app.use('/auth', authRouter);
 };

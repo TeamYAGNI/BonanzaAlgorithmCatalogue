@@ -1,31 +1,68 @@
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const passport = require('passport');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const client = redis.createClient();
+
 const { Strategy: LocalStrategy } = require('passport-local');
 const { Strategy: FacebookStrategy } = require('passport-facebook');
-const { facebookAuth } = require('./auth-credentials.json');
+const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
 
-const configAuth = (app, { users }) => {
-    passport.use('local', new LocalStrategy(
-        (username, password, done) => {
+const { localAuth,
+    facebookAuth,
+    googleAuth } = require('./auth-credentials.json');
+
+localAuth.passReqToCallback = true;
+facebookAuth.passReqToCallback = true;
+googleAuth.passReqToCallback = true;
+
+const configAuth = (app, { users }, passport) => {
+    passport.use('local-login', new LocalStrategy(
+        localAuth,
+        (req, username, password, done) => {
             return users.checkPassword(username, password)
                 .then((user) => done(null, user))
                 .catch((error) => done(error));
         }
     ));
 
-    passport.use('facebook', new FacebookStrategy(facebookAuth, (accessToken, refreshToken, profile, done) => {
+    passport.use('local-register', new LocalStrategy(
+        localAuth,
+        (req, username, password, done) => {
+            if (req.user) {
+                return done(null, req.user);
+            }
+            return users.findByUsername(username)
+                .then((user) => {
+                    if (user) {
+                        return done(null, false);
+                    }
+
+                    user = req.body;
+
+                    return users.create(user)
+                        .then((newUser) => {
+                            return done(null, newUser);
+                        });
+                }).catch((err) => done(err));
+        }));
+
+    passport.use('facebook-login',
+        new FacebookStrategy(facebookAuth,
+            (req, token, refreshToken, profile, done) => {
+                return users.findOrCreate(profile)
+                    .then((user) => done(null, user))
+                    .catch((err) => done(err));
+            }));
+
+    passport.use('google-login',
+     new GoogleStrategy(googleAuth,
+        (req, token, refreshToken, profile, done) => {
+            console.log('opa');
             return users.findOrCreate(profile)
-            .then((user) => {
-                console.log(user);
-                return user;
-            })
-            .then((user) => done(null, user))
-            .catch((err) => done(err));
-    }));
+                    .then((user) => done(null, user))
+                    .catch((err) => done(err));
+        }));
 
     app.use(cookieParser('test'));
     app.use(session({
@@ -52,13 +89,6 @@ const configAuth = (app, { users }) => {
                 done(null, user);
             })
             .catch(done);
-    });
-
-    app.use((req, res, next) => {
-        res.locals = {
-            user: req.user,
-        };
-        next();
     });
 };
 

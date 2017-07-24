@@ -11,10 +11,7 @@ class UsersData extends BaseData {
             username: new RegExp(username, 'i'),
         };
 
-        const result = this.collection.findOne(filter);
-
-        console.log(result);
-        return result;
+        return this.collection.findOne(filter);
     }
 
     findOrCreate(profile) {

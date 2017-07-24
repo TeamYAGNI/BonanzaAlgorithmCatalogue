@@ -1,5 +1,5 @@
 const express = require('express');
-const glob = require('glob');
+const passport = require('passport');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -11,7 +11,7 @@ const init = (data, config) => {
   const env = configJson.NODE_ENV || 'development';
 
   const app = express();
-   require('./auth')(app, data);
+  require('./auth')(app, data, passport);
 
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env === 'development';
@@ -30,10 +30,11 @@ const init = (data, config) => {
   app.use('/libs', express.static(config.root + '/node_modules'));
   app.use(methodOverride());
 
-  const routers = glob.sync(config.root + '/app/routers/*.router.js');
-  routers.forEach((router) => {
-    require(router).attachTo(app, data);
-  });
+  const controllers = require('../app/controllers')
+    .init(data, passport);
+
+  require('../app/routers')
+    .attachTo(app, data, controllers);
 
   app.use((req, res, next) => {
     const err = new Error('Not Found');

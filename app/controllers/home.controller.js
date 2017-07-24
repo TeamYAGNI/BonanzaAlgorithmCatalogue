@@ -1,4 +1,4 @@
-const getHomeController = () => {
+const getController = () => {
     const getHome = (req, res) => {
         return res.render('index', {
             title: 'Generator-Express MVC',
@@ -10,4 +10,4 @@ const getHomeController = () => {
     };
 };
 
-module.exports = { getHomeController };
+module.exports = { getController };
