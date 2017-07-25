@@ -1,5 +1,7 @@
 extends layout
-
+include navigation
+block navigation
+    +nav()
 block content
     div.fb-like(data-share="true" data-width="450" data-show-faces="true")
     form(action='/auth/login', method='post')

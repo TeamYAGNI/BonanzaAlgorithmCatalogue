@@ -83,7 +83,7 @@ const configAuth = (app, { users }, passport) => {
             host: 'localhost',
             port: 6379,
             client: client,
-            ttl: 900,
+            ttl: 30 * 24 * 60 * 60,
         }),
         saveUninitialized: true,
         resave: true,

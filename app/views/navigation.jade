@@ -1,0 +1,76 @@
+mixin nav(user, route)
+    nav.navbar.navbar-inverse
+        .container-fluid
+            .navbar-header
+                a.navbar-brand(href='/about') BonanzaAlgorithmsCatalogue
+            ul.nav.navbar-nav
+                li(class=(route === '/' ? 'active' : ''))
+                    a(href='/') Home
+                li.dropdown(class=(route === '/catalogue' ? 'active' : ''))
+                    a.dropdown-toggle(data-toggle='dropdown', href='#')
+                        | Catalogue
+                        span.caret
+                    ul.dropdown-menu
+                        li
+                            a(href='#') Data Structures
+                        li
+                            a(href='#') Algorithms
+                li(class=(route === '/tasks' ? 'active' : ''))
+                    a(href='#') Tasks
+            ul.nav.navbar-nav.navbar-right
+                if (user)
+                    li.dropdown
+                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                            span.glyphicon.glyphicon-user
+                            |  #{user.username}
+                            span.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='#')
+                                    i.fa.fa-fw.fa-user
+                                    |  Profile
+                            li
+                                a(href='#')
+                                    i.fa.fa-fw.fa-envelope
+                                    |  Messages
+                            li
+                                a(href='#')
+                                    i.fa.fa-fw.fa-gear
+                                    |  Settings
+                            li.divider
+                            li
+                                a(href='/auth/logout')
+                                    i.fa.fa-sign-out
+                                    |  Log Out
+                else
+                    li.dropdown
+                        a.dropdown-toggle(data-toggle='dropdown', href='#')
+                            span.glyphicon.glyphicon-user
+                            |  Sign In
+                            span.caret
+                        ul.dropdown-menu(role='menu')
+                            li
+                                a(href='/auth/login')
+                                    i.fa.fa-fw.fa-sign-in
+                                    |  Log In
+                            li
+                                a(href='/auth/register')
+                                    i.fa.fa-fw.fa-user
+                                    |  Register
+                            li.divider
+                            li.dropdown-header
+                                i.fa.fa-fw.fa-arrow-down
+                                |  Login With
+                            li.divider
+                            li
+                                a(href='/auth/facebook')
+                                    i.fa.fa-fw.fa-facebook
+                                    |  Facebook
+                            li
+                                a(href='/auth/google')
+                                    i.fa.fa-fw.fa-google-plus
+                                    |  Google+
+                            li
+                                a(href='/auth/twitter')
+                                    i.fa.fa-fw.fa-twitter
+                                    |  Twitter

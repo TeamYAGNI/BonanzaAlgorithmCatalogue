@@ -6,14 +6,20 @@ html(lang='en')
         title= title
         link(rel='icon' href='/public/img/favicon.ico')
         block css
-        link(rel='stylesheet', href='/public/css/style.css')
-        link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
         block js
-            script(type='text/javascript').
-                if (window.location.hash && window.location.hash == '#_=_') {
-                window.location.hash = '';
-                }
-            if ENV_DEVELOPMENT
-                script(src='http://localhost:35729/livereload.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+        script(src='https://use.fontawesome.com/38e386af6b.js')
+        script(type='text/javascript').
+            if (window.location.hash && window.location.hash == '#_=_') {
+            window.location.hash = '';
+            }
+        if ENV_DEVELOPMENT
+            script(src='http://localhost:35729/livereload.js')
     body
-        block content
+        block navigation
+        .container
+            block content
+
+        

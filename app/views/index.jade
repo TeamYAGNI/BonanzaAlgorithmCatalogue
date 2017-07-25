@@ -1,5 +1,7 @@
 extends layout
-
+include navigation
+block navigation
+    +nav(user, '/')
 block content
     div.fb-like(data-share="true" data-width="450" data-show-faces="true")
     h1= title

@@ -1,5 +1,7 @@
 extends layout
-
+include navigation
+block navigation
+    +nav()
 block content
     form(action='/auth/register', method='post')
         div
