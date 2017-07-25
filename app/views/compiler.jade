@@ -3,10 +3,11 @@ extends layout
 block content
     h1 
         | #{task.name}
-    form(action='/compiler/' + task._id, method='post')
+    form(id='compilerform' action='/compiler/' + task._id, method='post')
         div
             label Input:
-            input.text(type='text', name='input')
+                textarea(form='compilerform' wrap='hard' rows=10 cols=50 required='required' name='input')
+                
         div
-            input.button(type='submit', value='Post')
+            input(type='submit', value='Post')
         

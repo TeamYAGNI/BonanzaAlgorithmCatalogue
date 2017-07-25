@@ -17,21 +17,21 @@ block content
                         | Add Task
             #collapseOne.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingOne')
                 .panel-body
-                    form(action='/admin/task' method='post')
-                        div
+                    form(action='/admin/task' id='taskform' method='post')
+                        div.pull-left
                             label Name:
-                            input.text(type='text', required='required', name='name')
-                        div
-                            label Input:
-                            input.text(type='text', placeholder='results must be separated by a single comma - ","' required='required', name='input')
-                        div
-                            label Results:
-                            input.text(type='text', placeholder='results must be separated by a single comma - ","' required='required', name='results')
-                        div
+                                input(type='text', required='required', name='name')
+                        div.pull-left
                             label Timelimit:
-                            input.text(type='text', placeholder='in ms' required='required', name='timelimit')
-                        div
-                            input.button(type='submit', value='Post')
+                                input(type='text', placeholder='in ms' required='required', name='timelimit')
+                        div.pull-left
+                            label Input:
+                                textarea(form='taskform' wrap='hard' rows=5 cols=50 placeholder='results must be separated by a single comma - ","' required='required', name='input')
+                        div.pull-left
+                            label Results:
+                                textarea(form='taskform' wrap='hard' rows=5 cols=50 placeholder='results must be separated by a single comma - ","' required='required', name='results')
+                        div.pull-right
+                            input(type='submit', value='Post')
         .panel.panel-default
             #headingTwo.panel-heading(role='tab')
                 h4.panel-title
