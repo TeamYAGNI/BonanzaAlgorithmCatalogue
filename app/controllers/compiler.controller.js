@@ -1,11 +1,33 @@
 const edge = require('edge');
 
 const getCompilerController = ({ tasks }) => {
+    const getTasksList = (req, res) => {
+        tasks.getAll()
+            .then((data) => {
+                const context = {
+                    tasks: data,
+                };
+                res.render('tasks', context);
+            });
+    };
     const getCompilerForm = (req, res) => {
-        return res.render('compiler');
+        const id = req.params.id;
+        tasks.findById(id)
+            .then((task) => {
+                const context = {
+                    task: task,
+                };
+                return context;
+            })
+            .then((context) => {
+                return res.render('compiler', context);
+            });
     };
     const postTaskSolution = (req, res) => {
-        const boilerplate = edge.func(`using System;
+        const id = req.params.id;
+        tasks.findById(id)
+            .then((task) => {
+                const boilerplate = edge.func(`using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +40,7 @@ public class Startup
 {
     static void FakeInput(object input)
     {
-        Console.SetIn(new StringReader(input.ToString()));
+        Console.SetIn(new StringReader(input.ToString());
     }
     
     public async Task<object> Invoke(object input)
@@ -28,9 +50,9 @@ public class Startup
         {
             Console.SetOut(writer);
             var sw = new Stopwatch();
-            var task = Task.Factory.StartNew(() => Program.Main(null));
+            var task = Task.Factory.StartNew(() => Program.Main());
             sw.Start();
-            task.Wait(${timeout});
+            task.Wait(${+task.timelimit});
             if (task.IsCompleted)
             {
                 sw.Stop();
@@ -48,20 +70,42 @@ public class Startup
     ${req.body.input}
 }
 `);
-        const results = [];
-        for (let i = 0; i < input.length; i++) {
-            boilerplate(input[i], (error, result) => {
-                if (error) {
-                    results.push([error.name, error.message]);
-                } else {
-                    results.push(result.trim().split(' '));
+                const results = [];
+                for (let i = 0; i < task.input.length; i++) {
+                    boilerplate(task.input[i], (error, result) => {
+                        if (error) {
+                            results.push({
+                                status: 'failed',
+                                reason: error.name,
+                                message: error.message,
+                            });
+                        } else {
+                            const current = result.trim().split(' ');
+                            if (task.results[i].trim() === current[1]) {
+                                results.push({
+                                    status: 'passed',
+                                    reason: '',
+                                    message: current[0],
+                                });
+                            } else {
+                                results.push({
+                                    status: 'failed',
+                                    reason: 'wrong result',
+                                    message: current[0],
+                                });
+                            }
+                        }
+                    });
                 }
+                return results;
+            })
+            .then((results) => {
+                res.send(results);
             });
-        }
-        res.send(results);
     };
 
     return {
+        getTasksList,
         getCompilerForm,
         postTaskSolution,
     };
