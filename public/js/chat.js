@@ -2,7 +2,7 @@ window.onload = function() {
     'use strict';
 
     const messages = [];
-    const socket = io.connect('127.0.0.1:3000');
+    const socket = io.connect('http://ec2-35-158-219-114.eu-central-1.compute.amazonaws.com:3000');
     const field = document.getElementById('field');
     const sendButton = document.getElementById('send');
     const content = document.getElementById('content');
