@@ -1,7 +1,6 @@
 const passport = require('passport');
 
  const getAuthController = ({ users }) => {
-
     const getLoginForm = (req, res) => {
         return res.render('login');
     };
