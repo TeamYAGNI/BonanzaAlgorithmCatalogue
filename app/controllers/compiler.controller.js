@@ -24,11 +24,12 @@ const getCompilerController = ({ tasks }) => {
             });
     };
     const postTaskSolution = (req, res) => {
+        console.log(req.body);
         const id = req.params.id;
         tasks.findById(id)
             .then((task) => {
-                console.log(task);
-                const boilerplate = edge.func(`using System;
+                const boilerplate = edge.func(
+`using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,7 +42,7 @@ public class Startup
 {
     static void FakeInput(object input)
     {
-        Console.SetIn(new StringReader(input.ToString().Split(new string[] {"\\r\\n"}, StringSplitOptions.None)));
+        Console.SetIn(new StringReader(input.ToString()));
     }
     
     public async Task<object> Invoke(object input)
@@ -68,9 +69,8 @@ public class Startup
             }
         }
     }
-    ${req.body.input}
-}
-`);
+    ${req.body}
+}`);
                 const results = [];
                 for (let i = 0; i < task.input.length; i++) {
                     boilerplate(task.input[i], (error, result) => {

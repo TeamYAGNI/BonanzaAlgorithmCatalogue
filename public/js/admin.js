@@ -1,14 +1,14 @@
 /* globals $ */
 $(() => {
     $('.open-button').on('click', (ev) => {
-        $('.open-button')
+        $(ev.target)
             .closest('.collapse-group')
             .find('.collapse')
             .collapse('show');
     });
 
-    $('.close-button').on('click', () => {
-        $('.close-button')
+    $('.close-button').on('click', (ev) => {
+        $(ev.target)
             .closest('.collapse-group')
             .find('.collapse')
             .collapse('hide');

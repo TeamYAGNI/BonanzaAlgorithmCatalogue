@@ -10,7 +10,6 @@ const getAdminController = (data) => {
             results: req.body.results.split(','),
             timelimit: req.body.timelimit,
         };
-        console.log(task);
         data.tasks.create(task)
             .then(() => {
                 res.status(200).send();

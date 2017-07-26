@@ -21,6 +21,7 @@ const init = (data, config) => {
 
   app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
+  app.use(bodyParser.text());
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true,
