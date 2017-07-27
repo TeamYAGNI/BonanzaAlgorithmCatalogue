@@ -24,12 +24,11 @@ const getCompilerController = ({ tasks }) => {
             });
     };
     const postTaskSolution = (req, res) => {
-        console.log(req.body);
         const id = req.params.id;
         tasks.findById(id)
             .then((task) => {
                 const boilerplate = edge.func(
-`using System;
+                    `using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +50,7 @@ public class Startup
         using(var writer = new StringWriter())
         {
             Console.SetOut(writer);
+            Console.Out.NewLine = "\\n";
             var sw = new Stopwatch();
             var task = Task.Factory.StartNew(() => Program.Main());
             sw.Start();
@@ -73,7 +73,7 @@ public class Startup
 }`);
                 const results = [];
                 for (let i = 0; i < task.input.length; i++) {
-                    boilerplate(task.input[i], (error, result) => {
+                    boilerplate(task.input[i].trim(), (error, result) => {
                         if (error) {
                             results.push({
                                 status: 'failed',
@@ -82,7 +82,7 @@ public class Startup
                             });
                         } else {
                             const current = result.trim().split(' ');
-                            if (task.results[i].trim() === current[1]) {
+                            if (task.results[i].trim() === current[1].trim()) {
                                 results.push({
                                     status: 'passed',
                                     reason: '',

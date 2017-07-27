@@ -6,8 +6,8 @@ const getAdminController = (data) => {
     const createTask = (req, res) => {
         const task = {
             name: req.body.name,
-            input: req.body.input.split(','),
-            results: req.body.results.split(','),
+            input: req.body.input,
+            results: req.body.results,
             timelimit: req.body.timelimit,
         };
         data.tasks.create(task)

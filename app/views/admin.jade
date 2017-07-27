@@ -18,20 +18,21 @@ block content
             #collapseOne.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingOne')
                 .panel-body
                     form(action='/admin/task' id='taskform' method='post')
-                        div.pull-left
-                            label Name:
-                                input(type='text', required='required', name='name')
-                        div.pull-left
-                            label Timelimit:
-                                input(type='text', placeholder='in ms' required='required', name='timelimit')
+                    .pull-left
+                        label Name:
+                            input#name(type='text', required='required', name='name')
+                    
+                        label Timelimit:
+                            input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit')
+                    input#submit.btn.btn-primary(type='button', value='Post')
+                    .pull-right
+                        button#add.pull-left.btn.btn-primary(type='button') Add New Pair
                         div.pull-left
                             label Input:
-                                textarea(form='taskform' wrap='hard' rows=5 cols=50 placeholder='input must be separated by a single comma - ","' required='required', name='input')
+                                textarea#input(form='taskform' wrap='hard' required='required', name='input')
                         div.pull-left
-                            label Results:
-                                textarea(form='taskform' wrap='hard' rows=5 cols=50 placeholder='results must be separated by a single comma - ","' required='required', name='results')
-                        div.pull-right
-                            input(type='submit', value='Post')
+                            label Result:
+                                textarea#result(form='taskform' wrap='hard' required='required', name='results')
         .panel.panel-default
             #headingTwo.panel-heading(role='tab')
                 h4.panel-title
