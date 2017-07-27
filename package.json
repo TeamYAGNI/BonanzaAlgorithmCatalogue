@@ -22,6 +22,7 @@
     "fs": "^0.0.1-security",
     "glob": "^6.0.4",
     "jade": "^1.11.0",
+    "marked": "^0.3.6",
     "method-override": "^2.3.0",
     "mongodb": "^2.2.29",
     "morgan": "^1.6.1",

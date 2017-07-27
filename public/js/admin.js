@@ -32,16 +32,19 @@ $(() => {
         ev.preventDefault();
         const nameForm = $('#name');
         const timelimitForm = $('#timelimit');
+        const descriptionForm = $('#description');
         const task = {
             name: nameForm.val(),
+            timelimit: timelimitForm.val(),
+            description: descriptionForm.val(),
             input: input,
             results: results,
-            timelimit: timelimitForm.val(),
         };
         nameForm.val('');
+        timelimitForm.val('');
+        descriptionForm.val('');
         input = [];
         results = [];
-        timelimitForm.val('');
         const url = window.location.href + '/task';
         $.ajax({
             url: url,
@@ -49,11 +52,11 @@ $(() => {
             data: JSON.stringify(task),
             contentType: 'application/json',
             success: (data) => {
-               console.log('i am in success callback');
+                console.log('i am in success callback');
             },
             error: (error) => {
-               console.log('i am in error callback');
-               console.log(error);
+                console.log('i am in error callback');
+                console.log(error);
             },
         });
     });
