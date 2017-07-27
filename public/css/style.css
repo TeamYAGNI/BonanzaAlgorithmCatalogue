@@ -1,21 +1,113 @@
 body {
-  border: 1 solid black;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  padding: 70px 20px 20px 20px;
+    border: 1 solid black;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 70px 20px 20px 20px;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
 .offset-left {
-  margin-left: 12px;
+    margin-left: 12px;
 }
 
 .offset-top {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .red-text {
-  color: red;
+    color: red;
+}
+
+.hidden{
+    display: none;
+}
+
+h1 {
+    margin-bottom: 1em;
+}
+
+.circle-loader {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: loader-spin;
+    animation-timing-function: linear;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-left-color: #5cb85c;
+    display: inline-block;
+    margin: 0 0 30px 10px;
+    position: relative;
+    vertical-align: top;
+}
+
+.circle-loader,
+.circle-loader:after {
+    border-radius: 50%;
+    height: 8em;
+    left: 45%;
+    position: absolute;
+    top: 40%;
+    width: 8em;
+}
+
+.load-complete {
+    -webkit-animation: none;
+    animation: none;
+    border-color: #5cb85c;
+    transition: border 500ms ease-out;
+}
+
+.checkmark {
+    display: none;
+}
+  
+.draw:after {
+    animation-duration: 800ms;
+    animation-name: checkmark;
+    animation-timing-function: ease;
+    transform: scaleX(-1) rotate(135deg);
+}
+.checkmark:after {
+    border-right: 2px solid #5cb85c;
+    border-top: 2px solid #5cb85c;
+    content: '';
+    height: 4em;
+    left: 2em;
+    opacity: 1;
+    position: absolute;
+    top: 4em;
+    transform-origin: left top;
+    width: 2em;
+}
+
+@keyframes loader-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes checkmark {
+    0% {
+        height: 0;
+        opacity: 1;
+        width: 0;
+    }
+    20% {
+        height: 0;
+        opacity: 1;
+        width: 2em;
+    }
+    40% {
+        height: 4em;
+        opacity: 1;
+        width: 2em;
+    }
+    100% {
+        height: 4em;
+        opacity: 1;
+        width: 2em;
+    }
 }

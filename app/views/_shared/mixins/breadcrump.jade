@@ -1,0 +1,25 @@
+mixin breadcrump(route)
+    ol.breadcrumb
+        -var url = ""
+
+        each part, index in route
+            -var isLink = true;
+
+            if (part === 'Home')
+                -url = url + '/';
+            else 
+                if (part[0] === '-')
+                    -isLink = false;
+                    -part = part.slice(1)
+                -url = url + part.toLowerCase() + '/';
+
+            if (index !== route.length - 1 && isLink)
+                li
+                    a.request(href="#{url}")
+                        =part
+            else if (!isLink)
+                li.inactive
+                    =part
+            else
+                li.active
+                    =part

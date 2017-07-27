@@ -1,7 +1,13 @@
-extends layout
-include navigation
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
+
 block navigation
     +nav(user, '/')
+
+block breadcrump
+    +breadcrump(['Home'])
+
 block content
     div.fb-like(data-share="true" data-width="450" data-show-faces="true")
     h1= title

@@ -1,8 +1,6 @@
-extends layout
-include navigation
-
-block navigation
-    +nav()
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
 
 block css
       link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
@@ -10,14 +8,14 @@ block css
 block js
     script(src="https://cdnjs.cloudflare.com/ajax/libs/validator/8.0.0/validator.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
-    script(src="")
     script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
     script(src='/public/js/register.js')
 
+block navigation
+    +nav()
+
 block breadcrump
-        li.breadcrumb-item
-            a(href='/') Home
-        li.breadcrumb-item.active Register
+    +breadcrump(['Home', '-Auth', 'Some', 'Register'])
 
 block content
     form#signup-form.form-horizontal(action="/auth/register" method="POST")

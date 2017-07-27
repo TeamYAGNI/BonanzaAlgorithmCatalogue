@@ -1,12 +1,16 @@
-extends layout
-include navigation
-
-block navigation
-    +nav()
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
 
 block js
     script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
     script(src='/public/js/login.js')
+
+block navigation
+    +nav()
+
+block breadcrump
+    +breadcrump(['Home', '-Auth', 'Login'])
 
 block content
     div.fb-like(data-share="true" data-width="450" data-show-faces="true")

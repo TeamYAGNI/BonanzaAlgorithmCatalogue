@@ -61,7 +61,6 @@ $(() => {
     };
 
     const $signupForm = $('#signup-form');
-    console.log($signupForm);
 
     $signupForm.submit((event) => {
         const $firstName = $signupForm.find('#signup-first-name');
