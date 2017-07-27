@@ -53,6 +53,7 @@ public class Startup
             Console.SetOut(writer);
             Console.Out.NewLine = "\\n";
             var sw = new Stopwatch();
+            Process proc = Process.GetCurrentProcess();
             var task = Task.Factory.StartNew(() => Program.Main());
             sw.Start();
             task.Wait(${+task.timelimit});
@@ -61,7 +62,8 @@ public class Startup
                 sw.Stop();
                 writer.Flush();
                 var result = writer.GetStringBuilder().ToString();
-                return String.Format("{0} {1}", sw.Elapsed, result);
+                return String.Format("{0} {1} {2:F2}", 
+                sw.Elapsed, result, (proc.WorkingSet64 / (1024.0 * 1024) - 55));
             }
             else
             {
@@ -83,17 +85,19 @@ public class Startup
                             });
                         } else {
                             const current = result.trim().split(' ');
-                            if (task.results[i].trim() === current[1].trim()) {
+                            const message = `Time: ${current[0]} Memory: ${current[2]}MB`;
+                            if (task.results[i].trim() === current[1].trim() &&
+                            +task.memorylimit > +current[2]) {
                                 results.push({
                                     status: 'passed',
                                     reason: '',
-                                    message: current[0],
+                                    message: message,
                                 });
                             } else {
                                 results.push({
                                     status: 'failed',
                                     reason: 'wrong result',
-                                    message: current[0],
+                                    message: message,
                                 });
                             }
                         }
@@ -105,7 +109,8 @@ public class Startup
                 res.send(results);
             })
             .catch((error) => {
-                const message = error.message.substring(0, error.message.indexOf('---->') - 1);
+                const message = error.message
+                    .substring(0, error.message.indexOf('---->') - 1);
                 res.send([{
                     status: 'failed',
                     reason: error.name,

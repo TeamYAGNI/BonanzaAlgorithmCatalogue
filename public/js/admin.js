@@ -32,16 +32,19 @@ $(() => {
         ev.preventDefault();
         const nameForm = $('#name');
         const timelimitForm = $('#timelimit');
+        const memorylimitForm = $('#memorylimit');
         const descriptionForm = $('#description');
         const task = {
             name: nameForm.val(),
             timelimit: timelimitForm.val(),
+            memorylimit: memorylimitForm.val(),
             description: descriptionForm.val(),
             input: input,
             results: results,
         };
         nameForm.val('');
         timelimitForm.val('');
+        memorylimitForm.val('');
         descriptionForm.val('');
         input = [];
         results = [];

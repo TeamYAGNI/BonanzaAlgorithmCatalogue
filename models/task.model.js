@@ -7,7 +7,8 @@ class Task {
             Array.isArray(model.results) &&
             model.results.length === model.input.length &&
             typeof model.timelimit === 'string' &&
-            typeof model.description === 'string';
+            typeof model.description === 'string' &&
+            typeof model.memorylimit === 'string';
     }
 
     get id() {

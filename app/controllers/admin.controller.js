@@ -7,6 +7,7 @@ const getAdminController = (data) => {
         const task = {
             name: req.body.name,
             timelimit: req.body.timelimit,
+            memorylimit: req.body.memorylimit,
             description: req.body.description,
             input: req.body.input,
             results: req.body.results,

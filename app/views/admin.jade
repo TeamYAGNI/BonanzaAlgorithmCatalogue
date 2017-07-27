@@ -25,10 +25,13 @@ block content
                             .col
                                 label Timelimit:
                                     input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit')
+                            .col
+                                label Memory Limit:
+                                    input#memorylimit(type='text', placeholder='in MB' required='required', name='memorylimit')
                         .col-md-3
                             .col
                                 label Description:
-                                    textarea#description(form='taskform' wrap='hard' required='required', name='description')                    
+                                    textarea#description(form='taskform' wrap='hard' required='required', name='description')
                         .col-md-3
                             .col                        
                                 label Input:
