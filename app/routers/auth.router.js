@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const attachTo = (app, data, { auth: authController }) => {
+const attachTo = (app, { auth: authController }) => {
     const authRouter = new Router();
 
     authRouter
@@ -15,6 +15,7 @@ const attachTo = (app, data, { auth: authController }) => {
         .get('/google/callback', authController.googleLoginCallback)
         .get('/twitter', authController.twitterLogin)
         .get('/twitter/callback', authController.twitterLoginCallback);
+
     app.use('/auth', authRouter);
 };
 

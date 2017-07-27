@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require('passport');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -8,61 +7,63 @@ const methodOverride = require('method-override');
 const configJson = require('./config.json');
 
 const init = (data, config) => {
-  const env = configJson.NODE_ENV || 'development';
+    const env = configJson.NODE_ENV || 'development';
 
-  const app = express();
-  require('./auth')(app, data, passport);
+    const app = express();
 
-  app.locals.ENV = env;
-  app.locals.ENV_DEVELOPMENT = env === 'development';
+    const passport = require('./auth')(app, data);
 
-  app.set('views', config.root + '/app/views');
-  app.set('view engine', 'jade');
+    app.locals.ENV = env;
+    app.locals.ENV_DEVELOPMENT = env === 'development';
 
-  app.use(favicon(config.root + '/public/img/favicon.ico'));
-  app.use(logger('dev'));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({
-    extended: true,
-  }));
-  app.use(compress());
-  app.use('/public', express.static(config.root + '/public'));
-  app.use('/libs', express.static(config.root + '/node_modules'));
-  app.use(methodOverride());
+    app.set('views', config.root + '/app/views');
+    app.set('view engine', 'jade');
 
-  const controllers = require('../app/controllers')
-    .init(data, passport);
+    app.use(favicon(config.root + '/public/img/favicon.ico'));
+    app.use(logger('dev'));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
+        extended: true,
+    }));
+    app.use(compress());
+    app.use('/public', express.static(config.root + '/public'));
+    app.use('/libs', express.static(config.root + '/node_modules'));
+    app.use(methodOverride());
 
-  require('../app/routers')
-    .attachTo(app, data, controllers);
+    const controllers = require('../app/controllers')
+        .init(data, passport);
 
-  app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-  });
+    require('../app/routers')
+        .attachTo(app, controllers);
 
-  if (app.get('env') === 'development') {
+    console.log('app');
+    app.use((req, res, next) => {
+        const err = new Error('Not Found');
+        err.status = 404;
+        next(err);
+    });
+
+    if (app.get('env') === 'development') {
+        app.use((err, req, res, next) => {
+            res.status(err.status || 500);
+            res.render('error', {
+                message: err.message,
+                error: err,
+                title: 'error',
+            });
+        });
+    }
+
     app.use((err, req, res, next) => {
-      res.status(err.status || 500);
-      res.render('error', {
-        message: err.message,
-        error: err,
-        title: 'error',
-      });
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: {},
+            title: 'error',
+        });
     });
-  }
 
-  app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: {},
-      title: 'error',
-    });
-  });
-
-  return Promise.resolve(app);
+    return Promise.resolve(app);
 };
 
 module.exports = { init };

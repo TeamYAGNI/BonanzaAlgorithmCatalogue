@@ -5,9 +5,10 @@ html(lang='en')
         meta(name='viewport', content='width=device-width')
         title= title
         link(rel='icon' href='/public/img/favicon.ico')
-        block css
         link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-        block js
+        link(rel='stylesheet', href='/public/css/style.css')
+        block css
+
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
         script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
         script(src='https://use.fontawesome.com/38e386af6b.js')
@@ -17,9 +18,12 @@ html(lang='en')
             }
         if ENV_DEVELOPMENT
             script(src='http://localhost:35729/livereload.js')
+        block js
+
     body
         block navigation
-        .container
+        block breadcrump
+        .container-fluid
             block content
 
         

@@ -1,14 +1,77 @@
 extends layout
 include navigation
+
 block navigation
     +nav()
+
+block css
+      link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+
+block js
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/validator/8.0.0/validator.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
+    script(src="")
+    script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
+    script(src='/public/js/register.js')
+
+block breadcrump
+        li.breadcrumb-item
+            a(href='/') Home
+        li.breadcrumb-item.active Register
+
 block content
-    form(action='/auth/register', method='post')
-        div
-            label Username:
-            input(type='text', name='username', placeholder="Enter username")
-        div
-            label Password:
-            input(type='password', name='password', placeholder="Enter password")
-        div
-            input(type='submit', value='Register')
+    form#signup-form.form-horizontal(action="/auth/register" method="POST")
+        fieldset
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    label#photo-container
+                    .controls
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    label.control-label(for='signup-username') Username
+                    .controls
+                        input#signup-username.form-control.input-lg(type='text', name='signup-username', placeholder='Username', autofocus='')
+                        p#help-username.help-block
+                            | Username must contain only letters/numbers and be between 4 and 10 long.
+                .control-group.col-md-offset-1
+                    label.control-label(for='signup-password') Password
+                    .controls
+                        input#signup-password.form-control.input-lg(type='password', name='signup-password', placeholder='Password')
+                        p#help-password.help-block
+                            | Password must be between 4 and 100 characters long.
+                .control-group.col-md-offset-1
+                    label.control-label(for='signup-password-confirm') Password (Confirm)
+                    .controls
+                        input#signup-password-confirm.form-control.input-lg(type='password', name='signup-password-confirm', placeholder='Repeat Password')
+                        p#help-password-confirm.help-block
+                            | Please confirm password
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    label.control-label(for='signup-first-name') First Name
+                    .controls
+                        input#signup-first-name.form-control.input-lg(type='text', name='signup-first-name', placeholder='First Name')
+                        p#help-first-name.help-block
+                            | First Name must be between 1 and 10 characters long.
+                .control-group.col-md-offset-1
+                    label.control-label(for='signup-last-name') Last Name
+                    .controls
+                        input#signup-last-name.form-control.input-lg(type='text', name='signup-last-name', placeholder='Last Name')
+                        p#help-last-name.help-block
+                            | Last Name First Name must be between 1 and 10 characters long.
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    label.control-label(for='signup-email') E-mail
+                    .controls
+                        input#signup-email.form-control.input-lg(type='email', name='signup-email', placeholder='E-mail')
+                        p#help-email.help-block
+                            | Please provide your E-mail
+                .control-group.col-md-offset-1
+                    .controls.offset-top
+                        input#signup-submit.btn.btn-success.btn-lg(type="submit" value="Register")
+                        a#signin-btn.btn.btn-default.offset-left(href="/auth/login") Login
+                        a.btn.btn-primary.offset-left(href="/auth/facebook")
+                            span.fa.fa-facebook Facebook
+                        a.btn.btn-primary.btn-info.offset-left(href="/auth/twitter")
+                            span.fa.fa-twitter Twitter
+                        a.btn.btn-primary.btn-danger.offset-left(href="/auth/google")
+                            span.fa.fa-google-plus Google+

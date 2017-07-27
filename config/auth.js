@@ -1,5 +1,6 @@
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const passport = require('passport');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const client = redis.createClient();
@@ -20,7 +21,7 @@ facebookAuth.passReqToCallback = true;
 googleAuth.passReqToCallback = true;
 twitterAuth.passReqToCallback = true;
 
-const configAuth = (app, { users }, passport) => {
+const configAuth = (app, { users }) => {
     passport.use('local-login', new LocalStrategy(
         localAuth,
         (req, username, password, done) => {
@@ -102,6 +103,8 @@ const configAuth = (app, { users }, passport) => {
             })
             .catch(done);
     });
+
+    return passport;
 };
 
 module.exports = configAuth;
