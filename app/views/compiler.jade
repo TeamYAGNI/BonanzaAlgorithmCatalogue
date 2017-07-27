@@ -10,19 +10,32 @@ block content
         div
             label Input:
                 textarea#input(form='compilerform' wrap='hard' rows=10 cols=50 required='required' name='input')
-        #myModal.modal.fade(role='dialog')
-            .modal-dialog
+        #results-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='results-title', aria-hidden='true')
+            .modal-dialog(role='document')
                 .modal-content
                     .modal-header
-                        button.close(type='button', data-dismiss='modal') ×
-                        h4.modal-title Results
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                        h4#results-title.modal-title Results
                     .modal-body
                     .modal-footer
                         a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', title='', data-original-title='Go to catalogue', aria-describedby='tooltip218548') Catalogue
                         button.btn.btn-default(type='button', data-dismiss='modal') Close        
+        #description-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='description-modal-title', aria-hidden='true')
+            .modal-dialog(role='document')
+                .modal-content
+                    .modal-header
+                        h5#description-modal-title.modal-title #{task.name}
+                        button.close(type='button', data-dismiss='modal', aria-label='Close')
+                            span(aria-hidden='true') ×
+                    .modal-body
+                        | # LibrarySystem
+                    .modal-footer
+                        button.btn.btn-secondary(type='button', data-dismiss='modal') Close        
         div
-            button#submit.btn.btn-primary(type='button', data-toggle='modal', data-target='#myModal') Submit
-            button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#myModal') Results
+            button#submit.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Submit
+            button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Results
+            button#description.btn.btn-primary(type='button', data-toggle='modal', data-target='#description-modal') Description
             button#edit.btn.btn-primary(type='button') Edit
             button#delete.btn.btn-danger(type='button') Delete
     .pull-right 

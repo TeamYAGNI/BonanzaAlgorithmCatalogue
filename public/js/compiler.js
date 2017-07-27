@@ -9,7 +9,7 @@ $(() => {
             data: input,
             contentType: 'text/plain',
             success: (data) => {
-                $('.modal-body').empty();
+                $('#results-modal .modal-body').empty();
 
                 const results = $('<p/>');
 
@@ -21,14 +21,14 @@ $(() => {
                     singleResult.addClass('btn btn-secondary');
                     if (data[i].status === 'passed') {
                         const glyph = $('<span/>')
-                        .addClass('glyphicon glyphicon-ok');
+                            .addClass('glyphicon glyphicon-ok');
                         glyph.attr('aria-hidden', 'true');
                         singleResult.html(glyph);
                         singleResult.attr('title', 'Passed');
                         singleResult.attr('data-content', data[i].message);
                     } else {
                         const glyph = $('<span/>')
-                        .addClass('glyphicon glyphicon-remove');
+                            .addClass('glyphicon glyphicon-remove');
                         glyph.attr('aria-hidden', 'true');
                         singleResult.html(glyph);
                         singleResult.attr('title', data[i].reason);
@@ -37,7 +37,7 @@ $(() => {
                     singleResult.appendTo(results);
                 }
 
-                results.appendTo($('.modal-body'));
+                results.appendTo($('#results-modal .modal-body'));
                 $('[data-toggle="popover"]').popover();
             },
             error: (error) => {
@@ -46,6 +46,14 @@ $(() => {
         });
     });
 
+    $('#results').on('click', () => {
+        const body = $('#results-modal .modal-body');
+        if (body.is(':empty')) {
+            const p = $('<p/>');
+            p.text('You have no submissions yet.');
+            p.appendTo(body);
+        }
+    });
     $('[data-toggle="tooltip"]').tooltip();
 });
 

@@ -104,7 +104,12 @@ public class Startup
                 res.send(results);
             })
             .catch((error) => {
-                res.send(error);
+                const message = error.message.substring(0, error.message.indexOf('---->') - 1);
+                res.send([{
+                    status: 'failed',
+                    reason: error.name,
+                    message: message,
+                }]);
             });
     };
 
