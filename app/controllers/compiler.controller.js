@@ -1,5 +1,5 @@
 const edge = require('edge');
-
+const md = require('marked');
 const getCompilerController = ({ tasks }) => {
     const getTasksList = (req, res) => {
         tasks.getAll()
@@ -16,6 +16,7 @@ const getCompilerController = ({ tasks }) => {
             .then((task) => {
                 const context = {
                     task: task,
+                    md: md,
                 };
                 return context;
             })
