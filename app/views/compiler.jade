@@ -6,7 +6,7 @@ block js
 block content
     h1 
         | #{task.name}
-    form(id='compilerform' action='/compiler/' + task._id, method='post')
+    form.pull-left(id='compilerform' action='/compiler/' + task._id, method='post')
         div
             label Input:
                 textarea#input(form='compilerform' wrap='hard' rows=10 cols=50 required='required' name='input')
@@ -25,4 +25,22 @@ block content
             button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#myModal') Results
             button#edit.btn.btn-primary(type='button') Edit
             button#delete.btn.btn-danger(type='button') Delete
+    .pull-right 
+        h1 
+            | Ranking
+        table.table.table-hover.table-striped.table-bordered
+            thead
+                tr
+                    th #
+                    th Username
+                    th Result
+            tbody
+                tr
+                    th(scope='row') 1
+                    td Mark
+                    td 0 / #{task.results.length * 10}
+                tr
+                    th(scope='row') 2
+                    td Jacob
+                    td 0 / #{task.results.length * 10}
         
