@@ -40,7 +40,10 @@ class UsersData extends BaseData {
                     return Promise.reject('Invalid user');
                 }
 
-                if (user.password !== password) {
+                console.log(user.passHash);
+                console.log(password);
+
+                if (user.passHash !== password) {
                     return Promise.reject('Invalid password');
                 }
 
