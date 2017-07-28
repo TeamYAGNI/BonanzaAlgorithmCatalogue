@@ -1,6 +1,6 @@
 const edge = require('edge');
 const md = require('marked');
-const getCompilerController = ({ tasks }) => {
+const getTasksController = ({ tasks }) => {
     const getTasksList = (req, res) => {
         tasks.getAll()
             .then((data) => {
@@ -127,4 +127,4 @@ public class Startup
     };
 };
 
-module.exports = { getCompilerController };
+module.exports = { getTasksController };

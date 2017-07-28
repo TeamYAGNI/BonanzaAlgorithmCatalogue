@@ -12,7 +12,6 @@ const getAdminController = (data) => {
             input: req.body.input,
             results: req.body.results,
         };
-        console.log(task.description);
         data.tasks.create(task)
             .then(() => {
                 res.status(200).send();

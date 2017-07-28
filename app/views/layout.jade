@@ -9,10 +9,12 @@ html(lang='en')
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
     script(src="/libs/bootstrap/dist/js/bootstrap.min.js")
     block css
       link(rel='stylesheet', href='/public/css/style.css')
       link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.min.css')
+      link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css')
     block js
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')

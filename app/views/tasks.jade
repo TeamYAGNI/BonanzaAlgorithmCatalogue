@@ -3,5 +3,5 @@ extends layout
 block content
     .list-group
         each task in tasks
-            a.list-group-item.list-group-item-action(href='/compiler/' + task._id) 
+            a.list-group-item.list-group-item-action(href='/tasks/' + task._id) 
                 | #{task.name}

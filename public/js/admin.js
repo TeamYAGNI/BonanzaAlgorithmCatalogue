@@ -1,4 +1,4 @@
-/* globals $ */
+/* globals $ toastr */
 let input = [];
 let results = [];
 $(() => {
@@ -34,6 +34,14 @@ $(() => {
         const timelimitForm = $('#timelimit');
         const memorylimitForm = $('#memorylimit');
         const descriptionForm = $('#description');
+        const inputTextArea = $('#input');
+        const resultTextArea = $('#result');
+        const inputValue = inputTextArea.val();
+        const resultValue = resultTextArea.val();
+        if (inputValue && resultValue) {
+            input.push(inputValue);
+            results.push(resultValue);
+        }
         const task = {
             name: nameForm.val(),
             timelimit: timelimitForm.val(),
@@ -46,6 +54,8 @@ $(() => {
         timelimitForm.val('');
         memorylimitForm.val('');
         descriptionForm.val('');
+        inputTextArea.val('');
+        resultTextArea.val('');
         input = [];
         results = [];
         const url = window.location.href + '/task';
@@ -55,11 +65,10 @@ $(() => {
             data: JSON.stringify(task),
             contentType: 'application/json',
             success: (data) => {
-                console.log('i am in success callback');
+                toastr.success('Successfully created task!');
             },
             error: (error) => {
-                console.log('i am in error callback');
-                console.log(error);
+                toastr.error('Something went wrong. Please try again!');
             },
         });
     });
