@@ -1,18 +1,19 @@
+/* global $, io, sendMessage */
 window.onload = function() {
     'use strict';
 
     const messages = [];
-    const socket = io.connect('http://ec2-35-158-219-114.eu-central-1.compute.amazonaws.com:3000');
+    const socket = io.connect('localhost:3000');
     const field = document.getElementById('field');
     const sendButton = document.getElementById('send');
     const content = document.getElementById('content');
     const name = document.getElementById('name');
 
-    socket.on('message', function(data) {
+    socket.on('message', (data) => {
         if (data.messageText) {
             messages.push(data);
             let html = '';
-            messages.forEach(function(message) {
+            messages.forEach((message) => {
                 html += '<strong>' +
                     (message.username ? message.username : 'Server') +
                     ': </strong>';
@@ -25,14 +26,10 @@ window.onload = function() {
         }
     });
 
-    sendButton.onclick = function() {
-        if (name.value.length === 0) {
-            alert('Please type your name');
-        } else {
-            const text = field.value;
-            socket.emit('send', { messageText: text, username: name.value });
-            field.value = '';
-        }
+    sendButton.onclick = () => {
+        const text = field.value;
+        socket.emit('send', { messageText: text, username: name.value });
+        field.value = '';
     };
 };
 

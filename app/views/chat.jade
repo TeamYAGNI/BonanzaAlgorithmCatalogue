@@ -1,15 +1,15 @@
-doctype
-html
-    head
-        title= "Real time web chat"
-        script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
-        script(src='/public/js/chat.js')
-        script(src='/libs/socket.io-client/dist/socket.io.js') 
-    body
-        #content(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
-        .controls
-            | Name:
-            input#name(style='width:350px;')
-            br
-            input#field(style='width:350px;')
-            input#send(type='button', value='send')
+extends layout
+
+block js
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+    script(src='/public/js/chat.js')
+    script(src='/libs/socket.io-client/dist/socket.io.js')
+
+block content
+    #content(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
+    .controls
+        | Name:
+        input#name(style='width:350px;')
+        br
+        input#field(style='width:350px;')
+        input#send(type='button', value='send')

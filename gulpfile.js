@@ -34,7 +34,7 @@ gulp.task('default', [
 ]);
 
 gulp.task('lint-fix', () => {
-  return gulp.src(['**/*.js', '!node_modules/**', '!coverage/**', '!public/**'])
+  return gulp.src(['**/*.js', '!node_modules/**', '!coverage/**'])
     .pipe(plumber())
     .pipe(eslint({ fix: true }))
     .pipe(eslint.format())
