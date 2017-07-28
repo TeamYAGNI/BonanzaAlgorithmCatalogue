@@ -1,7 +1,8 @@
-const getHomeController = () => {
+const getController = () => {
     const getHome = (req, res) => {
         return res.status(200).render('index', {
             title: 'Generator-Express MVC',
+            user: req.user,
         });
     };
 
@@ -10,4 +11,4 @@ const getHomeController = () => {
     };
 };
 
-module.exports = { getHomeController };
+module.exports = { getController };

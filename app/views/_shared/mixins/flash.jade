@@ -1,0 +1,14 @@
+.messages
+each msgList, msgType in messages
+    if (msgType === 'error' && msgList.length > 0)
+        each message in msgList
+            .alert.alert-danger.alert-dismissible.fade-in(role="alert")
+                button.close(type="button" data-dismiss="alert" aria-label="Close")
+                    span(aria-hidden="true") ×
+                p= message
+    if (msgType === 'success' && msgList.length > 0)
+        each message in msgList
+            .alert.alert-success.alert-dismissible.fade-in(role="alert")
+                button.close(type="button" data-dismiss="alert" aria-label="Close")
+                    span(aria-hidden="true") ×
+                p= message

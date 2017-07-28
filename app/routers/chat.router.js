@@ -1,9 +1,7 @@
 const { Router } = require('express');
-const { getChatController } = require('../controllers/chat.controller');
 
-const attachTo = (app, data) => {
+const attachTo = (app, { chat: chatController }) => {
     const chatRouter = new Router();
-    const chatController = getChatController();
 
     chatRouter
         .get('/', chatController.getChatForm);

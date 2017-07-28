@@ -1,9 +1,7 @@
 const { Router } = require('express');
-const { getAdminController } = require('../controllers/admin.controller');
 
-const attachTo = (app, data) => {
+const attachTo = (app, { admin: adminController }) => {
     const adminRouter = new Router();
-    const adminController = getAdminController(data);
 
     adminRouter
         .get('/', adminController.getAdminPanel)

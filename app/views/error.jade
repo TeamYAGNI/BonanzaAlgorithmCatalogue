@@ -1,6 +1,10 @@
-extends layout
+extends _shared/base/layout
+include _shared/mixins/navigation
+
+block navigation
+    +nav(user, '/')
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+    h1= message
+    h2= error.status
+    pre #{error.stack}
