@@ -85,9 +85,10 @@ public class Startup
                             });
                         } else {
                             const current = result.trim().split(' ');
-                            const message = `Time: ${current[0]} Memory: ${current[2]}MB`;
+                            const message = `Time: ${current[0]}
+                            Memory: ${current[2]}MB`;
                             if (task.results[i].trim() === current[1].trim() &&
-                            +task.memorylimit > +current[2]) {
+                                +task.memorylimit > +current[2]) {
                                 results.push({
                                     status: 'passed',
                                     reason: '',
