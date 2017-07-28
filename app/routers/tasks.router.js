@@ -1,9 +1,7 @@
 const { Router } = require('express');
-const { getTasksController } = require('../controllers/tasks.controller');
 
-const attachTo = (app, data) => {
+const attachTo = (app, { compiler: tasksController }) => {
     const tasksRouter = new Router();
-    const tasksController = getTasksController(data);
 
     tasksRouter
         .get('/', tasksController.getTasksList)
