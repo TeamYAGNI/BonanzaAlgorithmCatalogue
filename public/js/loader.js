@@ -15,7 +15,7 @@ $(() => {
         $('.checkmark').fadeOut();
     }, 1000);
 
-    $('a.request').on('click', () => {
+    $('.request').on('click', () => {
         $('.circle-loader').toggleClass('load-complete');
         $('.circle-loader').show('fast');
     });

@@ -1,5 +1,4 @@
-/* globals __dirname */
-/* globals process */
+/* globals __dirname, process */
  /* eslint-disable no-invalid-this */
 
 const gulp = require('gulp');

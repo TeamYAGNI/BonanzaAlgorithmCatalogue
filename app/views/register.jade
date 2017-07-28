@@ -15,7 +15,7 @@ block navigation
     +nav()
 
 block breadcrump
-    +breadcrump(['Home', '-Auth', 'Some', 'Register'])
+    +breadcrump(['Home', '-Auth', 'Register'])
 
 block content
     form#signup-form.form-horizontal(action="/auth/register" method="POST")
@@ -26,50 +26,50 @@ block content
                     .controls
             .col-md-6.col-sm-12.col-xs-12.form-group
                 .control-group.col-md-offset-1
-                    label.control-label(for='signup-username') Username
+                    label.control-label(for='username') Username
                     .controls
-                        input#signup-username.form-control.input-lg(type='text', name='signup-username', placeholder='Username', autofocus='')
+                        input#signup-username.form-control.input-lg(type='text', name='username', placeholder='Username', autofocus='')
                         p#help-username.help-block
                             | Username must contain only letters/numbers and be between 4 and 10 long.
                 .control-group.col-md-offset-1
-                    label.control-label(for='signup-password') Password
+                    label.control-label(for='password') Password
                     .controls
-                        input#signup-password.form-control.input-lg(type='password', name='signup-password', placeholder='Password')
+                        input#signup-password.form-control.input-lg(type='password', name='password', placeholder='Password')
                         p#help-password.help-block
                             | Password must be between 4 and 100 characters long.
                 .control-group.col-md-offset-1
-                    label.control-label(for='signup-password-confirm') Password (Confirm)
+                    label.control-label(for='password-confirm') Password (Confirm)
                     .controls
-                        input#signup-password-confirm.form-control.input-lg(type='password', name='signup-password-confirm', placeholder='Repeat Password')
+                        input#signup-password-confirm.form-control.input-lg(type='password', name='password-confirm', placeholder='Repeat Password')
                         p#help-password-confirm.help-block
                             | Please confirm password
             .col-md-6.col-sm-12.col-xs-12.form-group
                 .control-group.col-md-offset-1
-                    label.control-label(for='signup-first-name') First Name
+                    label.control-label(for='first-name') First Name
                     .controls
-                        input#signup-first-name.form-control.input-lg(type='text', name='signup-first-name', placeholder='First Name')
+                        input#signup-first-name.form-control.input-lg(type='text', name='first-name', placeholder='First Name')
                         p#help-first-name.help-block
                             | First Name must be between 1 and 10 characters long.
                 .control-group.col-md-offset-1
-                    label.control-label(for='signup-last-name') Last Name
+                    label.control-label(for='last-name') Last Name
                     .controls
-                        input#signup-last-name.form-control.input-lg(type='text', name='signup-last-name', placeholder='Last Name')
+                        input#signup-last-name.form-control.input-lg(type='text', name='last-name', placeholder='Last Name')
                         p#help-last-name.help-block
                             | Last Name First Name must be between 1 and 10 characters long.
             .col-md-6.col-sm-12.col-xs-12.form-group
                 .control-group.col-md-offset-1
-                    label.control-label(for='signup-email') E-mail
+                    label.control-label(for='e-mail') E-mail
                     .controls
-                        input#signup-email.form-control.input-lg(type='email', name='signup-email', placeholder='E-mail')
+                        input#signup-email.form-control.input-lg(type='email', name='e-mail', placeholder='E-mail')
                         p#help-email.help-block
                             | Please provide your E-mail
                 .control-group.col-md-offset-1
                     .controls.offset-top
                         input#signup-submit.btn.btn-success.btn-lg(type="submit" value="Register")
-                        a#signin-btn.btn.btn-default.offset-left(href="/auth/login") Login
-                        a.btn.btn-primary.offset-left(href="/auth/facebook")
+                        a#signin-btn.btn.btn-default.offset-left.col-sx-offset-1(href="/auth/login") Login
+                        a.btn.btn-primary.offset-left.col-sx-offset-1(href="/auth/facebook")
                             span.fa.fa-facebook Facebook
-                        a.btn.btn-primary.btn-info.offset-left(href="/auth/twitter")
+                        a.btn.btn-primary.btn-info.offset-left.col-sx-offset-1(href="/auth/twitter")
                             span.fa.fa-twitter Twitter
-                        a.btn.btn-primary.btn-danger.offset-left(href="/auth/google")
+                        a.btn.btn-primary.btn-danger.offset-left.col-sx-offset-1(href="/auth/google")
                             span.fa.fa-google-plus Google+

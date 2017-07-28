@@ -5,11 +5,36 @@ const bodyParser = require('body-parser');
 const compress = require('compression');
 const methodOverride = require('method-override');
 const configJson = require('./config.json');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const redis = require('redis');
+const RedisStore = require('connect-redis')(session);
+const client = redis.createClient();
 
 const init = (data, config) => {
     const env = configJson.NODE_ENV || 'development';
 
     const app = express();
+
+    app.use(cookieParser('test'));
+    app.use(session({
+        secret: 'test',
+        store: new RedisStore({
+            host: 'localhost',
+            port: 6379,
+            client: client,
+            ttl: 30 * 24 * 60 * 60,
+        }),
+        saveUninitialized: true,
+        resave: true,
+    }));
+
+
+    app.use(require('connect-flash')());
+    app.use((req, res, next) => {
+        res.locals.messages = require('express-messages')(req, res);
+        next();
+    });
 
     const passport = require('./auth')(app, data);
 
@@ -36,7 +61,6 @@ const init = (data, config) => {
     require('../app/routers')
         .attachTo(app, controllers);
 
-    console.log('app');
     app.use((req, res, next) => {
         const err = new Error('Not Found');
         err.status = 404;

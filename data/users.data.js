@@ -15,7 +15,6 @@ class UsersData extends BaseData {
     }
 
     findOrCreate(profile) {
-        console.log(profile);
         const user = {
             username: profile.displayName,
             password: profile.id,
@@ -38,11 +37,11 @@ class UsersData extends BaseData {
         return this.findByUsername(username)
             .then((user) => {
                 if (!user) {
-                    throw new Error('Invalid user');
+                    return Promise.reject('Invalid user');
                 }
 
                 if (user.password !== password) {
-                    throw new Error('Invalid password');
+                    return Promise.reject('Invalid password');
                 }
 
                 return user;

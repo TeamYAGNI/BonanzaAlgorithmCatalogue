@@ -10,6 +10,10 @@ const { Strategy: FacebookStrategy } = require('passport-facebook');
 const { OAuth2Strategy: GoogleStrategy } = require('passport-google-oauth');
 const { Strategy: TwitterStrategy } = require('passport-twitter');
 
+const MESSAGES = {
+    EXISTING_USERNAME: 'There is already user with same username!',
+};
+
 const {
     localAuth,
     facebookAuth,
@@ -27,7 +31,7 @@ const configAuth = (app, { users }) => {
         (req, username, password, done) => {
             return users.checkPassword(username, password)
                 .then((user) => done(null, user))
-                .catch((error) => done(error));
+                .catch((error) => done(null, false, req.flash('error', error)));
         }
     ));
 
@@ -40,16 +44,26 @@ const configAuth = (app, { users }) => {
             return users.findByUsername(username)
                 .then((user) => {
                     if (user) {
-                        return done(null, false);
+                        return done(
+                            null,
+                            false,
+                            req.flash('error', MESSAGES.EXISTING_USERNAME));
                     }
 
-                    user = req.body;
+                    user = {
+                        firstName: req.body['first-name'],
+                        lastName: req.body['last-name'],
+                        username: req.body.username,
+                        passHash: req.body.password,
+                        email: req.body['e-mail'],
+                        profileImage: req.body['profile-img'],
+                    };
 
                     return users.create(user)
-                        .then((newUser) => {
-                            return done(null, newUser);
-                        });
-                }).catch((err) => done(err));
+                        .then((newUser) => done(null, newUser));
+                }).catch((error) => {
+                    done(null, false, req.flash('error', error));
+                });
         }));
 
     passport.use('facebook-login',
@@ -63,7 +77,6 @@ const configAuth = (app, { users }) => {
     passport.use('google-login',
         new GoogleStrategy(googleAuth,
             (req, token, tokenSecret, profile, done) => {
-                console.log('opa');
                 return users.findOrCreate(profile)
                     .then((user) => done(null, user))
                     .catch((err) => done(err));

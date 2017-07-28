@@ -11,16 +11,17 @@ const getController = ({ users }, passport) => {
         })(...args);
     };
 
-    const facebookLogin = (req, res) => {
-        passport.authenticate('facebook-login', { scope: 'email' })(req, res);
+    const facebookLogin = (req, res, next) => {
+        passport.authenticate('facebook-login',
+            { scope: 'email' })(req, res, next);
     };
 
-    const facebookLoginCallback = (req, res) => {
+    const facebookLoginCallback = (req, res, next) => {
         passport.authenticate('facebook-login', {
             successRedirect: '/',
             failureRedirect: '/auth/login',
             failureFlash: true,
-        })(req, res);
+        })(req, res, next);
     };
 
     const googleLogin = (req, res, next) => {
@@ -67,7 +68,7 @@ const getController = ({ users }, passport) => {
     const register = (...args) => {
         return passport.authenticate('local-register', {
             successRedirect: '/auth/login',
-            failureRedirect: '/',
+            failureRedirect: '/auth/register',
             failureFlash: true,
         })(...args);
     };

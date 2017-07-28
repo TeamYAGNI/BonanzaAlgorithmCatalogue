@@ -2,8 +2,8 @@ class User {
     static isValid(model) {
         return typeof model !== 'undefined' &&
             typeof model.username === 'string' &&
-            typeof model.password === 'string' &&
-             model.password.length > 3 &&
+            typeof model.passHash === 'string' &&
+            model.passHash.length === 64 &&
             model.username.length > 3;
     }
 

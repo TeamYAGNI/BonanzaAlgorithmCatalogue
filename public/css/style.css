@@ -8,12 +8,30 @@ a {
     color: #00B7FF;
 }
 
+.alert {
+    height: 30px;
+    line-height:30px;
+    margin-bottom: 15px;
+    padding: 0 15px;
+}
+
+.close{
+    height: 30px;
+    line-height:30px;
+    margin-right: 15px;
+    vertical-align: central;
+}
+
 .offset-left {
     margin-left: 12px;
 }
 
 .offset-top {
     margin-top: 30px;
+}
+
+.col-sx-offset-1{
+    margin-top: 0.5em;
 }
 
 .red-text {

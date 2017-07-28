@@ -91,8 +91,8 @@ $(() => {
             !validateImage(user.image)) {
             event.preventDefault();
         } else {
-            $password.html(user.password);
-            $passwordConfirmation.html(user.password);
+            $password.val(user.password);
+            $passwordConfirmation.val(user.password);
             return;
         }
     });
