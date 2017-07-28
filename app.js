@@ -9,6 +9,7 @@ async()
     .then((db) => require('./data').init(db))
     .then((data) => require('./config/express').init(data, config))
     .then((app) => {
-        app.listen(config.port, () =>
+       return app.listen(config.port, () =>
             console.log(`Express server listening on port:${config.port}`));
-    });
+    })
+    .then((server) => require('./config/socket').init(server));

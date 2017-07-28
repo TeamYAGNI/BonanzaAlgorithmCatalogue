@@ -62,7 +62,7 @@ gulp.task('pre-test', () => {
 });
 
 gulp.task('test:lint', () => {
-  return gulp.src(['**/*.js', '!./node_modules/', '!coverage/**'])
+  return gulp.src(['**/*.js', '!./node_modules/', '!coverage/**', '!public/**'])
     .pipe(plumber())
     .pipe(eslint())
     .pipe(eslint.format())
