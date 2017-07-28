@@ -48,13 +48,6 @@ const configAuth = (app, { users }) => {
             })
             .catch(done);
     });
-
-    app.use((req, res, next) => {
-        res.locals = {
-            user: req.user,
-        };
-        next();
-    });
 };
 
 module.exports = configAuth;

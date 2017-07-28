@@ -1,6 +1,6 @@
 const getHomeController = () => {
     const getHome = (req, res) => {
-        return res.render('index', {
+        return res.status(200).render('index', {
             title: 'Generator-Express MVC',
         });
     };

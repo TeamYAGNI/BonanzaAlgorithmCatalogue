@@ -1,0 +1,55 @@
+extends layout
+
+block js
+    script(src="/public/js/admin.js")
+
+block content
+    .collapse-group
+        .controls
+            button.btn.btn-primary.open-button(type='button')
+                | Open all
+            button.btn.btn-primary.close-button(type='button')
+                | Close all
+        .panel.panel-default
+            #headingOne.panel-heading(role='tab')
+                h4.panel-title
+                    a.trigger.collapsed(role='button', data-toggle='collapse', href='#collapseOne', aria-expanded='true', aria-controls='collapseOne')
+                        | Add Task
+            #collapseOne.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingOne')
+                .panel-body
+                    form.container(action='/admin/task' id='taskform' method='post')
+                        .col-md-2
+                            .col
+                                label Name:
+                                    input#name(type='text', required='required', name='name')
+                            .col
+                                label Timelimit:
+                                    input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit')
+                            .col
+                                label Memory Limit:
+                                    input#memorylimit(type='text', placeholder='in MB' required='required', name='memorylimit')
+                        .col-md-3
+                            .col
+                                label Description:
+                                    textarea#description(form='taskform' wrap='hard' required='required', name='description')
+                        .col-md-3
+                            .col                        
+                                label Input:
+                                    textarea#input(form='taskform' wrap='hard' required='required', name='input')
+                        .col-md-3
+                            .col
+                                label Result:
+                                    textarea#result(form='taskform' wrap='hard' required='required', name='results')
+                        .col-md-1
+                            .col
+                                button#add.btn.btn-primary(type='button') Add New Pair
+                            .col
+                                input#submit.btn.btn-primary(type='button', value='Post')
+        .panel.panel-default
+            #headingTwo.panel-heading(role='tab')
+                h4.panel-title
+                    a.trigger.collapsed(role='button', data-toggle='collapse', href='#collapseTwo', aria-expanded='true', aria-controls='collapseTwo')
+                        | Collapsible Group Item #2
+            #collapseTwo.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingTwo')
+                .panel-body
+                    | Sunt quia aperiam, officiis tempora quis quasi fugit ab ipsa quo expedita reiciendis quod iusto! Enim delectus unde voluptatem officiis molestiae repudiandae.
