@@ -1,4 +1,4 @@
-const getChatController = () => {
+const getController = () => {
     const getChatForm = (req, res) => {
         if (req.isAuthenticated()) {
             res.render('chat');
@@ -12,4 +12,4 @@ const getChatController = () => {
     };
 };
 
-module.exports = { getChatController };
+module.exports = { getController };

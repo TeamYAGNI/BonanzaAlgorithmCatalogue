@@ -1,4 +1,4 @@
-const getAdminController = (data) => {
+const getController = (data) => {
     const getAdminPanel = (req, res) => {
         res.status(200).render('admin');
     };
@@ -27,4 +27,4 @@ const getAdminController = (data) => {
     };
 };
 
-module.exports = { getAdminController };
+module.exports = { getController };

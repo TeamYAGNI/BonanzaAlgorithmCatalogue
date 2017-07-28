@@ -1,6 +1,7 @@
 const edge = require('edge');
 const md = require('marked');
-const getTasksController = ({ tasks }) => {
+
+const getController = ({ tasks }) => {
     const getTasksList = (req, res) => {
         tasks.getAll()
             .then((data) => {
@@ -86,7 +87,7 @@ public class Startup
                         } else {
                             const current = result.trim().split(' ');
                             const message = `Time: ${current[0]}
-                            Memory: ${current[2]}MB`;
+                                 Memory: ${current[2]}MB`;
                             if (task.results[i].trim() === current[1].trim() &&
                                 +task.memorylimit > +current[2]) {
                                 results.push({
@@ -127,4 +128,4 @@ public class Startup
     };
 };
 
-module.exports = { getTasksController };
+module.exports = { getController };

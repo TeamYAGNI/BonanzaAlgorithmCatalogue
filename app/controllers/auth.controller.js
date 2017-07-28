@@ -1,16 +1,55 @@
-const passport = require('passport');
-
- const getAuthController = ({ users }) => {
+const getController = ({ users }, passport) => {
     const getLoginForm = (req, res) => {
         return res.render('login');
     };
 
-    const login = (req, res) => {
-        return passport.authenticate('local', {
+    const login = (...args) => {
+        return passport.authenticate('local-login', {
             successRedirect: '/',
             failureRedirect: '/auth/login',
             failureFlash: true,
-        })(req, res);
+        })(...args);
+    };
+
+    const facebookLogin = (req, res, next) => {
+        passport.authenticate('facebook-login',
+            { scope: 'email' })(req, res, next);
+    };
+
+    const facebookLoginCallback = (req, res, next) => {
+        passport.authenticate('facebook-login', {
+            successRedirect: '/',
+            failureRedirect: '/auth/login',
+            failureFlash: true,
+        })(req, res, next);
+    };
+
+    const googleLogin = (req, res, next) => {
+        passport
+            .authenticate('google-login',
+            { scope: ['profile', 'email'] })(req, res, next);
+    };
+
+    const googleLoginCallback = (req, res, next) => {
+        passport.authenticate('google-login', {
+            successRedirect: '/',
+            failureRedirect: '/auth/login',
+            failureFlash: true,
+        })(req, res, next);
+    };
+
+    const twitterLogin = (req, res, next) => {
+        passport
+            .authenticate('twitter-login',
+            { scope: 'email' })(req, res, next);
+    };
+
+    const twitterLoginCallback = (req, res, next) => {
+        passport.authenticate('twitter-login', {
+            successRedirect: '/',
+            failureRedirect: '/auth/login',
+            failureFlash: true,
+        })(req, res, next);
     };
 
     const logout = (req, res) => {
@@ -22,26 +61,31 @@ const passport = require('passport');
         });
     };
 
-     const getRegisterForm = (req, res) => {
+    const getRegisterForm = (req, res) => {
         return res.render('register');
     };
 
-    const register = (req, res) => {
-        const user = req.body;
-
-        return users.create(user)
-            .then((dbUser) => {
-                return res.redirect('/auth/login');
-            });
+    const register = (...args) => {
+        return passport.authenticate('local-register', {
+            successRedirect: '/auth/login',
+            failureRedirect: '/auth/register',
+            failureFlash: true,
+        })(...args);
     };
 
     return {
         getLoginForm,
         login,
+        facebookLogin,
+        facebookLoginCallback,
+        googleLogin,
+        googleLoginCallback,
+        twitterLogin,
+        twitterLoginCallback,
         logout,
         getRegisterForm,
         register,
     };
 };
 
-module.exports = { getAuthController };
+module.exports = { getController };

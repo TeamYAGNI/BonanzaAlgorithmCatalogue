@@ -1,13 +1,41 @@
-extends layout
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
+
+block css
+      link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+
+block js
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
+    script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
+    script(src='/public/js/login.js')
+
+block navigation
+    +nav()
+
+block breadcrump
+    +breadcrump(['Home', '-Auth', 'Login'])
 
 block content
-    form(action='/auth/login', method='post')
-        div
-            label Username:
-                input(type='text', name='username')
-        div
-            label Password:
-                input(type='password', name='password')
-        div
-            input(type='submit', value='Log In')
-            
+    form#signin-form(action="/auth/login" method="POST")
+        fieldset
+            .row
+                .col-md-6.col-sm-12.col-xs-12.form-group.col-md-offset-3
+                    .control-group
+                        label.control-label(for='username') Username
+                        .controls
+                            input#signin-username.form-control.input-lg(type='text', name='username', placeholder='Username', autofocus='', required ='required')
+                    .control-group
+                        label.control-label(for='password') Password
+                        .controls
+                            input#signin-password.form-control.input-lg(type='password', name='password', placeholder='Password' required ='required')
+                    .control-group
+                        .controls.offset-top
+                            input#signin-submit.btn.btn-success.btn-lg(type="submit" value="Log In")
+                            label.control-label.col-md-offset-1 Or Log in with:
+                            a.btn.btn-primary.offset-left.col-sx-offset-1(href="/auth/facebook")
+                                span.fa.fa-facebook Facebook
+                            a.btn.btn-primary.btn-info.offset-left.col-sx-offset-1(href="/auth/twitter")
+                                span.fa.fa-twitter Twitter
+                            a.btn.btn-primary.btn-danger.offset-left.col-sx-offset-1(href="/auth/google")
+                                span.fa.fa-google-plus Google+

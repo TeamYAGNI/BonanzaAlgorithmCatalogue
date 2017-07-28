@@ -1,15 +1,20 @@
 const { Router } = require('express');
-const { getUserController } = require('../controllers/users.controller');
 
-const attachTo = (app, data) => {
+const attachTo = (app, { users: userController }) => {
     const usersRouter = new Router();
-    const userController = getUserController(data);
 
     usersRouter
-        .get('/', userController.getUsers)
-        .get('/:id', userController.getById);
+        .get('/', isLoggedIn, userController.getUsers)
+        .get('/:id', isLoggedIn, userController.getById);
 
     app.use('/users', usersRouter);
+};
+
+const isLoggedIn = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+         res.redirect('/auth/login');
+    }
+        return next();
 };
 
 module.exports = { attachTo };
