@@ -138,3 +138,7 @@ textarea {
      width: 100%;
  }
 
+ body.waiting * {
+    cursor: progress;
+}
+

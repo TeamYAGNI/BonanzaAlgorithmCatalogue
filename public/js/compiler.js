@@ -1,6 +1,7 @@
 /* globals $ */
 $(() => {
     $('#submit').on('click', (ev) => {
+        $('body').addClass('waiting');
         const body = $('#results-modal .modal-body');
         body.empty();
         const inputForm = $('#input');
@@ -52,15 +53,18 @@ $(() => {
                 },
             });
         }
+        $('body').removeClass('waiting');
     });
 
     $('#results').on('click', () => {
+        $('body').addClass('waiting');
         const body = $('#results-modal .modal-body');
         if (body.is(':empty')) {
             const p = $('<b/>');
             p.text('You have no submissions yet.');
             p.appendTo(body);
         }
+        $('body').removeClass('waiting');
     });
 
     $('[data-toggle="tooltip"]').tooltip();
@@ -76,6 +80,7 @@ $(() => {
     });
 
     $('#avg').on('click', () => {
+        $('body').addClass('waiting');
         const body = $('#avg-modal .modal-body');
         body.empty();
         const data = table.api().column(2).data();
@@ -107,6 +112,7 @@ Min achieved: ${low}`;
             p.text('There are no participants yet.');
             p.appendTo(body);
         }
+        $('body').removeClass('waiting');
     });
 });
 
