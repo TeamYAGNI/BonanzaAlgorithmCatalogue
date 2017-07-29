@@ -198,4 +198,14 @@ $(() => {
         $('#help-email').removeClass('red-text');
         return true;
     };
+
+    $('#photo-container').prepend(
+        $.cloudinary.image('default-profile-picture', {
+            radius: 'max',
+            height: 150,
+            width: 150,
+            crop: 'scale',
+        })
+        .addClass("avatar img-circle img-thumbnail")
+    );
 });

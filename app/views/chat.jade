@@ -15,6 +15,11 @@ block breadcrump
     +breadcrump(['Home', 'Chat'])  
 
 block content
+    div#progress-bar.progress.hidden
+        div.progress-bar.progress-bar-info(role="progressbar" aria-valuemin="0" aria-valuemax="100")
+    div#photo-container
+        h6 "Upload a different photo..."
+        input#photo-selector(name="file" type="file" class="upload_field text-center center-block well well-sm")
     .chat_window
         #content.messages
         .bottom_wrapper.clearfix

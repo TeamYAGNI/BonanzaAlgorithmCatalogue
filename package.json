@@ -11,7 +11,10 @@
     "test:integration": "mocha --recursive test/integration"
   },
   "dependencies": {
+    "blueimp-file-upload": "^9.18.0",
     "body-parser": "^1.13.3",
+    "bootstrap": "^3.3.7",
+    "cloudinary-jquery-file-upload": "^2.3.0",
     "compression": "^1.5.2",
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.3.0",
