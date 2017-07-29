@@ -1,59 +1,125 @@
-extends layout
+extends _shared/base/layout
+include _shared/mixins/navigation
+
+block css
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css')
 
 block js
-    script(src="/public/js/compiler.js")
+    script(src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")
+    script(src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js")
+    script(src='/public/js/compiler.js')
+
+block navigation
+    +nav(user, '/')
 
 block content
-    h1 
-        | #{task.name}
-    form.pull-left(id='compilerform' action='/compiler/' + task._id, method='post')
-        div
+    h1.text-center #{task.name}
+    form.col-md-6(id='compilerform' action='/compiler/' + task._id, method='post')
+        h1.text-center Solution
+        .col
             label Input:
-                textarea#input(form='compilerform' wrap='hard' rows=10 cols=50 required='required' name='input')
-        #results-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='results-title', aria-hidden='true')
-            .modal-dialog(role='document')
-                .modal-content
-                    .modal-header
-                        button.close(type='button', data-dismiss='modal', aria-label='Close')
-                            span(aria-hidden='true') ×
-                        h4#results-title.modal-title Results
-                    .modal-body
-                    .modal-footer
-                        a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', title='', data-original-title='Go to catalogue', aria-describedby='tooltip218548') Catalogue
-                        button.btn.btn-default(type='button', data-dismiss='modal') Close        
-        #description-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='description-modal-title', aria-hidden='true')
-            .modal-dialog(role='document')
-                .modal-content
-                    .modal-header
-                        h5#description-modal-title.modal-title #{task.name}
-                        button.close(type='button', data-dismiss='modal', aria-label='Close')
-                            span(aria-hidden='true') ×
-                    .modal-body
-                        != md(task.description)
-                    .modal-footer
-                        button.btn.btn-secondary(type='button', data-dismiss='modal') Close        
-        div
-            button#submit.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Submit
-            button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Results
-            button#description.btn.btn-primary(type='button', data-toggle='modal', data-target='#description-modal') Description
-            button#edit.btn.btn-primary(type='button') Edit
-            button#delete.btn.btn-danger(type='button') Delete
-    .pull-right 
-        h1 
-            | Ranking
-        table.table.table-hover.table-striped.table-bordered
-            thead
-                tr
-                    th #
-                    th Username
-                    th Result
-            tbody
-                tr
-                    th(scope='row') 1
-                    td Mark
-                    td 0 / #{task.results.length * 10}
-                tr
-                    th(scope='row') 2
-                    td Jacob
-                    td 0 / #{task.results.length * 10}
-        
+                textarea#input(form='compilerform' wrap='hard' rows=50 cols=90 required='required' name='input')
+        .col.btn-toolbar.centered
+            .btn-group
+                button#submit.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Submit
+                button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Results
+                button#description.btn.btn-primary(type='button', data-toggle='modal', data-target='#description-modal') Description
+                a#submissions.btn.btn-primary(href='/usersubmissions', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
+            .btn-group
+                button#edit.btn.btn-primary(type='button') Edit
+                button#delete.btn.btn-danger(type='button') Delete
+    .col-md-6
+        .col
+            h1.text-center Ranking
+                table#ranking-table.table.table-hover.table-striped.table-bordered(cellspacing='0')
+                    thead
+                        tr
+                            th #
+                            th Username
+                            th Result
+                    tfoot
+                        tr
+                            th #
+                            th Username
+                            th
+                                button#avg.btn.btn-primary(type='button', data-toggle='modal', data-target='#avg-modal') Get Average
+                    tbody
+                        tr
+                            td 1
+                            td Test
+                            td.result 10 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 9 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 8 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 7 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 6 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 0 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 5 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 4 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 2 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 1 / #{task.results.length * 10}
+                        tr
+                            td 2
+                            td Test
+                            td.result 3 / #{task.results.length * 10}
+    #results-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='results-title', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                    h4#results-title.modal-title Results
+                .modal-body
+                .modal-footer
+                    a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
+                    button.btn.btn-default(type='button', data-dismiss='modal') Close        
+    #description-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='description-modal-title', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#description-modal-title.modal-title #{task.name}
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    != md(task.description)
+                .modal-footer
+                    a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+    #avg-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='avg-modal-title', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#avg-modal-title.modal-title #{task.name} Average Results
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                .modal-footer
+                    a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
