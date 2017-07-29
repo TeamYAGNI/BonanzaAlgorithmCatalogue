@@ -1,9 +1,18 @@
-extends layout
+extends _shared/base/layout
+include _shared/mixins/navigation
+
+block css
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css')
 
 block js
-    script(src="/public/js/admin.js")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js')
+    script(src='/public/js/admin.js')
+
+block navigation
+    +nav(user, '/admin')
 
 block content
+    h1.text-center Admin Panel
     .collapse-group
         .controls
             button.btn.btn-primary.open-button(type='button')
@@ -31,20 +40,33 @@ block content
                         .col-md-3
                             .col
                                 label Description:
-                                    textarea#description(form='taskform' wrap='hard' required='required', name='description')
+                                    textarea#description(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='description')
                         .col-md-3
                             .col                        
                                 label Input:
-                                    textarea#input(form='taskform' wrap='hard' required='required', name='input')
+                                    textarea#input(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='input')
                         .col-md-3
                             .col
                                 label Result:
-                                    textarea#result(form='taskform' wrap='hard' required='required', name='results')
+                                    textarea#result(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='results')
                         .col-md-1
                             .col
-                                button#add.btn.btn-primary(type='button') Add New Pair
+                                label Tags:
+                                    select#tags.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
+                                        option(data-token='#data-structures') Data Structures
+                                        option(data-token='#recursion') Recursion
+                                        option(data-token='#combinatorics') Combinatorics
+                                        option(data-token='#sorting-algorithms') Sorting Algorithms
+                                        option(data-token='#searching-algorithms') Searching Algorithms
+                                        option(data-token='#trees-and-traversals') Trees and Traversals
+                                        option(data-token='#graph-algorithms') Graph Algorithms
+                                        option(data-token='#greedy-algorithms') Greedy Algorithms
+                                        option(data-token='#dynamic-programming') Dynamic Programming
+                                        option(data-token='#string-algorithms') String Algorithms
                             .col
-                                input#submit.btn.btn-primary(type='button', value='Post')
+                                button#add.btn.btn-primary(type='button') Add Input/Result
+                            .col
+                                input#submit.btn.btn-primary(type='button', value='Post Task')
         .panel.panel-default
             #headingTwo.panel-heading(role='tab')
                 h4.panel-title

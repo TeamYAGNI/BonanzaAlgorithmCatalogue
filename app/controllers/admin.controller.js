@@ -11,8 +11,8 @@ const getController = (data) => {
             description: req.body.description,
             input: req.body.input,
             results: req.body.results,
+            tags: req.body.tags,
         };
-        console.log(task.description);
         data.tasks.create(task)
             .then(() => {
                 res.status(200).send();

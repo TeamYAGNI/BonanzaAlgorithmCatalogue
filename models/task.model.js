@@ -8,7 +8,8 @@ class Task {
             model.results.length === model.input.length &&
             typeof model.timelimit === 'string' &&
             typeof model.description === 'string' &&
-            typeof model.memorylimit === 'string';
+            typeof model.memorylimit === 'string' &&
+            Array.isArray(model.tags);
     }
 
     get id() {
