@@ -45,9 +45,26 @@ $(() => {
         }
     });
 
-    $(document).ready(function() {
+    $('#photo-container').prepend(
+        $.cloudinary.image('default-profile-picture', {
+            radius: 'max',
+            height: 150,
+            width: 150,
+            crop: 'scale',
+        })
+        .attr('id', 'profile-photo')
+    );
+
+    $('#photo-selector').unsigned_cloudinary_upload('q3olokl1', {
+        cloud_name: 'teamyowie',
+        tags: 'browser_uploads',
+    })
+    .bind('cloudinarydone', (e, data) => {
+        $('#profile-photo').remove();
+        $('#progress-bar')
+            .addClass('hidden');
         $('#photo-container').prepend(
-            $.cloudinary.image('default-profile-picture', {
+            $.cloudinary.image(data.result.public_id, {
                 radius: 'max',
                 height: 150,
                 width: 150,
@@ -55,32 +72,15 @@ $(() => {
             })
             .attr('id', 'profile-photo')
         );
-
-        $('#photo-selector').unsigned_cloudinary_upload('q3olokl1', {
-            cloud_name: 'teamyowie',
-            tags: 'browser_uploads',
-        })
-        .bind('cloudinarydone', (e, data) => {
-            $('#profile-photo').remove();
-            $('#photo-container').html(
-                $.cloudinary.image(data.result.public_id, {
-                    radius: 'max',
-                    height: 150,
-                    width: 150,
-                    crop: 'scale',
-                })
-                .attr('id', 'profile-photo')
-            );
-        });
-        // .bind("cloudinaryprogress", (e, data) => {
-        //     let percent = Math.round((data.loaded*100.0)/data.total)+"%";
-        //     $("#photo-selector")
-        //         .addClass("hidden");
-        //     $("#progress-bar")
-        //         .removeClass("hidden");
-        //     $(".progress-bar-info")
-        //         .css("width", currentPercentage)
-        //         .text(currentPercentage);
-        // });
+    })
+    .bind('cloudinaryprogress', (e, data) => {
+        const percent = Math.round((data.loaded*100.0)/data.total)+'%';
+        // $('#photo-selector')
+        //     .addClass('hidden');
+        $('#progress-bar')
+            .removeClass('hidden');
+        $('.progress-bar-info')
+            .css('width', percent)
+            .text(percent);
     });
 });

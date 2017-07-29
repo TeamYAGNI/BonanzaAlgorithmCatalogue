@@ -206,6 +206,5 @@ $(() => {
             width: 150,
             crop: 'scale',
         })
-        .attr('id', 'profile-photo')
     );
 });
