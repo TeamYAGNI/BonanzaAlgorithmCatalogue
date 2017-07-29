@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const attachTo = (app, { compiler: tasksController }) => {
+const attachTo = (app, { tasks: tasksController }) => {
     const tasksRouter = new Router();
 
     tasksRouter

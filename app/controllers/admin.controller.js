@@ -11,6 +11,7 @@ const getController = (data) => {
             description: req.body.description,
             input: req.body.input,
             results: req.body.results,
+            tags: req.body.tags,
         };
         data.tasks.create(task)
             .then(() => {

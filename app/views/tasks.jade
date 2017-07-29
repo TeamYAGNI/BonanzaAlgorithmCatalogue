@@ -14,8 +14,8 @@ block navigation
 
 block content
     h1.text-center Tasks
-    table#tasks-table.table.table-hover.table-striped(cellspacing='0', width='100%')
-        thead.thead-inverse
+    table#tasks-table.table.table-hover.table-striped.table-bordered(cellspacing='0')
+        thead
             tr
                 th Name
                 th Tags
@@ -30,6 +30,7 @@ block content
                 tr
                     td
                         a.list-group-item(href='/tasks/' + task._id) #{task.name}
-                    td System Architect
-                    td Edinburgh
-                        //- a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', title='', data-original-title='Go to catalogue', aria-describedby='tooltip218548') Catalogue
+                    td 
+                        each tag in task.tags
+                            a.btn.btn-secondary(href='/catalogue/' + tag.substr(1), role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue category: ' + tag.substr(1)) #{tag}
+                    td 0 / #{task.results.length * 10}

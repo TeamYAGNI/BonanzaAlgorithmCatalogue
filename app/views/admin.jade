@@ -1,7 +1,11 @@
 extends _shared/base/layout
 include _shared/mixins/navigation
 
+block css
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css')
+
 block js
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js')
     script(src='/public/js/admin.js')
 
 block navigation
@@ -46,6 +50,19 @@ block content
                                 label Result:
                                     textarea#result(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='results')
                         .col-md-1
+                            .col
+                                label Tags:
+                                    select#tags.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
+                                        option(data-token='#data-structures') Data Structures
+                                        option(data-token='#recursion') Recursion
+                                        option(data-token='#combinatorics') Combinatorics
+                                        option(data-token='#sorting-algorithms') Sorting Algorithms
+                                        option(data-token='#searching-algorithms') Searching Algorithms
+                                        option(data-token='#trees-and-traversals') Trees and Traversals
+                                        option(data-token='#graph-algorithms') Graph Algorithms
+                                        option(data-token='#greedy-algorithms') Greedy Algorithms
+                                        option(data-token='#dynamic-programming') Dynamic Programming
+                                        option(data-token='#string-algorithms') String Algorithms
                             .col
                                 button#add.btn.btn-primary(type='button') Add Input/Result
                             .col

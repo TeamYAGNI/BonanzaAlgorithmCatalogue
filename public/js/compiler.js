@@ -3,11 +3,13 @@ $(() => {
     $('#submit').on('click', (ev) => {
         const body = $('#results-modal .modal-body');
         body.empty();
-        const input = $('#input').val();
-        if (input === '') {
+        const inputForm = $('#input');
+        const input = inputForm.val();
+        if (input.trim() === '') {
             const p = $('<b/>');
             p.text('You can not pass empty submission!');
             p.appendTo(body);
+            inputForm.val('');
         } else {
             const url = window.location.href;
             $.ajax({
@@ -60,7 +62,52 @@ $(() => {
             p.appendTo(body);
         }
     });
+
     $('[data-toggle="tooltip"]').tooltip();
+
+    const table = $('#ranking-table').dataTable({
+        'processing': true,
+        'searching': false,
+        'ordering': false,
+        'deferRender': true,
+        'pageLength': 10,
+        'lengthChange': false,
+        'pagingType': 'simple',
+    });
+
+    $('#avg').on('click', () => {
+        const body = $('#avg-modal .modal-body');
+        body.empty();
+        const data = table.api().column(2).data();
+        const participantsCount = data.length;
+        if (participantsCount > 0) {
+            const maxResult = +(data[0].split('/')[1].trim());
+            let result = 0;
+            let low = maxResult + 1;
+            let high = 0;
+            let currentEl;
+            $.each(data, (index, element) => {
+                currentEl = +(element.split('/')[0].trim());
+                result += currentEl;
+                if (currentEl > high) {
+                    high = currentEl;
+                }
+                if (currentEl < low) {
+                    low = currentEl;
+                }
+            });
+            const avg = result / participantsCount;
+            const text = `Average result: ${avg} / ${maxResult}
+Max achieved: ${high}
+Min achieved: ${low}`;
+            const pre = $('<pre/>').append(text);
+            pre.appendTo(body);
+        } else {
+            const p = $('<b/>');
+            p.text('There are no participants yet.');
+            p.appendTo(body);
+        }
+    });
 });
 
 // if we need to dynamically add tooltip ->
