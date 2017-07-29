@@ -21,7 +21,9 @@ mixin nav(user, route)
                             li
                                 a.request(href='#') Algorithms
                     li(class=(route === '/tasks' ? 'active' : ''))
-                        a(href='#') Tasks
+                        a(href='/tasks') Tasks
+                    li(class=(route === '/admin' ? 'active' : ''))
+                        a(href='/admin') Admin
                 ul.nav.navbar-nav.navbar-right
                     if (user)
                         li.dropdown

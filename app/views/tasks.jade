@@ -1,7 +1,35 @@
-extends layout
+extends _shared/base/layout
+include _shared/mixins/navigation
+
+block css
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css')
+
+block js
+    script(src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")
+    script(src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js")
+    script(src="/public/js/tasks.js")
+
+block navigation
+    +nav(user, '/tasks')
 
 block content
-    .list-group
-        each task in tasks
-            a.list-group-item.list-group-item-action(href='/tasks/' + task._id) 
-                | #{task.name}
+    h1.text-center Tasks
+    table#tasks-table.table.table-hover.table-striped(cellspacing='0', width='100%')
+        thead.thead-inverse
+            tr
+                th Name
+                th Tags
+                th Result
+        tfoot
+            tr
+                th Name
+                th Tags
+                th Result
+        tbody
+            each task in tasks
+                tr
+                    td
+                        a.list-group-item(href='/tasks/' + task._id) #{task.name}
+                    td System Architect
+                    td Edinburgh
+                        //- a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', title='', data-original-title='Go to catalogue', aria-describedby='tooltip218548') Catalogue
