@@ -206,5 +206,6 @@ $(() => {
             width: 150,
             crop: 'scale',
         })
+        .addClass("avatar img-circle img-thumbnail")
     );
 });
