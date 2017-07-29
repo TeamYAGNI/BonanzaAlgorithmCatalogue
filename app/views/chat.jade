@@ -1,15 +1,32 @@
-extends layout
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
 
+block css
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+    link(rel="stylesheet" href="/public/css/chat.css")
 block js
-    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
-    script(src='/public/js/chat.js')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js")
     script(src='/libs/socket.io-client/dist/socket.io.js')
+    script(src='/public/js/chat.js')
+
+block navigation
+    +nav(user)
+
+block breadcrump
+    +breadcrump(['Home', 'Chat'])  
 
 block content
-    #content(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll;')
-    .controls
-        | Name:
-        input#name(style='width:350px;')
-        br
-        input#field(style='width:350px;')
-        input#send(type='button', value='send')
+    .chat_window
+        #content.messages
+        .bottom_wrapper.clearfix
+            .message_input_wrapper
+                input#field.message_input(placeholder='Type your message here...')
+            .send_message
+                .icon
+                .text Send
+    .message_template
+        li.message
+            .avatar
+            .text_wrapper
+                .text

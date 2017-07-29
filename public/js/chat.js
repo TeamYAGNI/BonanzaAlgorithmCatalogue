@@ -1,40 +1,45 @@
-/* global $, io, sendMessage */
-window.onload = function() {
-    'use strict';
-
-    const messages = [];
+/* global $, io */
+$(() => {
     const socket = io.connect('localhost:3000');
     const field = document.getElementById('field');
-    const sendButton = document.getElementById('send');
+    const $sendButton = $('.send_message');
+    const username = $('#current-username').html().trim();
     const content = document.getElementById('content');
-    const name = document.getElementById('name');
 
     socket.on('message', (data) => {
+        data.username = data.username ? data.username : 'Server';
+
         if (data.messageText) {
-            messages.push(data);
-            let html = '';
-            messages.forEach((message) => {
-                html += '<strong>' +
-                    (message.username ? message.username : 'Server') +
-                    ': </strong>';
-                html += message.messageText + '<br />';
-            });
-            content.innerHTML = html;
+            const $message = $($('.message_template').clone().html());
+            $message.find('.text')
+                .html(data.username + ': ' + data.messageText);
+
+            if (data.username === username) {
+                $message.addClass('left');
+            } else {
+                $message.addClass('right');
+            }
+
+            $('.messages').append($message);
+            $message.addClass('appeared');
+
             content.scrollTop = content.scrollHeight;
         } else {
             console.log('There is a problem:', data);
         }
     });
 
-    sendButton.onclick = () => {
+    const sendMessage = () => {
         const text = field.value;
-        socket.emit('send', { messageText: text, username: name.value });
+        socket.emit('send', { messageText: text, username: username });
         field.value = '';
     };
-};
 
-$(document).ready(function() {
-    $('#field').keyup(function(e) {
+    $sendButton.click(() => {
+        sendMessage();
+    });
+
+    $('.message_input').keyup((e) => {
         if (e.keyCode === 13) {
             sendMessage();
         }

@@ -27,7 +27,7 @@ mixin nav(user, route)
                         li.dropdown
                             a.dropdown-toggle(data-toggle='dropdown', href='#')
                                 span.glyphicon.glyphicon-user
-                                |  #{user.username}
+                                span#current-username   #{user.username}
                                 span.caret
                             ul.dropdown-menu
                                 li
@@ -37,7 +37,7 @@ mixin nav(user, route)
                                 li
                                     a.request(href='#')
                                         i.fa.fa-fw.fa-envelope
-                                        |  Messages
+                                        |  Chat
                                 li
                                     a.request(href='#')
                                         i.fa.fa-fw.fa-gear
