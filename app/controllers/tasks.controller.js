@@ -1,33 +1,44 @@
 const edge = require('edge');
 const md = require('marked');
 
-const getController = ({ tasks }) => {
+const getController = (data) => {
     const getTasksList = (req, res) => {
-        tasks.getAll()
-            .then((data) => {
+        data.tasks.getAll()
+            .then((t) => {
+                const userTasks = (req.user.tasks)
+                    ? req.user.tasks : {};
                 const context = {
-                    tasks: data,
+                    tasks: t,
+                    userTasks: userTasks,
                 };
+                console.log(context);
                 res.render('tasks', context);
             });
     };
     const getCompilerForm = (req, res) => {
         const id = req.params.id;
-        tasks.findById(id)
+        data.tasks.findById(id)
             .then((task) => {
+                const sortedKeys = Object.keys(task.users)
+                    .sort((a, b) => task.users[b] - task.users[a]);
                 const context = {
                     task: task,
                     md: md,
+                    sortedKeys: sortedKeys,
                 };
                 return context;
             })
             .then((context) => {
                 return res.render('compiler', context);
+            })
+            .catch((err) => {
+                console.log(err);
             });
     };
     const postTaskSolution = (req, res) => {
         const id = req.params.id;
-        tasks.findById(id)
+        const input = req.body;
+        data.tasks.findById(id)
             .then((task) => {
                 const boilerplate = edge.func(
                     `using System;
@@ -73,7 +84,7 @@ public class Startup
             }
         }
     }
-    ${req.body}
+    ${input}
 }`);
                 const results = [];
                 for (let i = 0; i < task.input.length; i++) {
@@ -88,8 +99,7 @@ public class Startup
                             const current = result.trim().split(' ');
                             const message = `Time: ${current[0]}
                                  Memory: ${current[2]}MB`;
-                            if (task.results[i].trim() === current[1].trim() &&
-                                +task.memorylimit > +current[2]) {
+                            if (task.results[i].trim() === current[1].trim()) {
                                 results.push({
                                     status: 'passed',
                                     reason: '',
@@ -105,6 +115,34 @@ public class Startup
                         }
                     });
                 }
+                const successCount = results
+                    .filter((x) => x.status === 'passed').length;
+                const submission = {
+                    code: input,
+                    result: successCount * 10,
+                    date: new Date().toLocaleDateString(),
+                };
+                const user = req.user;
+                if (!user.tasks) {
+                    user.tasks = {};
+                }
+                if (user.tasks[task._id]) {
+                    user.tasks[task._id].submissions.push(submission);
+                    if (user.tasks[task._id]
+                        .topResult.result < submission.result) {
+                        user.tasks[task._id].topResult = submission;
+                        task.users[user.username] = submission.result;
+                        data.tasks.updateById(task);
+                    }
+                } else {
+                    user.tasks[task._id] = {
+                        submissions: [submission],
+                        topResult: submission,
+                    };
+                    task.users[user.username] = submission.result;
+                    data.tasks.updateById(task);
+                }
+                data.users.updateById(user);
                 return results;
             })
             .then((results) => {

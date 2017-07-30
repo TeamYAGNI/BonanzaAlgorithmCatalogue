@@ -81,6 +81,7 @@ $(() => {
             lastName: validator.escape($lastName.val()),
             image: $profileImageUrl.val(),
             email: validator.escape($email.val()),
+            tasks: {},
         };
 
         if (!validateUsername(user.username) ||
@@ -206,6 +207,6 @@ $(() => {
             width: 150,
             crop: 'scale',
         })
-        .addClass("avatar img-circle img-thumbnail")
+        .addClass('avatar img-circle img-thumbnail')
     );
 });

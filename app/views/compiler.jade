@@ -45,50 +45,14 @@ block content
                             th
                                 button#avg.btn.btn-primary(type='button', data-toggle='modal', data-target='#avg-modal') Get Average
                     tbody
-                        tr
-                            td 1
-                            td Test
-                            td.result 10 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 9 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 8 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 7 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 6 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 0 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 5 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 4 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 2 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 1 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 3 / #{task.results.length * 10}
+                        each key, index in sortedKeys
+                            tr
+                                td 
+                                    | #{index+1}
+                                td
+                                    | #{key}
+                                td.result 
+                                    | #{task.users[key]} / #{task.results.length * 10}
     #results-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='results-title', aria-hidden='true')
         .modal-dialog(role='document')
             .modal-content

@@ -11,6 +11,7 @@ $(() => {
             p.text('You can not pass empty submission!');
             p.appendTo(body);
             inputForm.val('');
+            $('body').removeClass('waiting');
         } else {
             const url = window.location.href;
             $.ajax({
@@ -47,13 +48,14 @@ $(() => {
 
                     results.appendTo(body);
                     $('[data-toggle="popover"]').popover();
+                    $('body').removeClass('waiting');
                 },
                 error: (error) => {
+                    $('body').removeClass('waiting');
                     console.log(error);
                 },
             });
         }
-        $('body').removeClass('waiting');
     });
 
     $('#results').on('click', () => {

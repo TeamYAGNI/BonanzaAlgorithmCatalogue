@@ -52,7 +52,7 @@ $(() => {
             width: 150,
             crop: 'scale',
         })
-        .addClass("avatar img-circle img-thumbnail")
+        .addClass('avatar img-circle img-thumbnail')
         .attr('id', 'profile-photo')
     );
 
@@ -71,7 +71,7 @@ $(() => {
                 width: 150,
                 crop: 'scale',
             })
-            .addClass("avatar img-circle img-thumbnail")
+            .addClass('avatar img-circle img-thumbnail')
             .attr('id', 'profile-photo')
         );
     })

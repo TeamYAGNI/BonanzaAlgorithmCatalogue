@@ -11,8 +11,8 @@ const config = {
       name: 'bonanzaalgorithmscatalogue',
     },
     port: configJson.PORT || 3000,
-    db: 'mongodb://ec2-35-158-165-86.eu-central-1.compute.amazonaws.com/bonanzaalgorithmscatalogue-development',
-    // db: 'mongodb://localhost/bonanzaalgorithmscatalogue-development',
+    // db: 'mongodb://ec2-35-158-165-86.eu-central-1.compute.amazonaws.com/bonanzaalgorithmscatalogue-development',
+    db: 'mongodb://localhost/bonanzaalgorithmscatalogue-development',
   },
 
   test: {
