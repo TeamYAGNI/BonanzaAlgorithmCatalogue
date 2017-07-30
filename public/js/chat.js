@@ -1,6 +1,6 @@
 /* global $, io */
 $(() => {
-    const socket = io.connect('localhost:3000');
+    const socket = io.connect('http://ec2-35-158-219-114.eu-central-1.compute.amazonaws.com:3000');
     const field = document.getElementById('field');
     const $sendButton = $('.send_message');
     const username = $('#current-username').html().trim();
