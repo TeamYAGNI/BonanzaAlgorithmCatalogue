@@ -67,6 +67,7 @@ h1 {
     position: absolute;
     top: 40%;
     width: 8em;
+    z-index: 10;
 }
 
 .load-complete {
@@ -74,10 +75,12 @@ h1 {
     animation: none;
     border-color: #5cb85c;
     transition: border 500ms ease-out;
+    z-index: 10;
 }
 
 .checkmark {
     display: none;
+    z-index: 10;
 }
   
 .draw:after {
@@ -142,6 +145,10 @@ textarea {
     cursor: progress;
 }
 
-.profil-image {
+.profile-image {
     margin-left: 100px;
+}
+
+.not-visible {
+    visibility: hidden;
 }

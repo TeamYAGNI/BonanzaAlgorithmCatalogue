@@ -1,4 +1,4 @@
-/* globals $ validator toastr Hashes*/
+/* globals $ validator toastr Hashes requester */
 
 $(() => {
     const CONSTRAINTS = {
@@ -57,37 +57,58 @@ $(() => {
             Email must be a valid one!`,
     };
 
-    const $signupForm = $('#signup-form');
+    const $profileForm = $('#profile-form');
+    let userImage = $('#user-image').html().trim();
+    userImage = userImage ? userImage : 'default-profile-picture';
 
-    $signupForm.submit((event) => {
-        const $firstName = $signupForm.find('#signup-first-name');
-        const $lastName = $signupForm.find('#signup-last-name');
-        const $username = $signupForm.find('#signup-username');
-        const $email = $signupForm.find('#signup-email');
-        const $password = $signupForm.find('#signup-password');
+    $('#edit-btn').on('click', () => {
+        $('input').prop('disabled', false);
+        $('.help-block').removeClass('.not-visible');
+    });
+
+    $('#profile-save').on('click', () => {
+        const $firstName = $profileForm.find('#profile-first-name');
+        const $lastName = $profileForm.find('#profile-last-name');
+        const $username = $('#username');
+        const $email = $profileForm.find('#profile-email');
+        const $profileImage = $('#image-id');
+        const $oldPassword = $profileForm.find('#profile-old-password');
+        const oldPassword = $oldPassword.val();
+        const $password = $profileForm.find('#profile-password');
         const password = $password.val();
-        const $passwordConfirmation = $signupForm
-            .find('#signup-password-confirm');
+        const $passwordConfirmation = $profileForm
+            .find('#profile-password-confirm');
         const passwordConfirmation = $passwordConfirmation.val();
+        const url = window.location.href;
 
         const user = {
-            username: validator.escape($username.val()),
+            username: validator.escape($username.text()),
+            oldPassword: new Hashes.SHA256().hex(oldPassword).toString(),
             password: new Hashes.SHA256().hex(password).toString(),
             firstName: validator.escape($firstName.val()),
             lastName: validator.escape($lastName.val()),
             email: validator.escape($email.val()),
+            profileImage: validator.escape($profileImage.val()),
         };
 
-        if (!validateUsername(user.username) ||
-            !validatePassword(password, passwordConfirmation) ||
-            !validateEmail(user.email) ||
-            !validateFirstName(user.firstName) ||
-            !validateLastName(user.lastName)) {
-            event.preventDefault();
-        } else {
+        if (validateUsername(user.username) &&
+            validatePassword(password, passwordConfirmation) &&
+            validateEmail(user.email) &&
+            validateFirstName(user.firstName) &&
+            validateLastName(user.lastName)) {
+            $oldPassword.val(user.oldPassword);
             $password.val(user.password);
             $passwordConfirmation.val(user.password);
-            return;
+
+            requester.put(url, { user })
+                .then((response) => {
+                    toastr.success(response);
+
+                    setTimeout(() => {
+                        window.location.href = url;
+                    }, 1000);
+                })
+                .catch((response) => toastr.error(response.responseText));
         }
     });
 
@@ -182,51 +203,52 @@ $(() => {
         return true;
     };
 
-     $('.profile-image').html(
-        $.cloudinary.image('default-profile-picture', {
+    $('.profile-image').html(
+        $.cloudinary.image(userImage, {
             radius: 'max',
             height: 240,
             width: 240,
             crop: 'scale',
         })
-        .addClass('avatar img-circle img-thumbnail')
-        .attr('id', 'profile-photo')
+            .addClass('avatar img-circle img-thumbnail')
+            .attr('id', 'profile-photo')
     );
 
     $('#photo-selector').unsigned_cloudinary_upload('q3olokl1', {
         cloud_name: 'teamyowie',
         tags: 'browser_uploads',
     })
-    .bind('cloudinarydone', (e, data) => {
-        $('#profile-photo').remove();
-        $('#progress-bar')
-            .addClass('hidden');
-        $('#image-id').val(data.result.public_id);
+        .bind('cloudinarydone', (e, data) => {
+            $('#profile-photo').remove();
+            $('#progress-bar')
+                .addClass('hidden');
+            $('#image-id').val(data.result.public_id);
 
-        $('.profile-image').html(
-            $.cloudinary.image(data.result.public_id, {
-                radius: 'max',
-                height: 240,
-                width: 240,
-                crop: 'scale',
-            })
-            .addClass('avatar img-circle img-thumbnail')
-            .attr('id', 'profile-photo')
-        );
-    })
-    .bind('cloudinaryprogress', (e, data) => {
-        const percent = Math.round((data.loaded*100.0)/data.total)+'%';
-        $('#progress-bar')
-            .removeClass('hidden');
-        $('.progress-bar-info')
-            .css('width', percent)
-            .text(percent);
-    });
+            $('.profile-image').html(
+                $.cloudinary.image(data.result.public_id, {
+                    radius: 'max',
+                    height: 240,
+                    width: 240,
+                    crop: 'scale',
+                })
+                    .addClass('avatar img-circle img-thumbnail')
+                    .attr('id', 'profile-photo')
+            );
+        })
+        .bind('cloudinaryprogress', (e, data) => {
+            const percent = Math
+                .round((data.loaded * 100.0) / data.total) + '%';
+            $('#progress-bar')
+                .removeClass('hidden');
+            $('.progress-bar-info')
+                .css('width', percent)
+                .text(percent);
+        });
 
     const $photoSelector = $('#photo-selector');
 
     $photoSelector.on('change', () => {
         $('#file-path')
-        .val($photoSelector.val().replace(/\\/g, '/').replace(/.*\//, ''));
-  });
+            .val($photoSelector.val().replace(/\\/g, '/').replace(/.*\//, ''));
+    });
 });

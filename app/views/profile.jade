@@ -1,0 +1,80 @@
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
+
+block css
+      link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+
+block js
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/validator/8.0.0/validator.min.js")
+    script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
+    script(src='/public/js/requester.js')
+    script(src='/public/js/profile.js')
+
+block navigation
+    +nav(user)
+
+block breadcrump
+    +breadcrump(['Home', 'Users', user.username])
+
+block content
+    form#profile-form.form-horizontal(action="#{/users/user.username}" method="POST")
+        fieldset
+            #progress-bar.progress.hidden
+                .progress-bar.progress-bar-info(role="progressbar" aria-valuemin="0" aria-valuemax="100")
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    .profile-image  
+                    label.control-label(for='photo-selector') Upload a different photo...
+                    .input-group
+                        input#image-id(type='hidden', name='image-id', value= user.profileImage)
+                        label.input-group-btn
+                            span.btn.btn-primary Browse… 
+                                input#photo-selector(name="file" type="file", style='display: none;', multiple='' disabled)
+                        input#file-path.form-control(type='text', readonly='')
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    label.control-label(for='profile-old-password') Old Password
+                    .controls
+                        input#profile-old-password.form-control.input-lg(type='password', name='profile-old-password', placeholder='Old Password', disabled)
+                        p#help-old-password.help-block
+                            | Please provide your current password.
+                .control-group.col-md-offset-1
+                    label.control-label(for='profile-password') Password
+                    .controls
+                        input#profile-password.form-control.input-lg(type='password', name='password', placeholder='Password' disabled)
+                        p#help-password.help-block
+                            | Password must be between 4 and 100 characters long.
+                .control-group.col-md-offset-1
+                    label.control-label(for='profile-password-confirm') Password (Confirm)
+                    .controls
+                        input#profile-password-confirm.form-control.input-lg(type='password', name='password-confirm', placeholder='Repeat Password' disabled)
+                        p#help-password-confirm.help-block
+                            | Please confirm password
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    label.control-label(for='profile-first-name') First Name
+                    .controls
+                        input#profile-first-name.form-control.input-lg(type='text', name='first-name', value = '#{user.firstName}', placeholder='First Name' disabled)
+                        p#help-first-name.help-block
+                            | First Name must be between 1 and 10 characters long.
+                .control-group.col-md-offset-1
+                    label.control-label(for='profile-last-name') Last Name
+                    .controls
+                        input#profile-last-name.form-control.input-lg(type='text', name='last-name', value = '#{user.lastName}', placeholder='Last Name' disabled)
+                        p#help-last-name.help-block
+                            | Last Name First Name must be between 1 and 10 characters long.
+            .col-md-6.col-sm-12.col-xs-12.form-group
+                .control-group.col-md-offset-1
+                    label.control-label(for='profile-email') E-mail
+                    .controls
+                        input#profile-email.form-control.input-lg(type='email', name='email', value = '#{user.email}', placeholder='E-mail' disabled)
+                        p#help-email.help-block
+                            | Please provide your E-mail
+                .control-group.col-md-offset-1
+                    .controls.offset-top
+                        input#edit-btn.btn.btn-primary.btn-lg(type="button" value="Edit")
+                        input#profile-save.btn.btn-success.btn-lg.offset-left(type="button" value="Save Changes" disabled)
+    #user.hidden
+        #user-image #{user.profileImage}
+        #username #{user.username}

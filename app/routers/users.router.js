@@ -5,7 +5,8 @@ const attachTo = (app, { users: userController }) => {
 
     usersRouter
         .get('/', isLoggedIn, userController.getUsers)
-        .get('/:id', isLoggedIn, userController.getById);
+        .get('/:username/settings', isLoggedIn, userController.getEditForm)
+        .put('/:username/settings', isLoggedIn, userController.editProfile);
 
     app.use('/users', usersRouter);
 };

@@ -37,11 +37,11 @@ mixin nav(user, route)
                                         i.fa.fa-fw.fa-user
                                         |  Profile
                                 li
-                                    a.request(href='#')
+                                    a.request(href='/chat')
                                         i.fa.fa-fw.fa-envelope
                                         |  Chat
                                 li
-                                    a.request(href='#')
+                                    a.request(href='/users/#{user.username}/settings')
                                         i.fa.fa-fw.fa-gear
                                         |  Settings
                                 li.divider

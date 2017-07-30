@@ -50,6 +50,12 @@ class UsersData extends BaseData {
                 return user;
             });
     }
+
+    updateByUsername(user) {
+        return this.collection.updateOne({
+            username: user.username,
+        }, user);
+    }
 }
 
 const getData = (db) => {
