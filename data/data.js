@@ -3,14 +3,14 @@
 const fs = require('fs');
 const path = require('path');
 
-const dataNameSufix = '.data';
+const dataNameSuffix = '.data';
 
 const init = (db) => {
     const data = {};
     fs.readdirSync(__dirname)
-        .filter((file) => file.includes(dataNameSufix))
+        .filter((file) => file.includes(dataNameSuffix))
         .forEach((file) => {
-            const dataName = file.substr(0, file.indexOf(dataNameSufix));
+            const dataName = file.substr(0, file.indexOf(dataNameSuffix));
             const dataModulePath = path.join(__dirname, file);
             data[dataName] = require(dataModulePath).getData(db);
         });
