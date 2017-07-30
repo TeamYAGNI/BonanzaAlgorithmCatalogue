@@ -162,10 +162,16 @@ public class Startup
 
     const getUserSubmissions = (req, res) => {
         const id = req.params.id;
+        let submissions = {};
+        let topResult = {};
+        if (req.user.tasks[id]) {
+            submissions = req.user.tasks[id].submissions;
+            topResult = req.user.tasks[id].topResult;
+        }
         const context = {
             user: req.user,
-            submissions: req.user.tasks[id].submissions,
-            topResult: req.user.tasks[id].topResult,
+            submissions: submissions,
+            topResult: topResult,
         };
         res.render('submissions', context);
     };
