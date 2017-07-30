@@ -81,10 +81,24 @@ gulp.task('test:unit', () => {
     .pipe(istanbul.writeReports());
 });
 
+gulp.task('test:integration', () => {
+  return gulp.src('./tests/integration/**/*.js', { read: false })
+    .pipe(plumber())
+    .pipe(mocha({
+      colors: false,
+      reporter: 'nyan',
+    }))
+    .on('error', (err) => {
+      process.exit(2);
+    })
+    .pipe(istanbul.writeReports());
+});
+
 gulp.task('test', gulpsync.sync([
   'pre-test',
   'test:lint',
   'test:unit',
+  'test:integration',
 ]));
 
 gulp.task('serve', () => {
