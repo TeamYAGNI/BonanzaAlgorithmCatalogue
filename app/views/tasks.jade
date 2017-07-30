@@ -1,5 +1,6 @@
 extends _shared/base/layout
 include _shared/mixins/navigation
+include _shared/mixins/breadcrump
 
 block css
     link(rel='stylesheet', href='https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css')
@@ -11,6 +12,9 @@ block js
 
 block navigation
     +nav(user, '/tasks')
+
+block breadcrump
+    +breadcrump(['Home', 'Tasks'])
 
 block content
     h1.text-center Tasks
@@ -30,7 +34,11 @@ block content
                 tr
                     td
                         a.list-group-item(href='/tasks/' + task._id) #{task.name}
-                    td 
+                    td
                         each tag in task.tags
                             a.btn.btn-secondary(href='/catalogue/' + tag.substr(1), role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue category: ' + tag.substr(1)) #{tag}
-                    td 0 / #{task.results.length * 10}
+                    td
+                        if userTasks[task._id]
+                            | #{userTasks[task._id].topResult.result} / #{task.results.length * 10}
+                        else
+                            | 0 / #{task.results.length * 10}

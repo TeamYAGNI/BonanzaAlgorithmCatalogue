@@ -52,6 +52,7 @@ const configAuth = (app, { users }) => {
                         passHash: req.body.password,
                         email: req.body['e-mail'],
                         profileImage: req.body['image-id'],
+                        tasks: {},
                     };
 
                     return users.create(user)

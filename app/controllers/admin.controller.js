@@ -1,6 +1,9 @@
 const getController = (data) => {
     const getAdminPanel = (req, res) => {
-        res.status(200).render('admin');
+        const context = {
+            user: req.user,
+        };
+        res.status(200).render('admin', context);
     };
 
     const createTask = (req, res) => {
@@ -12,6 +15,7 @@ const getController = (data) => {
             input: req.body.input,
             results: req.body.results,
             tags: req.body.tags,
+            users: {},
         };
         data.tasks.create(task)
             .then(() => {

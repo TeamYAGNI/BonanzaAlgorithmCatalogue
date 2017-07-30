@@ -152,3 +152,12 @@ textarea {
 .not-visible {
     visibility: hidden;
 }
+
+.match-user {
+    background-color: lightgreen!important;;
+}
+
+textarea {
+    height: 100%;
+    width: 100%;
+}

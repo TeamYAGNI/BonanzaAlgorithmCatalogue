@@ -3,21 +3,25 @@ include _shared/mixins/navigation
 
 block css
     link(rel='stylesheet', href='https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css')
+    link(rel='stylesheet', href='/libs/codemirror/lib/codemirror.css')
+    link(rel='stylesheet', href='/libs/codemirror/theme/rubyblue.css')
 
 block js
     script(src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js")
     script(src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js")
+    script(src='/libs/codemirror/lib/codemirror.js')
+    script(src='/libs/codemirror/mode/clike/clike.js')
     script(src='/public/js/compiler.js')
 
 block navigation
-    +nav(user, '/')
+    +nav(user)
 
 block content
     h1.text-center #{task.name}
     form.col-md-6(id='compilerform' action='/compiler/' + task._id, method='post')
         h1.text-center Solution
-        .col
+        .col#size
             label Input:
                 textarea#input(form='compilerform' wrap='hard' rows=50 cols=90 required='required' name='input')
         .col.btn-toolbar.centered
@@ -25,7 +29,7 @@ block content
                 button#submit.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Submit
                 button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Results
                 button#description.btn.btn-primary(type='button', data-toggle='modal', data-target='#description-modal') Description
-                a#submissions.btn.btn-primary(href='/usersubmissions', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
+                a#submissions.btn.btn-primary(href='/tasks/'+ task._id + '/' + user.username, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
             .btn-group
                 button#edit.btn.btn-primary(type='button') Edit
                 button#delete.btn.btn-danger(type='button') Delete
@@ -40,55 +44,30 @@ block content
                             th Result
                     tfoot
                         tr
-                            th #
+                            th
+                                button#refresh.btn.btn-primary(type='button')
+                                    span.glyphicon.glyphicon-refresh
                             th Username
                             th
                                 button#avg.btn.btn-primary(type='button', data-toggle='modal', data-target='#avg-modal') Get Average
                     tbody
-                        tr
-                            td 1
-                            td Test
-                            td.result 10 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 9 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 8 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 7 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 6 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 0 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 5 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 4 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 2 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 1 / #{task.results.length * 10}
-                        tr
-                            td 2
-                            td Test
-                            td.result 3 / #{task.results.length * 10}
+                        each key, index in sortedKeys
+                            if key != user.username
+                                tr
+                                    td
+                                        | #{index+1}
+                                    td
+                                        | #{key}
+                                    td.result 
+                                        | #{task.users[key]} / #{task.results.length * 10}
+                            else
+                                tr.match-user
+                                    td
+                                        | #{index+1}
+                                    td
+                                        | #{key}
+                                    td.result 
+                                        | #{task.users[key]} / #{task.results.length * 10}                                
     #results-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='results-title', aria-hidden='true')
         .modal-dialog(role='document')
             .modal-content

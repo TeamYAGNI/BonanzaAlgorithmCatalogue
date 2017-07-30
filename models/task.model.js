@@ -9,7 +9,8 @@ class Task {
             typeof model.timelimit === 'string' &&
             typeof model.description === 'string' &&
             typeof model.memorylimit === 'string' &&
-            Array.isArray(model.tags);
+            Array.isArray(model.tags) &&
+            typeof model.users !== 'undefined';
     }
 
     get id() {
