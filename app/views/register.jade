@@ -19,10 +19,18 @@ block breadcrump
 block content
     form#signup-form.form-horizontal(action="/auth/register" method="POST")
         fieldset
+            #progress-bar.progress.hidden
+                .progress-bar.progress-bar-info(role="progressbar" aria-valuemin="0" aria-valuemax="100")
             .col-md-6.col-sm-12.col-xs-12.form-group
                 .control-group.col-md-offset-1
-                    label#photo-container
-                    .controls
+                    .profil-image  
+                    label.control-label(for='photo-selector') Upload a different photo...
+                    .input-group
+                        input#image-id(type='hidden', name='image-id', value="default-profile-picture")
+                        label.input-group-btn
+                            span.btn.btn-primary Browse… 
+                                input#photo-selector(name="file" type="file", style='display: none;', multiple='')
+                        input#file-path.form-control(type='text', readonly='')
             .col-md-6.col-sm-12.col-xs-12.form-group
                 .control-group.col-md-offset-1
                     label.control-label(for='signup-username') Username

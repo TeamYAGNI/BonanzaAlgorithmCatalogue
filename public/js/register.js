@@ -55,9 +55,6 @@ $(() => {
 
         INVALID_EMAIL: `
             Email must be a valid one!`,
-
-        INVALID_IMAGE_URL: `
-            Image url must be a valid one!`,
     };
 
     const $signupForm = $('#signup-form');
@@ -67,7 +64,6 @@ $(() => {
         const $lastName = $signupForm.find('#signup-last-name');
         const $username = $signupForm.find('#signup-username');
         const $email = $signupForm.find('#signup-email');
-        const $profileImageUrl = $signupForm.find('#signup-profile-img');
         const $password = $signupForm.find('#signup-password');
         const password = $password.val();
         const $passwordConfirmation = $signupForm
@@ -79,7 +75,6 @@ $(() => {
             password: new Hashes.SHA256().hex(password).toString(),
             firstName: validator.escape($firstName.val()),
             lastName: validator.escape($lastName.val()),
-            image: $profileImageUrl.val(),
             email: validator.escape($email.val()),
         };
 
@@ -87,8 +82,7 @@ $(() => {
             !validatePassword(password, passwordConfirmation) ||
             !validateEmail(user.email) ||
             !validateFirstName(user.firstName) ||
-            !validateLastName(user.lastName) ||
-            !validateImage(user.image)) {
+            !validateLastName(user.lastName)) {
             event.preventDefault();
         } else {
             $password.val(user.password);
@@ -174,17 +168,6 @@ $(() => {
         return true;
     };
 
-    const validateImage = (url) => {
-        if (!url && !CONSTRAINTS.IMAGE.REQUIRED) {
-            return true;
-        }
-        if (url && !validator.isURL(url)) {
-            toastr.error(MESSAGES.INVALID_IMAGE_URL);
-            return false;
-        }
-        return true;
-    };
-
     const validateEmail = (email) => {
         if (!email && !CONSTRAINTS.EMAIL.REQUIRED) {
             $('#help-email').removeClass('red-text');
@@ -199,13 +182,51 @@ $(() => {
         return true;
     };
 
-    $('#photo-container').prepend(
+     $('.profil-image').html(
         $.cloudinary.image('default-profile-picture', {
             radius: 'max',
-            height: 150,
-            width: 150,
+            height: 240,
+            width: 240,
             crop: 'scale',
         })
-        .addClass("avatar img-circle img-thumbnail")
+        .addClass('avatar img-circle img-thumbnail')
+        .attr('id', 'profile-photo')
     );
+
+    $('#photo-selector').unsigned_cloudinary_upload('q3olokl1', {
+        cloud_name: 'teamyowie',
+        tags: 'browser_uploads',
+    })
+    .bind('cloudinarydone', (e, data) => {
+        $('#profile-photo').remove();
+        $('#progress-bar')
+            .addClass('hidden');
+        $('#image-id').val(data.result.public_id);
+
+        $('.profil-image').html(
+            $.cloudinary.image(data.result.public_id, {
+                radius: 'max',
+                height: 240,
+                width: 240,
+                crop: 'scale',
+            })
+            .addClass('avatar img-circle img-thumbnail')
+            .attr('id', 'profile-photo')
+        );
+    })
+    .bind('cloudinaryprogress', (e, data) => {
+        const percent = Math.round((data.loaded*100.0)/data.total)+'%';
+        $('#progress-bar')
+            .removeClass('hidden');
+        $('.progress-bar-info')
+            .css('width', percent)
+            .text(percent);
+    });
+
+    const $photoSelector = $('#photo-selector');
+
+    $photoSelector.on('change', () => {
+        $('#file-path')
+        .val($photoSelector.val().replace(/\\/g, '/').replace(/.*\//, ''));
+  });
 });
