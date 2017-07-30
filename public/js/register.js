@@ -81,7 +81,6 @@ $(() => {
             lastName: validator.escape($lastName.val()),
             image: $profileImageUrl.val(),
             email: validator.escape($email.val()),
-            tasks: {},
         };
 
         if (!validateUsername(user.username) ||

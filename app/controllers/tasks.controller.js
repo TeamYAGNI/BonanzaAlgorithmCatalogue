@@ -5,11 +5,9 @@ const getController = (data) => {
     const getTasksList = (req, res) => {
         data.tasks.getAll()
             .then((t) => {
-                const userTasks = (req.user.tasks)
-                    ? req.user.tasks : {};
                 const context = {
                     tasks: t,
-                    userTasks: userTasks,
+                    userTasks: req.user.tasks,
                     user: req.user,
                 };
                 res.render('tasks', context);
@@ -124,9 +122,6 @@ public class Startup
                     date: new Date().toLocaleDateString(),
                 };
                 const user = req.user;
-                if (!user.tasks) {
-                    user.tasks = {};
-                }
                 if (user.tasks[task._id]) {
                     user.tasks[task._id].submissions.push(submission);
                     if (user.tasks[task._id]
