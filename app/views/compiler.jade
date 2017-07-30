@@ -31,8 +31,8 @@ block content
                 button#description.btn.btn-primary(type='button', data-toggle='modal', data-target='#description-modal') Description
                 a#submissions.btn.btn-primary(href='/tasks/'+ task._id + '/' + user.username, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
             .btn-group
-                button#edit.btn.btn-primary(type='button') Edit
-                button#delete.btn.btn-danger(type='button') Delete
+                a.btn.btn-primary(href='/admin/'+ task._id, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to the admin panel') Edit
+                a.btn.btn-danger(href='/admin/'+ task._id, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to the admin panel') Delete
     .col-md-6
         .col
             h1.text-center Ranking
@@ -45,7 +45,7 @@ block content
                     tfoot
                         tr
                             th
-                                button#refresh.btn.btn-primary(type='button')
+                                a.btn.btn-primary(href='/tasks/'+ task._id, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='It will refresh the whole page!')
                                     span.glyphicon.glyphicon-refresh
                             th Username
                             th

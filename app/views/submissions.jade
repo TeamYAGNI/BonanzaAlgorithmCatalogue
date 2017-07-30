@@ -10,7 +10,7 @@ block navigation
 block content
     h1.text-center 
         | #{user.username}'s Submissions
-    button#back.btn.btn-primary(type='button') Back
+    a.btn.btn-primary(href='/tasks/'+ id, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go back to the task') Back
     .list-group
         .list-group-item
             .submission-body
