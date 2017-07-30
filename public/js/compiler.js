@@ -116,6 +116,10 @@ Min achieved: ${low}`;
         }
         $('body').removeClass('waiting');
     });
+
+    $('#refresh').on('click', () => {
+        window.location.reload();
+    });
 });
 
 // if we need to dynamically add tooltip ->
