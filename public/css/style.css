@@ -142,3 +142,11 @@ textarea {
     cursor: progress;
 }
 
+.match-user {
+    background-color: lightgreen!important;;
+}
+
+textarea {
+    width: 100%;
+    height: 100%;
+}

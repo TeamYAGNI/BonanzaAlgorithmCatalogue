@@ -1,11 +1,22 @@
-/* globals $ */
+/* globals $ CodeMirror */
 $(() => {
+    const editor = CodeMirror.fromTextArea(document.getElementById('input'), {
+        theme: 'rubyblue',
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: 'text/x-csharp',
+        indentWithTabs: true,
+        showCursorWhenSelecting: true,
+        lineWrapping: true,
+        indentUnit: 4,
+    });
+    editor.setSize($('#input').width(), $('#input').height());
     $('#submit').on('click', (ev) => {
         $('body').addClass('waiting');
         const body = $('#results-modal .modal-body');
         body.empty();
         const inputForm = $('#input');
-        const input = inputForm.val();
+        const input = editor.getValue();
         if (input.trim() === '') {
             const p = $('<b/>');
             p.text('You can not pass empty submission!');
