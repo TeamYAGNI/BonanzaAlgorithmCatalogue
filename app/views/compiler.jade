@@ -11,7 +11,7 @@ block js
     script(src='/public/js/compiler.js')
 
 block navigation
-    +nav(user, '/')
+    +nav(user)
 
 block content
     h1.text-center #{task.name}
@@ -25,7 +25,7 @@ block content
                 button#submit.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Submit
                 button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Results
                 button#description.btn.btn-primary(type='button', data-toggle='modal', data-target='#description-modal') Description
-                a#submissions.btn.btn-primary(href='/usersubmissions', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
+                a#submissions.btn.btn-primary(href='/tasks/'+ task._id + '/' + user.username, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
             .btn-group
                 button#edit.btn.btn-primary(type='button') Edit
                 button#delete.btn.btn-danger(type='button') Delete

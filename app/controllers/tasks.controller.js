@@ -10,8 +10,8 @@ const getController = (data) => {
                 const context = {
                     tasks: t,
                     userTasks: userTasks,
+                    user: req.user,
                 };
-                console.log(context);
                 res.render('tasks', context);
             });
     };
@@ -25,6 +25,7 @@ const getController = (data) => {
                     task: task,
                     md: md,
                     sortedKeys: sortedKeys,
+                    user: req.user,
                 };
                 return context;
             })
@@ -159,10 +160,20 @@ public class Startup
             });
     };
 
+    const getUserSubmissions = (req, res) => {
+        const id = req.params.id;
+        const context = {
+            user: req.user,
+            submissions: req.user.tasks[id].submissions,
+            topResult: req.user.tasks[id].topResult,
+        };
+        res.render('submissions', context);
+    };
     return {
         getTasksList,
         getCompilerForm,
         postTaskSolution,
+        getUserSubmissions,
     };
 };
 

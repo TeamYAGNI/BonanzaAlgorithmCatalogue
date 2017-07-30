@@ -1,0 +1,32 @@
+extends _shared/base/layout
+include _shared/mixins/navigation
+
+block js
+    script(src='/public/js/submissions.js')
+
+block navigation
+    +nav(user)
+
+block content
+    h1.text-center 
+        | #{user.username}'s Submissions
+    .list-group
+        .list-group-item
+            .submission-body
+                h3
+                    | Top Result
+                h4.list-group-item-heading
+                    | Result: #{topResult.result} Date: #{topResult.date}
+                    span.pull-right.fall-down.glyphicon.glyphicon-chevron-down
+                pre.hidden.list-group-item-text
+                    | #{topResult.code}
+        h3 
+            | All submissions
+        each submission in submissions
+            .list-group-item
+                .submission-body
+                    h4.list-group-item-heading
+                        | Result: #{submission.result} Date: #{submission.date}
+                        span.pull-right.fall-down.glyphicon.glyphicon-chevron-down
+                    pre.hidden.list-group-item-text
+                        | #{submission.code}
