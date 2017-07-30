@@ -1,8 +1,7 @@
 const BaseData = require('./base');
-const User = require('../models/user.model');
 
 class UsersData extends BaseData {
-    constructor(db) {
+    constructor(db, { User }) {
         super(db, User, User);
     }
 
@@ -58,8 +57,8 @@ class UsersData extends BaseData {
     }
 }
 
-const getData = (db) => {
-    return new UsersData(db);
+const getData = (db, models) => {
+    return new UsersData(db, models);
 };
 
 module.exports = { getData };

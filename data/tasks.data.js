@@ -1,8 +1,7 @@
 const BaseData = require('./base');
-const Task = require('../models/task.model');
 
 class TasksData extends BaseData {
-    constructor(db) {
+    constructor(db, { Task }) {
         super(db, Task, Task);
     }
 
@@ -15,8 +14,8 @@ class TasksData extends BaseData {
     }
 }
 
-const getData = (db) => {
-    return new TasksData(db);
+const getData = (db, models) => {
+    return new TasksData(db, models);
 };
 
 module.exports = { getData };

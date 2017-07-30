@@ -1,4 +1,5 @@
 const config = require('./../../../../config/config');
+const models = require('./../../../../models').init();
 const request = require('supertest');
 
 describe('homeController tests', () => {
@@ -9,7 +10,7 @@ describe('homeController tests', () => {
             .then(() => require('./../../../../db')
                 .init(config.db))
             .then((db) => require('./../../../../data')
-                .init(db))
+                .init(db, models))
             .then((data) => require('./../../../../config/express')
                 .init(data, config))
             .then((_app) => {

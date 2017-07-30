@@ -1,4 +1,5 @@
 const config = require('./config/config');
+const models = require('./models').init();
 
 const async = () => {
     return Promise.resolve();
@@ -6,7 +7,7 @@ const async = () => {
 
 async()
     .then(() => require('./db').init(config.db))
-    .then((db) => require('./data').init(db))
+    .then((db) => require('./data').init(db, models))
     .then((data) => require('./config/express').init(data, config))
     .then((app) => {
        return app.listen(config.port, () =>
