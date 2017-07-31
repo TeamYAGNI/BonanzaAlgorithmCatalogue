@@ -1,0 +1,56 @@
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
+
+block js
+    script(src='/public/js/user-profile.js')
+
+block navigation
+    +nav(user)
+
+block breadcrump
+    +breadcrump(['Home', '-Auth', profile.username])
+
+block content
+    .well.col-xs-8.col-sm-8.col-md-8.col-lg-8.col-xs-offset-2.col-sm-offset-2.col-md-offset-2.col-lg-offset-2
+        .row.user-row
+            .member-img-small.col-xs-3.col-sm-2.col-md-1.col-lg-1
+                | #{profile.profileImage}
+            .col-xs-8.col-sm-9.col-md-10.col-lg-10
+                strong #{profile.username}
+                br
+                span.text-muted User level: #{profile.role}
+            .col-xs-1.col-sm-1.col-md-1.col-lg-1.dropdown-user(data-for=user.username)
+                i.glyphicon.glyphicon-chevron-down.text-muted
+        .row.user-infos(id=user.username, class=user.username)
+            .col-xs-12.col-sm-12.col-md-10.col-lg-10.col-xs-offset-0.col-sm-offset-0.col-md-offset-1.col-lg-offset-1
+                .panel.panel-primary
+                    .panel-heading
+                        h3.panel-title User information
+                    .panel-body
+                        .row
+                            .member-img-big.col-md-3.col-lg-3.hidden-xs.hidden-sm
+                                | #{profile.profileImage}
+                            .col-xs-10.col-sm-10.hidden-md.hidden-lg
+                                strong #{profile.username}
+                                br
+                                dl
+                                    dt User level:
+                                    dd #{profile.role}
+                                    dt Email:
+                                    dd #{profile.email}
+                            .col-md-9.col-lg-9.hidden-xs.hidden-sm
+                                strong #{profile.username}
+                                br
+                                table.table.table-user-information
+                                    tbody
+                                        tr
+                                            td User level:
+                                            td #{profile.role}
+                                        tr
+                                            td Email:
+                                            td #{profile.email}
+                    .panel-footer
+                        a.btn.btn-sm.btn-primary(href='/chat', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to chat')
+                            i.glyphicon.glyphicon-envelope
+                        span.pull-right

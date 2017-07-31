@@ -132,15 +132,3 @@ Min achieved: ${low}`;
         window.location.reload();
     });
 });
-
-// if we need to dynamically add tooltip ->
-// const tooltip = $('<a/>');
-// tooltip.attr('href', document.location.origin + '/catalogue');
-// tooltip.attr('role', 'button');
-// tooltip.addClass('btn btn-secondary pull-left');
-// tooltip.attr('data-toggle', 'tooltip');
-// tooltip.attr('data-placement', 'bottom');
-// tooltip.attr('title', 'Go to catalogue');
-// tooltip.text('Catalogue');
-// tooltip.prependTo($('.modal-footer'));
-// $('[data-toggle="tooltip"]').tooltip();

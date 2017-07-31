@@ -1,12 +1,8 @@
 const getController = () => {
     const getChatForm = (req, res) => {
-        if (req.isAuthenticated()) {
-            res.render('chat', {
-                user: req.user,
-            });
-        } else {
-            res.redirect('/auth/login');
-        }
+        res.render('chat', {
+            user: req.user,
+        });
     };
 
     return {

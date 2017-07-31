@@ -22,6 +22,22 @@ const getController = ({ users }) => {
             });
     };
 
+    const getProfile = (req, res) => {
+        const username = req.params.username;
+        users.findByUsername(username)
+            .then((profile) => {
+                const context = {
+                    profile: profile,
+                    user: req.user,
+                };
+                return res.render('user-profile', context);
+            })
+            .catch((err) => {
+                req.flash('error', err.message);
+                return res.status(404).redirect('/users');
+            });
+    };
+
     const getEditForm = (req, res, next) => {
         const username = req.params.username;
         const currentUserId = req.user._id.toString();
@@ -100,6 +116,7 @@ const getController = ({ users }) => {
 
     return {
         getUsers,
+        getProfile,
         getEditForm,
         editProfile,
     };

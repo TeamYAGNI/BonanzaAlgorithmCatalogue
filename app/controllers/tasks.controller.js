@@ -98,7 +98,8 @@ public class Startup
                             const current = result.trim().split(' ');
                             const message = `Time: ${current[0]}
                                  Memory: ${current[2]}MB`;
-                            if (task.results[i].trim() === current[1].trim()) {
+                            if (task.results[i].trim() ===
+                                current[1].trim()) {
                                 results.push({
                                     status: 'passed',
                                     reason: '',
@@ -164,6 +165,7 @@ public class Startup
             topResult = req.user.tasks[id].topResult;
         }
         const context = {
+            id: id,
             user: req.user,
             submissions: submissions,
             topResult: topResult,
