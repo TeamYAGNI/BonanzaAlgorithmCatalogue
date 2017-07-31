@@ -6,20 +6,13 @@ mixin nav(user, route)
                     span.icon-bar
                     span.icon-bar
                     span.icon-bar
-                a.navbar-brand.request(href='/about') BonanzaAlgorithmsCatalogue
+                a.navbar-brand.request(href='') BonanzaAlgorithmsCatalogue
             .collapse.navbar-collapse
                 ul.nav.navbar-nav
                     li(class=(route === '/' ? 'active' : ''))
                         a.request(href='/') Home
-                    li.dropdown(class=(route === '/catalogue' ? 'active' : ''))
-                        a.dropdown-toggle(data-toggle='dropdown', href='#')
-                            | Catalogue
-                            span.caret
-                        ul.dropdown-menu
-                            li
-                                a.request(href='#') Data Structures
-                            li
-                                a.request(href='#') Algorithms
+                    li(class=(route === '/catalogue' ? 'active' : ''))
+                        a.request(href='/catalogue/categories') Categories
                     li(class=(route === '/tasks' ? 'active' : ''))
                         a(href='/tasks') Tasks
                     if(user && user.role === 'admin')

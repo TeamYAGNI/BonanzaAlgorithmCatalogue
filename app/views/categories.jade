@@ -18,4 +18,6 @@ block content
             .card-header #{category.name}
             .card-block
                 p.card-text #{category.summary}
-                a.btn.btn-primary(href='/catalogue/categories/#{category.name.toLowerCase()}/algorithms') Algoritms
+                a.btn.btn-primary(href='/catalogue/categories/#{category.name.toLowerCase()}') Algoritms
+                if(user && user.role === 'admin')
+                    button#add-algo.btn.btn-danger(type='button') Delete

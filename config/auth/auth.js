@@ -50,7 +50,6 @@ const configAuth = (app, { users }) => {
     app.use(user.middleware());
 
     user.use((req, res) => {
-        console.log(req.user);
         return (req.user && req.user.role === 'admin') ? true : false;
     });
 

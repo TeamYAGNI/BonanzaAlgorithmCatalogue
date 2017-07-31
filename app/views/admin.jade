@@ -10,6 +10,7 @@ block js
     script(src='/public/js/requester.js')
     script(src='/public/js/admin.js')
     script(src='/public/js/categories.js')
+    script(src='/public/js/algorithms.js')
 
 block navigation
     +nav(user, '/admin')
@@ -85,3 +86,21 @@ block content
                             label(for='summary') Summary:
                             textarea#summary.form-control(rows='5')
                         button#add-category.btn.btn-default(type='button') Add Category
+        .panel.panel-default
+                    #headingThree.panel-heading(role='tab')
+                        h4.panel-title
+                            a.trigger.collapsed(role='button', data-toggle='collapse', href='#collapseThree', aria-expanded='true', aria-controls='collapseTwo')
+                                | Add Algorithm
+                    #collapseThree.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingThree')
+                        .panel-body
+                            form
+                                .form-group
+                                    label(for='algo-name') Algorithm name:
+                                    input#algo-name.form-control(type='text')
+                                .form-group
+                                    label(for='algo-category') Category name:
+                                    input#algo-category.form-control(type='text')
+                                .form-group
+                                    label(for='algo-note') Note:
+                                    textarea#algo-note.form-control(rows='5')
+                                button#add-algo.btn.btn-default(type='button') Add Algorithm

@@ -20,8 +20,9 @@ const getController = ({ categories }) => {
             .then((result) => {
                 const context = {
                     categories: result,
+                    user: req.user,
                 };
-                return res.render('Categories', context );
+                return res.render('categories', context);
             });
     };
 
@@ -41,21 +42,33 @@ const getController = ({ categories }) => {
             });
     };
 
-    const editCategory = (req, res) => {
-
-    };
-
     const removeCategory = (req, res) => {
+        const categoryName = req.params.categoryName;
 
+        categories.remove({ name: categoryName });
+        res.status(200).send('Category removed successfully!');
     };
 
     const getCategory = (req, res) => {
+        const categoryName = req.params.categoryName;
 
+        return categories.findByName(categoryName)
+            .then((categoryFound) => {
+                const context = {
+                    category: categoryFound,
+                    user: req.user,
+                };
+                return res.render('algorithms', context);
+            });
     };
 
     const addAlgorithm = (req, res) => {
         const categoryName = req.params.categoryName;
-        const algorithm = req.params.algorithm;
+
+        const algo = {
+            name: req.body.algo.name,
+            note: req.body.algo.note,
+        };
 
         categories.findByName(categoryName)
             .then((categoryFound) => {
@@ -63,37 +76,38 @@ const getController = ({ categories }) => {
                     return res.status(404).send('There is no such category!');
                 }
 
-                if (!algorithm.isValid(algorithm)) {
-                    return res.status(404).send('Validation failed!');
-                }
-
-                categoryFound.algorithms.push(algorithm);
+                categoryFound.algorithms.push(algo);
+                categories.updateByName(categoryFound);
 
                 return res.status(200).send('Algorithm successfully added!');
             });
     };
 
-    const getAlgorithm = (req, res) => {
-
-    };
-
-    const editAlgorithm = (req, res) => {
-
-    };
-
     const removeAlgorithm = (req, res) => {
+        const categoryName = req.params.categoryName;
+        const algoName = req.body.algoName;
 
+        categories.findByName(categoryName)
+            .then((categoryFound) => {
+                if (!categoryFound) {
+                    return res.status(404).send('No such category!');
+                }
+
+                categoryFound.algorithms = categoryFound.algorithms
+                    .filter((a) => a.name !== algoName);
+
+                categories.updateByName(categoryFound);
+
+                return res.status(200).send('Algo is removed!');
+            });
     };
 
     return {
         getCategories,
         addCategory,
-        editCategory,
         removeCategory,
         getCategory,
         addAlgorithm,
-        getAlgorithm,
-        editAlgorithm,
         removeAlgorithm,
     };
 };

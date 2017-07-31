@@ -72,7 +72,6 @@ const getController = ({ users }) => {
             .catch((error) => {
                 return res.status(401).send(error.message);
             }).then((foundUser) => {
-                console.log(newUser.username);
                 users.updateByUsername(newUser);
                 res.status(200).send('Your Profile is updated!');
             });
