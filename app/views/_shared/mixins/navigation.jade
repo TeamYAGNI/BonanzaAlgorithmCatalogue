@@ -12,7 +12,7 @@ mixin nav(user, route)
                     li(class=(route === '/' ? 'active' : ''))
                         a.request(href='/') Home
                     li(class=(route === '/catalogue' ? 'active' : ''))
-                        a.request(href='/catalogue/categories') Categories
+                        a.request(href='/catalogue/categories') Catalogue
                     li(class=(route === '/tasks' ? 'active' : ''))
                         a(href='/tasks') Tasks
                     if(user && user.role === 'admin')
