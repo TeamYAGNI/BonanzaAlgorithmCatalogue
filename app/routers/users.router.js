@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const attachTo = (app, { users: userController }) => {
+const attachTo = (app, { users: userController }, admin) => {
     const usersRouter = new Router();
 
     usersRouter

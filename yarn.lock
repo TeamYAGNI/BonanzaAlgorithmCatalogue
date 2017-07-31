@@ -580,6 +580,10 @@ character-parser@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/character-parser/-/character-parser-1.2.1.tgz#c0dde4ab182713b919b970959a123ecc1a30fcd6"
 
+character-parser@~1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/character-parser/-/character-parser-1.0.2.tgz#55384d6afcf8c6b9dd483e8347646a790e4545e7"
+
 charm@~0.1.1:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/charm/-/charm-0.1.2.tgz#06c21eed1a1b06aeb67553cdc53e23274bac2296"
@@ -775,6 +779,14 @@ connect-redis@^3.3.0:
   dependencies:
     debug "^2.2.0"
     redis "^2.1.0"
+
+connect-roles@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/connect-roles/-/connect-roles-3.1.2.tgz#732bc627f857966dffd1797274e2ae760b072fea"
+  dependencies:
+    ert "^1.0.1"
+    path-to-regexp "^1.0.1"
+    promise "^6.0.1"
 
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
@@ -1130,6 +1142,12 @@ error-ex@^1.2.0:
   resolved "https://registry.yarnpkg.com/error-ex/-/error-ex-1.3.1.tgz#f855a86ce61adc4e8621c3cda21e7a7612c3a8dc"
   dependencies:
     is-arrayish "^0.2.1"
+
+ert@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ert/-/ert-1.0.1.tgz#20043c748d6783b5f6b8359163892ef310938094"
+  dependencies:
+    character-parser "~1.0.0"
 
 es6-promise@3.2.1:
   version "3.2.1"
@@ -3404,7 +3422,7 @@ path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
 
-path-to-regexp@^1.7.0:
+path-to-regexp@^1.0.1, path-to-regexp@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
   dependencies:

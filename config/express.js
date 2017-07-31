@@ -48,7 +48,7 @@ const init = (data, config) => {
         resave: true,
     }));
 
-    const passport = require('./auth')(app, data);
+    const { passport, user } = require('./auth')(app, data);
 
     app.use(require('connect-flash')());
     app.use((req, res, next) => {
@@ -60,7 +60,7 @@ const init = (data, config) => {
         .init(data, passport);
 
     require('../app/routers')
-        .attachTo(app, controllers);
+        .attachTo(app, controllers, user);
 
     app.use((req, res, next) => {
         const err = new Error('Not Found');
