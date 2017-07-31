@@ -4,10 +4,11 @@ const attachTo = (app, { admin: adminController }, user) => {
     const adminRouter = new Router();
 
     adminRouter
-        .get('/', adminController.getAdminPanel)
-        .post('/task', adminController.createTask);
+        .get('/', user.can('access admin page'), adminController.getAdminPanel)
+        .post('/task', user.can('access admin page'), adminController
+            .createTask);
 
-    app.use('/admin', user.can('access admin page'), adminRouter);
+    app.use('/admin', adminRouter);
 };
 
 module.exports = { attachTo };

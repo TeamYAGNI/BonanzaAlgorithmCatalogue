@@ -1,16 +1,28 @@
-/* globals $ */
+/* globals $ CodeMirror */
 $(() => {
+    const editor = CodeMirror.fromTextArea(document.getElementById('input'), {
+        theme: 'rubyblue',
+        lineNumbers: true,
+        matchBrackets: true,
+        mode: 'text/x-csharp',
+        indentWithTabs: true,
+        showCursorWhenSelecting: true,
+        lineWrapping: true,
+        indentUnit: 4,
+    });
+    editor.setSize($('#input').width(), $('#input').height());
     $('#submit').on('click', (ev) => {
         $('body').addClass('waiting');
         const body = $('#results-modal .modal-body');
         body.empty();
         const inputForm = $('#input');
-        const input = inputForm.val();
+        const input = editor.getValue();
         if (input.trim() === '') {
             const p = $('<b/>');
             p.text('You can not pass empty submission!');
             p.appendTo(body);
             inputForm.val('');
+            $('body').removeClass('waiting');
         } else {
             const url = window.location.href;
             $.ajax({
@@ -47,13 +59,14 @@ $(() => {
 
                     results.appendTo(body);
                     $('[data-toggle="popover"]').popover();
+                    $('body').removeClass('waiting');
                 },
                 error: (error) => {
+                    $('body').removeClass('waiting');
                     console.log(error);
                 },
             });
         }
-        $('body').removeClass('waiting');
     });
 
     $('#results').on('click', () => {
@@ -113,6 +126,10 @@ Min achieved: ${low}`;
             p.appendTo(body);
         }
         $('body').removeClass('waiting');
+    });
+
+    $('#refresh').on('click', () => {
+        window.location.reload();
     });
 });
 

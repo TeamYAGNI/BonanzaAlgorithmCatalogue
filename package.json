@@ -15,6 +15,7 @@
     "body-parser": "^1.13.3",
     "bootstrap": "^3.3.7",
     "cloudinary-jquery-file-upload": "^2.3.0",
+    "codemirror": "^5.28.0",
     "compression": "^1.5.2",
     "connect-flash": "^0.1.1",
     "connect-redis": "^3.3.0",

@@ -6,7 +6,8 @@ const attachTo = (app, { tasks: tasksController }) => {
     tasksRouter
         .get('/', tasksController.getTasksList)
         .get('/:id', tasksController.getCompilerForm)
-        .post('/:id', tasksController.postTaskSolution);
+        .post('/:id', tasksController.postTaskSolution)
+        .get('/:id/:username', tasksController.getUserSubmissions);
 
     app.use('/tasks', tasksRouter);
 };

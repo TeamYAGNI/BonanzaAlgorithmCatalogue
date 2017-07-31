@@ -40,23 +40,18 @@ const configAuth = (app, { users }) => {
                 });
             } else {
                 res.send(
-                    'Access Denied: You do not nave permission to: ' + action);
+                    'Access Denied: You do not have permission to: ' + action);
             }
-        }
+        },
     });
 
     app.use(passport.initialize());
     app.use(passport.session());
     app.use(user.middleware());
 
-    user.use((req, action) => {
-        return ((req.isAuthenticated() && action !== 'access admin page')
-            ? true
-            : false);
-    });
-
-    user.use((req) => {
-        return (req.user.role === 'admin') ? true : false;
+    user.use((req, res) => {
+        console.log(req.user);
+        return (req.user && req.user.role === 'admin') ? true : false;
     });
 
     return {
@@ -66,75 +61,3 @@ const configAuth = (app, { users }) => {
 };
 
 module.exports = configAuth;
-
-
-// //===============PASSPORT=================
-
-// // Passport session setup.
-// passport.serializeUser(function (user, done) {
-//     console.log("serializing " + user.username);
-//     done(null, user);
-// });
-
-// passport.deserializeUser(function (obj, done) {
-//     console.log("deserializing " + obj);
-//     // simulate an admin user
-//     obj.role = obj.username == 'admin' ? 'admin' : 'user';
-//     done(null, obj);
-// });
-
-// /* GET home page. */
-// app.get('/', user.can('access home page'), function (req, res, next) {
-//     res.render('index', { title: 'Express' });
-// });
-
-// //displays our signup page
-// app.get('/signin', function (req, res) {
-//     res.render('signin');
-// });
-
-// //sends the request through our local signup strategy, and if successful takes     user to homepage, otherwise returns then to signin page
-// app.post('/local-reg', passport.authenticate('local-signup', {
-//     successRedirect: '/',
-//     failureRedirect: '/signin'
-// })
-// );
-
-// //sends the request through our local login/signin strategy, and if successful    takes user to homepage, otherwise returns then to signin page
-// app.post('/login', passport.authenticate('local-signin', {
-//     successRedirect: '/',
-//     failureRedirect: '/signin'
-// })
-// );
-
-// // Simple route middleware to ensure user is authenticated.
-// app.use(function (req, res, next) {
-//     if (req.isAuthenticated()) { return next(); }
-//     req.session.error = 'Please sign in!';
-//     res.redirect('/signin');
-// });
-
-// //logs user out of site, deleting them from the session, and returns to homepage
-// app.get('/logout', function (req, res) {
-//     var name = req.user.username;
-//     console.log("LOGGIN OUT " + req.user.username)
-//     req.logout();
-//     res.redirect('/');
-//     req.session.notice = "You have successfully been logged out " + name + "!";
-// });
-
-// app.get('/private', user.can('access private page'), function (req, res) {
-//     res.render('private');
-// });
-
-// app.get('/admin', user.can('access admin page'), function (req, res) {
-//     res.render('admin');
-// });
-
-
-// app.use('/users', users);
-
-// ....
-
-
-// module.exports = app;
