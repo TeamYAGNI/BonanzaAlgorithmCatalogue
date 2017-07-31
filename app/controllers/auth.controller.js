@@ -67,7 +67,7 @@ const getController = ({ users }, passport) => {
 
     const register = (...args) => {
         return passport.authenticate('local-register', {
-            successRedirect: '/auth/login',
+            successRedirect: '/',
             failureRedirect: '/auth/register',
             failureFlash: true,
         })(...args);
