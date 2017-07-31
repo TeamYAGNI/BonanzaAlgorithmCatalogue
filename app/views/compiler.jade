@@ -21,7 +21,7 @@ block content
     h1.text-center #{task.name}
     form.col-md-6(id='compilerform' action='/compiler/' + task._id, method='post')
         h1.text-center Solution
-        .col#size
+        .col
             label Input:
                 textarea#input(form='compilerform' wrap='hard' rows=50 cols=90 required='required' name='input')
         .col.btn-toolbar.centered

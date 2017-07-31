@@ -1,5 +1,6 @@
 extends _shared/base/layout
 include _shared/mixins/navigation
+include _shared/mixins/breadcrump
 
 block css
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css')
@@ -11,6 +12,9 @@ block js
 block navigation
     +nav(user, '/admin')
 
+block breadcrump
+    +breadcrump(['Home', 'Admin'])
+
 block content
     h1.text-center Admin Panel
     .collapse-group
@@ -19,6 +23,8 @@ block content
                 | Open all
             button.btn.btn-primary.close-button(type='button')
                 | Close all
+            if task
+                a.btn.btn-primary(href='/admin/', role='button') Switch to Add
         .panel.panel-success
             #headingOne.panel-heading(role='tab')
                 h4.panel-title
@@ -26,7 +32,7 @@ block content
                         | Add Task
             #collapseOne.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingOne')
                 .panel-body
-                    if id
+                    if task
                         fieldset(disabled='disabled')
                             form.form-group.container(action='/admin/' method='post')
                                 .col-md-2
@@ -108,9 +114,9 @@ block content
                                             option(data-token='#dynamic-programming') Dynamic Programming
                                             option(data-token='#string-algorithms') String Algorithms
                                 .col
-                                    button#add.btn.btn-primary(type='button') Add Input/Result
+                                    button#add-pair.btn.btn-primary(type='button') Add Input/Result
                                 .col
-                                    input#submit.btn.btn-primary(type='button', value='Post Task')
+                                    input#add-task.btn.btn-primary(type='button', value='Post Task')
         .panel.panel-warning
             #headingTwo.panel-heading(role='tab')
                 h4.panel-title
@@ -118,51 +124,49 @@ block content
                         | Update Task
             #collapseTwo.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingTwo')
                 .panel-body
-                    if id
-                        form.container(action='/admin/task' + id, id='taskform' method='put')
+                    if task
+                        form.container(action='/admin/' + task._id, id='taskform' method='put')
                             .col-md-2
                                 .col
                                     label Name:
-                                        input#name(type='text', required='required', name='name')
+                                        input#name(type='text', required='required', name='name', value=task.name)
                                 .col
                                     label Timelimit:
-                                        input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit')
+                                        input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit' value=task.timelimit)
                                 .col
                                     label Memory Limit:
-                                        input#memorylimit(type='text', placeholder='in MB' required='required', name='memorylimit')
+                                        input#memorylimit(type='text', placeholder='in MB' required='required', name='memorylimit' value=task.memorylimit)
                             .col-md-3
                                 .col
                                     label Description:
-                                        textarea#description(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='description')
+                                        textarea#description(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='description') #{task.description}
                             .col-md-3
                                 .col                        
-                                    label Input:
-                                        textarea#input(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='input')
+                                    label Input(change = new task):
+                                        textarea#input(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='input') #{task.input}
                             .col-md-3
                                 .col
-                                    label Result:
-                                        textarea#result(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='results')
+                                    label Result(change = new task):
+                                        textarea#result(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='results') #{task.results}
                             .col-md-1
                                 .col
                                     label Tags:
                                         select#tags.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
-                                            option(data-token='#data-structures') Data Structures
-                                            option(data-token='#recursion') Recursion
-                                            option(data-token='#combinatorics') Combinatorics
-                                            option(data-token='#sorting-algorithms') Sorting Algorithms
-                                            option(data-token='#searching-algorithms') Searching Algorithms
-                                            option(data-token='#trees-and-traversals') Trees and Traversals
-                                            option(data-token='#graph-algorithms') Graph Algorithms
-                                            option(data-token='#greedy-algorithms') Greedy Algorithms
-                                            option(data-token='#dynamic-programming') Dynamic Programming
-                                            option(data-token='#string-algorithms') String Algorithms
+                                            each key in [{'#data-structures' : 'Data Structures'}, {'#recursion' : 'Recursion'}, {'#combinatorics' : 'Combinatorics'}, {'#sorting-algorithms' : 'Sorting Algorithms'}, {'#searching-algorithms' : 'Searching Algorithms'}, {'#trees-and-traversals' : 'Trees and Traversals'}, {'#graph-algorithms' : 'Graph Algorithms'}, {'#greedy-algorithms' : 'Greedy Algorithms'}, {'#dynamic-programming' : 'Dynamic Programming'}, {'#string-algorithms' : 'String Algorithms'}, ]
+                                                - var mark = true
+                                                each tag, index in task.tags
+                                                    if Object.keys(key)[0] === tag
+                                                        option(data-token=Object.keys(key)[0] selected=true) #{key[Object.keys(key)[0]]}
+                                                        - mark = false
+                                                if mark
+                                                    option(data-token=Object.keys(key)[0]) #{key[Object.keys(key)[0]]}
                                 .col
-                                    button#add.btn.btn-primary(type='button') Add Input/Result
+                                    button#add-pair.btn.btn-primary(type='button') Add Input/Result
                                 .col
-                                    input#submit.btn.btn-primary(type='button', value='Update Task')
+                                    input#update-task.btn.btn-primary(type='button', value='Update Task')
                     else
                         fieldset(disabled='disabled')
-                            form.container(action='/admin/' + id, method='put')
+                            form.container(action='/admin/', method='put')
                                 .col-md-2
                                     .col
                                         label Name:
@@ -210,9 +214,9 @@ block content
                         | Delete Task
             #collapseThree.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingThree')
                 .panel-body
-                    if id
-                        form.container(action='/admin/' + id, method='post')
-                            input#delete.btn.btn-danger(type='button', value='Delete Task')
+                    if task
+                        form.container(action='/admin/' + task._id, method='post')
+                            input#delete-task.btn.btn-danger(type='button', value='Delete Task')
                     else
-                        form.container(action='/admin/' + id, method='post')
+                        form.container(action='/admin/', method='post')
                             input.btn.btn-danger(type='button', value='Delete Task' disabled)
