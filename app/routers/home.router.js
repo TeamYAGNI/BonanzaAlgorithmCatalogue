@@ -5,7 +5,6 @@ const attachTo = (app, { home: homeController }) => {
 
     homeRouter
         .get('/', homeController.getHome)
-        .get('/about', () => {});
     app.use('/', homeRouter);
 };
 
