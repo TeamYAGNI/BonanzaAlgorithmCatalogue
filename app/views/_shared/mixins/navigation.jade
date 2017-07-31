@@ -34,7 +34,7 @@ mixin nav(user, route)
                                 span.caret
                             ul.dropdown-menu
                                 li
-                                    a.request(href='#')
+                                    a.request(href='/users/#{user.username}')
                                         i.fa.fa-fw.fa-user
                                         |  Profile
                                 li

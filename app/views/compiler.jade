@@ -58,7 +58,8 @@ block content
                                     td
                                         | #{index+1}
                                     td
-                                        | #{key}
+                                        a(href='/users/'+ key, data-toggle='tooltip', data-placement='bottom', data-original-title='Go to user profile')
+                                            | #{key}
                                     td.result 
                                         | #{task.users[key]} / #{task.results.length * 10}
                             else
@@ -66,7 +67,8 @@ block content
                                     td
                                         | #{index+1}
                                     td
-                                        | #{key}
+                                        a(href='/users/'+ key, data-toggle='tooltip', data-placement='bottom', data-original-title='Go to user profile')
+                                            | #{key}
                                     td.result 
                                         | #{task.users[key]} / #{task.results.length * 10}                                
     #results-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='results-title', aria-hidden='true')
