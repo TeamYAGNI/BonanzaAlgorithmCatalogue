@@ -1,7 +1,7 @@
 const BaseData = require('./base');
 
 class CategoriesData extends BaseData {
-    constructor(db, { Category }) {
+    constructor(db, { Category, Algorithm }) {
         super(db, Category, Category);
     }
 
@@ -11,6 +11,25 @@ class CategoriesData extends BaseData {
         };
 
         return this.collection.findOne(filter);
+    }
+
+    removeAlgorithm(categoryName, algorithmName){
+        this.findByName(categoryName)
+            .then((categoryFound) => {
+                if (!categoryFound) {
+                    return Promise.reject('There is no such category!');
+                }
+
+                categoryFound.algorithms.push(Algorithm);
+
+                return this.updateByName(categoryFound);
+            });
+    }
+
+    updateByName(category) {
+        return this.collection.updateOne({
+            name: category.name,
+        }, category);
     }
 }
 

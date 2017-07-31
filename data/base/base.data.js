@@ -57,8 +57,8 @@ class BaseMongoDbData {
     }
 
     _isModelValid(model) {
-        if ('undefined' === typeof this.validator ||
-            'function' !== typeof this.validator.isValid) {
+        if (typeof this.validator === 'undefined' ||
+            typeof this.validator.isValid !== 'function') {
             return true;
         }
 

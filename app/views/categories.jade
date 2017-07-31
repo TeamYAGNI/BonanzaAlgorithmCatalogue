@@ -1,0 +1,21 @@
+extends _shared/base/layout
+include _shared/mixins/navigation
+include _shared/mixins/breadcrump
+
+block css
+      link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css")
+      link(rel="stylesheet" href="/public/css/card-list.css")
+
+block navigation
+    +nav(user)
+
+block breadcrump
+    +breadcrump(['Home', '-Catalogue', 'Categories'])
+
+block content
+    each category in categories
+        .card
+            .card-header #{category.name}
+            .card-block
+                p.card-text #{category.summary}
+                a.btn.btn-primary(href='/catalogue/categories/#{category.name.toLowerCase()}/algorithms') Algoritms
