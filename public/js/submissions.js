@@ -7,8 +7,5 @@ $(() => {
             .toggleClass('hidden');
     });
 
-    $('#back').on('click', () => {
-        window.location.href = window.location.href
-        .substring(0, window.location.href.lastIndexOf('/'));
-    });
+    $('[data-toggle="tooltip"]').tooltip();
 });

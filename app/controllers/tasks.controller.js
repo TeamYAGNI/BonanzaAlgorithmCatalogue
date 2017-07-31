@@ -164,6 +164,7 @@ public class Startup
             topResult = req.user.tasks[id].topResult;
         }
         const context = {
+            id: id,
             user: req.user,
             submissions: submissions,
             topResult: topResult,

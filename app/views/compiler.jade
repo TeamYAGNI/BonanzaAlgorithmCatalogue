@@ -21,7 +21,7 @@ block content
     h1.text-center #{task.name}
     form.col-md-6(id='compilerform' action='/compiler/' + task._id, method='post')
         h1.text-center Solution
-        .col#size
+        .col
             label Input:
                 textarea#input(form='compilerform' wrap='hard' rows=50 cols=90 required='required' name='input')
         .col.btn-toolbar.centered
@@ -32,8 +32,8 @@ block content
                 a#submissions.btn.btn-primary(href='/tasks/'+ task._id + '/' + user.username, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
             if(user && user.role == 'admin')
                 .btn-group
-                    button#edit.btn.btn-primary(type='button') Edit
-                    button#delete.btn.btn-danger(type='button') Delete
+                    a.btn.btn-primary(href='/admin/'+ task._id, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to the admin panel') Edit
+                    a.btn.btn-danger(href='/admin/'+ task._id, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to the admin panel') Delete
     .col-md-6
         .col
             h1.text-center Ranking
@@ -46,7 +46,7 @@ block content
                     tfoot
                         tr
                             th
-                                button#refresh.btn.btn-primary(type='button')
+                                a.btn.btn-primary(href='/tasks/'+ task._id, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='It will refresh the whole page!')
                                     span.glyphicon.glyphicon-refresh
                             th Username
                             th
