@@ -36,7 +36,7 @@ const configAuth = (app, { users }) => {
                         status: 403,
                     },
                     message: `Access Denied: 
-                    You do not nave permission to: ` + action,
+                    You do not have permission to: ` + action,
                 });
             } else {
                 res.send(

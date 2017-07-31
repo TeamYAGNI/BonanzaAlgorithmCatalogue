@@ -30,7 +30,8 @@ const init = (users) => {
                         passHash: req.body.password,
                         email: req.body['e-mail'],
                         profileImage: req.body['image-id'],
-                        role: 'admin',
+                        role: 'user',
+                        tasks: {},
                     };
 
                     return users.create(user)

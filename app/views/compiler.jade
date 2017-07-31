@@ -30,9 +30,10 @@ block content
                 button#results.btn.btn-primary(type='button', data-toggle='modal', data-target='#results-modal') Results
                 button#description.btn.btn-primary(type='button', data-toggle='modal', data-target='#description-modal') Description
                 a#submissions.btn.btn-primary(href='/tasks/'+ task._id + '/' + user.username, role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to your previous submissions') Submissions
-            .btn-group
-                button#edit.btn.btn-primary(type='button') Edit
-                button#delete.btn.btn-danger(type='button') Delete
+            if(user && user.role == 'admin')
+                .btn-group
+                    button#edit.btn.btn-primary(type='button') Edit
+                    button#delete.btn.btn-danger(type='button') Delete
     .col-md-6
         .col
             h1.text-center Ranking
