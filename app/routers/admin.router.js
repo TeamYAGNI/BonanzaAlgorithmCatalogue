@@ -5,7 +5,10 @@ const attachTo = (app, { admin: adminController }) => {
 
     adminRouter
         .get('/', adminController.getAdminPanel)
-        .post('/task', adminController.createTask);
+        .post('/', adminController.createTask)
+        .get('/:id', adminController.getAdminPanel)
+        .put('/:id', adminController.updateTask)
+        .post('/:id', adminController.deleteTask);
 
     app.use('/admin', adminRouter);
 };

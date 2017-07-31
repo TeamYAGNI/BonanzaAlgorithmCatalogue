@@ -35,6 +35,13 @@ class BaseMongoDbData {
         return this.collection.findOne(filter);
     }
 
+    deleteById(id) {
+        const filter = {
+            _id: this.db.getId(id),
+        };
+
+        return this.collection.deleteOne(filter);
+    }
     findOrCreateBy(props) {
         return this.filterBy(props)
             .then(([model]) => {

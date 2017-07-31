@@ -89,7 +89,7 @@ $(() => {
         input = [];
         results = [];
 
-        const url = window.location.href + '/task';
+        const url = window.location.href;
         $.ajax({
             url: url,
             type: 'POST',
@@ -97,6 +97,21 @@ $(() => {
             contentType: 'application/json',
             success: (data) => {
                 toastr.success('Successfully created task!');
+            },
+            error: (error) => {
+                toastr.error('Something went wrong. Please try again!');
+            },
+        });
+    });
+
+    $('#delete').on('click', (ev) => {
+        ev.preventDefault();
+        const url = window.location.href;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: (data) => {
+                toastr.success('Successfully deleted task!');
             },
             error: (error) => {
                 toastr.error('Something went wrong. Please try again!');

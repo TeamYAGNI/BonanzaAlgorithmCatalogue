@@ -19,59 +19,200 @@ block content
                 | Open all
             button.btn.btn-primary.close-button(type='button')
                 | Close all
-        .panel.panel-default
+        .panel.panel-success
             #headingOne.panel-heading(role='tab')
                 h4.panel-title
                     a.trigger.collapsed(role='button', data-toggle='collapse', href='#collapseOne', aria-expanded='true', aria-controls='collapseOne')
                         | Add Task
             #collapseOne.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingOne')
                 .panel-body
-                    form.container(action='/admin/task' id='taskform' method='post')
-                        .col-md-2
-                            .col
-                                label Name:
-                                    input#name(type='text', required='required', name='name')
-                            .col
-                                label Timelimit:
-                                    input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit')
-                            .col
-                                label Memory Limit:
-                                    input#memorylimit(type='text', placeholder='in MB' required='required', name='memorylimit')
-                        .col-md-3
-                            .col
-                                label Description:
-                                    textarea#description(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='description')
-                        .col-md-3
-                            .col                        
-                                label Input:
-                                    textarea#input(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='input')
-                        .col-md-3
-                            .col
-                                label Result:
-                                    textarea#result(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='results')
-                        .col-md-1
-                            .col
-                                label Tags:
-                                    select#tags.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
-                                        option(data-token='#data-structures') Data Structures
-                                        option(data-token='#recursion') Recursion
-                                        option(data-token='#combinatorics') Combinatorics
-                                        option(data-token='#sorting-algorithms') Sorting Algorithms
-                                        option(data-token='#searching-algorithms') Searching Algorithms
-                                        option(data-token='#trees-and-traversals') Trees and Traversals
-                                        option(data-token='#graph-algorithms') Graph Algorithms
-                                        option(data-token='#greedy-algorithms') Greedy Algorithms
-                                        option(data-token='#dynamic-programming') Dynamic Programming
-                                        option(data-token='#string-algorithms') String Algorithms
-                            .col
-                                button#add.btn.btn-primary(type='button') Add Input/Result
-                            .col
-                                input#submit.btn.btn-primary(type='button', value='Post Task')
-        .panel.panel-default
+                    if id
+                        fieldset(disabled='disabled')
+                            form.form-group.container(action='/admin/' method='post')
+                                .col-md-2
+                                    .col
+                                        label Name:
+                                            input(type='text', required='required', name='name')
+                                    .col
+                                        label Timelimit:
+                                            input(type='text', placeholder='in ms' required='required', name='timelimit')
+                                    .col
+                                        label Memory Limit:
+                                            input(type='text', placeholder='in MB' required='required', name='memorylimit')
+                                .col-md-3
+                                    .col
+                                        label Description:
+                                            textarea(wrap='hard' rows='7' cols='25' required='required', name='description')
+                                .col-md-3
+                                    .col                        
+                                        label Input:
+                                            textarea(wrap='hard' rows='7' cols='25' required='required', name='input')
+                                .col-md-3
+                                    .col
+                                        label Result:
+                                            textarea(wrap='hard' rows='7' cols='25' required='required', name='results')
+                                .col-md-1
+                                    .col
+                                        label Tags:
+                                            select.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
+                                                option(data-token='#data-structures') Data Structures
+                                                option(data-token='#recursion') Recursion
+                                                option(data-token='#combinatorics') Combinatorics
+                                                option(data-token='#sorting-algorithms') Sorting Algorithms
+                                                option(data-token='#searching-algorithms') Searching Algorithms
+                                                option(data-token='#trees-and-traversals') Trees and Traversals
+                                                option(data-token='#graph-algorithms') Graph Algorithms
+                                                option(data-token='#greedy-algorithms') Greedy Algorithms
+                                                option(data-token='#dynamic-programming') Dynamic Programming
+                                                option(data-token='#string-algorithms') String Algorithms
+                                    .col
+                                        button.btn.btn-primary(type='button') Add Input/Result
+                                    .col
+                                        input.btn.btn-primary(type='button', value='Post Task')
+                    else
+                        form.form-group.container(action='/admin/' id='taskform' method='post')
+                            .col-md-2
+                                .col
+                                    label Name:
+                                        input#name(type='text', required='required', name='name')
+                                .col
+                                    label Timelimit:
+                                        input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit')
+                                .col
+                                    label Memory Limit:
+                                        input#memorylimit(type='text', placeholder='in MB' required='required', name='memorylimit')
+                            .col-md-3
+                                .col
+                                    label Description:
+                                        textarea#description(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='description')
+                            .col-md-3
+                                .col                        
+                                    label Input:
+                                        textarea#input(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='input')
+                            .col-md-3
+                                .col
+                                    label Result:
+                                        textarea#result(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='results')
+                            .col-md-1
+                                .col
+                                    label Tags:
+                                        select#tags.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
+                                            option(data-token='#data-structures') Data Structures
+                                            option(data-token='#recursion') Recursion
+                                            option(data-token='#combinatorics') Combinatorics
+                                            option(data-token='#sorting-algorithms') Sorting Algorithms
+                                            option(data-token='#searching-algorithms') Searching Algorithms
+                                            option(data-token='#trees-and-traversals') Trees and Traversals
+                                            option(data-token='#graph-algorithms') Graph Algorithms
+                                            option(data-token='#greedy-algorithms') Greedy Algorithms
+                                            option(data-token='#dynamic-programming') Dynamic Programming
+                                            option(data-token='#string-algorithms') String Algorithms
+                                .col
+                                    button#add.btn.btn-primary(type='button') Add Input/Result
+                                .col
+                                    input#submit.btn.btn-primary(type='button', value='Post Task')
+        .panel.panel-warning
             #headingTwo.panel-heading(role='tab')
                 h4.panel-title
                     a.trigger.collapsed(role='button', data-toggle='collapse', href='#collapseTwo', aria-expanded='true', aria-controls='collapseTwo')
-                        | Collapsible Group Item #2
+                        | Update Task
             #collapseTwo.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingTwo')
                 .panel-body
-                    | Sunt quia aperiam, officiis tempora quis quasi fugit ab ipsa quo expedita reiciendis quod iusto! Enim delectus unde voluptatem officiis molestiae repudiandae.
+                    if id
+                        form.container(action='/admin/task' + id, id='taskform' method='put')
+                            .col-md-2
+                                .col
+                                    label Name:
+                                        input#name(type='text', required='required', name='name')
+                                .col
+                                    label Timelimit:
+                                        input#timelimit(type='text', placeholder='in ms' required='required', name='timelimit')
+                                .col
+                                    label Memory Limit:
+                                        input#memorylimit(type='text', placeholder='in MB' required='required', name='memorylimit')
+                            .col-md-3
+                                .col
+                                    label Description:
+                                        textarea#description(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='description')
+                            .col-md-3
+                                .col                        
+                                    label Input:
+                                        textarea#input(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='input')
+                            .col-md-3
+                                .col
+                                    label Result:
+                                        textarea#result(form='taskform' wrap='hard' rows='7' cols='25' required='required', name='results')
+                            .col-md-1
+                                .col
+                                    label Tags:
+                                        select#tags.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
+                                            option(data-token='#data-structures') Data Structures
+                                            option(data-token='#recursion') Recursion
+                                            option(data-token='#combinatorics') Combinatorics
+                                            option(data-token='#sorting-algorithms') Sorting Algorithms
+                                            option(data-token='#searching-algorithms') Searching Algorithms
+                                            option(data-token='#trees-and-traversals') Trees and Traversals
+                                            option(data-token='#graph-algorithms') Graph Algorithms
+                                            option(data-token='#greedy-algorithms') Greedy Algorithms
+                                            option(data-token='#dynamic-programming') Dynamic Programming
+                                            option(data-token='#string-algorithms') String Algorithms
+                                .col
+                                    button#add.btn.btn-primary(type='button') Add Input/Result
+                                .col
+                                    input#submit.btn.btn-primary(type='button', value='Update Task')
+                    else
+                        fieldset(disabled='disabled')
+                            form.container(action='/admin/' + id, method='put')
+                                .col-md-2
+                                    .col
+                                        label Name:
+                                            input(type='text', required='required', name='name')
+                                    .col
+                                        label Timelimit:
+                                            input(type='text', placeholder='in ms' required='required', name='timelimit')
+                                    .col
+                                        label Memory Limit:
+                                            input(type='text', placeholder='in MB' required='required', name='memorylimit')
+                                .col-md-3
+                                    .col
+                                        label Description:
+                                            textarea(wrap='hard' rows='7' cols='25' required='required', name='description')
+                                .col-md-3
+                                    .col                        
+                                        label Input:
+                                            textarea(wrap='hard' rows='7' cols='25' required='required', name='input')
+                                .col-md-3
+                                    .col
+                                        label Result:
+                                            textarea(wrap='hard' rows='7' cols='25' required='required', name='results')
+                                .col-md-1
+                                    .col
+                                        label Tags:
+                                            select.selectpicker(multiple data-live-search='true' mobile='true' width='auto')
+                                                option(data-token='#data-structures') Data Structures
+                                                option(data-token='#recursion') Recursion
+                                                option(data-token='#combinatorics') Combinatorics
+                                                option(data-token='#sorting-algorithms') Sorting Algorithms
+                                                option(data-token='#searching-algorithms') Searching Algorithms
+                                                option(data-token='#trees-and-traversals') Trees and Traversals
+                                                option(data-token='#graph-algorithms') Graph Algorithms
+                                                option(data-token='#greedy-algorithms') Greedy Algorithms
+                                                option(data-token='#dynamic-programming') Dynamic Programming
+                                                option(data-token='#string-algorithms') String Algorithms
+                                    .col
+                                        button.btn.btn-primary(type='button') Add Input/Result
+                                    .col
+                                        input.btn.btn-primary(type='button', value='Update Task')
+        .panel.panel-danger
+            #headingThree.panel-heading(role='tab')
+                h4.panel-title
+                    a.trigger.collapsed(role='button', data-toggle='collapse', href='#collapseThree', aria-expanded='true', aria-controls='collapseThree')
+                        | Delete Task
+            #collapseThree.panel-collapse.collapse(role='tabpanel', aria-labelledby='headingThree')
+                .panel-body
+                    if id
+                        form.container(action='/admin/' + id, method='post')
+                            input#delete.btn.btn-danger(type='button', value='Delete Task')
+                    else
+                        form.container(action='/admin/' + id, method='post')
+                            input.btn.btn-danger(type='button', value='Delete Task' disabled)
