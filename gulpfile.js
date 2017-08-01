@@ -11,14 +11,14 @@ const eslint = require('gulp-eslint');
 const istanbul = require('gulp-istanbul');
 const pm2 = require('pm2');
 
-gulp.task('develop', function () {
+gulp.task('develop', function() {
   livereload.listen();
   nodemon({
     script: 'app.js',
     ext: 'js coffee jade',
     stdout: false,
-  }).on('readable', function () {
-    this.stdout.on('data', function (chunk) {
+  }).on('readable', function() {
+    this.stdout.on('data', function(chunk) {
       if (/^Express server listening on port/.test(chunk)) {
         livereload.changed(__dirname);
       }
@@ -98,8 +98,8 @@ const configJson = require('./config/config.json');
 const models = require('./models').init();
 
 gulp.task('server-start', () => {
-  configJson['NODE_ENV'] = 'test';
-  configJson['PORT'] = 3001;
+  configJson.NODE_ENV = 'test';
+  configJson.PORT = 3001;
   const config = require('./config/config');
   return Promise.resolve()
     .then(() => require('./db').init(config.db))
@@ -117,8 +117,8 @@ gulp.task('server-stop', () => {
   const config = require('./config/config');
   return MongoClient.connect(config.db)
     .then((db) => {
-      configJson['NODE_ENV'] = 'development';
-      configJson['PORT'] = 3000;
+      configJson.NODE_ENV = 'development';
+      configJson.PORT = 3000;
       return db.dropDatabase();
     });
 });
@@ -128,8 +128,9 @@ gulp.task('test:browser', ['server-start'], () => {
     .pipe(mocha({
       colors: false,
       reporter: 'nyan',
-      timeout: 10000,
+      timeout: 15000,
     }))
+    .pipe(istanbul.writeReports())
     .once('end', () => {
       gulp.start('server-stop');
     });
@@ -140,7 +141,7 @@ gulp.task('test', gulpsync.sync([
   'test:lint',
   'test:unit',
   'test:integration',
-  'test:browser',
+  // 'test:browser',
 ]));
 
 gulp.task('serve', () => {

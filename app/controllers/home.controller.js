@@ -1,7 +1,7 @@
 const getController = () => {
     const getHome = (req, res) => {
         return res.status(200).render('index', {
-            title: 'Generator-Express MVC',
+            title: 'BonanzaAlgorithmsCatalogue',
             user: req.user,
         });
     };
