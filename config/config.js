@@ -20,7 +20,7 @@ const config = {
     app: {
       name: 'bonanzaalgorithmscatalogue',
     },
-    port: configJson.PORT || 3000,
+    port: configJson.PORT || 3001,
     db: 'mongodb://localhost/bonanzaalgorithmscatalogue-test',
   },
 
