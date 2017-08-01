@@ -80,7 +80,7 @@ block content
                     h4#results-title.modal-title Results
                 .modal-body
                 .modal-footer
-                    a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
+                    a.btn.btn-secondary.pull-left(href='/catalogue/categories', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
                     button.btn.btn-default(type='button', data-dismiss='modal') Close        
     #description-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='description-modal-title', aria-hidden='true')
         .modal-dialog(role='document')
@@ -92,7 +92,7 @@ block content
                 .modal-body
                     != md(task.description)
                 .modal-footer
-                    a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
+                    a.btn.btn-secondary.pull-left(href='/catalogue/categories', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Close
     #avg-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='avg-modal-title', aria-hidden='true')
         .modal-dialog(role='document')
@@ -103,5 +103,5 @@ block content
                         span(aria-hidden='true') ×
                 .modal-body
                 .modal-footer
-                    a.btn.btn-secondary.pull-left(href='/catalogue', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
+                    a.btn.btn-secondary.pull-left(href='/catalogue/categories', role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue') Catalogue
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Close

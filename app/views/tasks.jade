@@ -36,7 +36,7 @@ block content
                         a.list-group-item(href='/tasks/' + task._id) #{task.name}
                     td
                         each tag in task.tags
-                            a.btn.btn-secondary(href='/catalogue/' + tag.substr(1), role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue category: ' + tag.substr(1)) #{tag}
+                            a.btn.btn-secondary(href='/catalogue/categories/' + tag.substr(1), role='button', data-toggle='tooltip', data-placement='bottom', data-original-title='Go to catalogue category: ' + tag.substr(1)) #{tag}
                     td
                         if userTasks[task._id]
                             | #{userTasks[task._id].topResult.result} / #{task.results.length * 10}
