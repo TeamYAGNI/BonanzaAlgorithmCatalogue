@@ -2,6 +2,10 @@
 
 This is a course-project for the Nodejs Course in TelerikAcademy. It represents an Algorithms catalogue with judge system functionality, where you can solve complex tasks and chat with other users.
 
+[**Assignment**](https://github.com/TelerikAcademy/Web-Applications-with-Node.js/blob/master/Course%20Project/README.md)
+
+[**Telerik Academy Showcase System**](http://best.telerikacademy.com/projects/703/BonanzaAlgorithmsCatalogue)
+
 ## Authors
 
 ### [***TeamYAGNI***](https://github.com/TeamYAGNI)
